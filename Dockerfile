@@ -43,12 +43,9 @@ RUN mkdir -p /opt/adtools; \
     git submodule init; \
     git submodule update; \
     gild/bin/gild clone; \
-    cp /opt/temp/native-build /opt/adtools -r; \
     gild/bin/gild checkout binutils 2.23.2; \
     gild/bin/gild checkout gcc 8; \
-    make -C native-build gcc-cross CROSS_PREFIX=/opt/adtools -j6; \
-    cp ./bin ./include ./lib ./libexec ./ppc-amigaos ./share /opt/ppc-amigaos -r; \
-    cd /opt/ppc-amigaos/bin; \
-    rm .gitignore adtdeploy dedup gild logdeploy makefile; \
+    cp /opt/temp/native-build /opt/adtools -r; \
+    make -C native-build gcc-cross CROSS_PREFIX=/opt/ppc-amigaos -j4; \
     cd /opt; \
     rm -rf /opt/adtools;
