@@ -6,7 +6,7 @@ LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 CMD ["/sbin/my_init"]
 
 RUN apt-get update && apt-get -y install \
-    g++-8 \
+    g++-10 \
     flex \
     git \
     lhasa \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get -y install \
     texinfo \
     wget ; \
     ln -s /usr/bin/python2.7 /usr/bin/python; \
-    ln -s /usr/bin/g++-8 /usr/bin/g++; \
+    ln -s /usr/bin/g++-10 /usr/bin/g++; \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # Install python2 pip
@@ -33,19 +33,25 @@ RUN cd /tmp; \
 # Fix for the AmigaOS SDK download
 COPY files/native-build /opt/temp/native-build
 
+WORKDIR /opt
+ARG GCC_VER
+
 # Compile adtools ppc-amigaos-gcc8
-RUN mkdir -p /opt/adtools; \
-    mkdir -p /opt/ppc-amigaos; \
-    cd /opt/adtools; \
-    git config --global user.email "walkero@gmail.com"; \
+RUN git config --global user.email "walkero@gmail.com"; \
     git config --global user.name "Georgios Sokianos"; \
-    git clone https://github.com/sba1/adtools .; \
+    if [ ${GCC_VER} -eq 10 ] ; \
+    then \
+        git clone https://github.com/sodero/adtools -b topic/gcc10_support; \
+    else \
+        git clone https://github.com/sba1/adtools; \
+    fi; \
+    cd /opt/adtools; \
     git submodule init; \
     git submodule update; \
     gild/bin/gild clone; \
     gild/bin/gild checkout binutils 2.23.2; \
-    gild/bin/gild checkout gcc 8; \
-    cp /opt/temp/native-build /opt/adtools -r; \
+    gild/bin/gild checkout gcc ${GCC_VER}; \
+    cp /opt/temp/native-build/makefile-${GCC_VER} /opt/adtools/native-build/; \
     make -C native-build gcc-cross CROSS_PREFIX=/opt/ppc-amigaos -j4; \
     cd /opt; \
     rm -rf /opt/adtools;
