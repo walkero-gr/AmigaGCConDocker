@@ -1,4 +1,5 @@
 GCC ?= 8
+MAKEFILESPATH ?= files/native-build
 REPO ?= walkero/amigagccondocker
 TAG ?= ppc-base-gcc$(GCC)
 VOLUMES ?= -v "${PWD}/code":/opt/code
@@ -11,11 +12,13 @@ default: build
 
 build:
 	docker build -t $(REPO):$(TAG) \
-		--build-arg GCC_VER=$(GCC) .
+		--build-arg GCC_VER=$(GCC) \
+		--build-arg MAKEFILES_PATH=$(MAKEFILESPATH) .
 
 buildnc:
 	docker build --no-cache -t $(REPO):$(TAG) \
-		--build-arg GCC_VER=$(GCC) .
+		--build-arg GCC_VER=$(GCC) \
+		--build-arg MAKEFILES_PATH=$(MAKEFILESPATH) .
 
 shell:
 	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash

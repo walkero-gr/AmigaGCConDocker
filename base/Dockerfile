@@ -5,7 +5,7 @@ LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
-RUN apt-get update && apt-get -y install \
+RUN apt-get update && apt-get -y --no-install-recommends install \
     g++-10 \
     flex \
     git \
@@ -31,7 +31,8 @@ RUN cd /tmp; \
     rm -rf /tmp/*;
 
 # Fix for the AmigaOS SDK download
-COPY files/native-build /opt/temp/native-build
+ARG MAKEFILES_PATH
+COPY ${MAKEFILES_PATH} /opt/temp/native-build
 
 WORKDIR /opt
 ARG GCC_VER
@@ -45,7 +46,7 @@ RUN git config --global user.email "walkero@gmail.com"; \
     else \
         git clone https://github.com/sba1/adtools; \
     fi; \
-    cd /opt/adtools; \
+    cd /opt/adtools || exit; \
     git submodule init; \
     git submodule update; \
     gild/bin/gild clone; \
@@ -53,5 +54,5 @@ RUN git config --global user.email "walkero@gmail.com"; \
     gild/bin/gild checkout gcc ${GCC_VER}; \
     cp /opt/temp/native-build/makefile-${GCC_VER} /opt/adtools/native-build/; \
     make -C native-build gcc-cross CROSS_PREFIX=/opt/ppc-amigaos -j4; \
-    cd /opt; \
+    cd /opt || exit; \
     rm -rf /opt/adtools;

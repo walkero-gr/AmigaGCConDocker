@@ -14,6 +14,7 @@ steps:
       dockerfile: base/Dockerfile
       build_args:
         - GCC_VER=8
+        - MAKEFILES_PATH=base/files/native-build
       username:
         from_secret: DOCKERHUB_USERNAME
       password:
