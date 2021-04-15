@@ -1,9 +1,9 @@
 GCC ?= 8
 REPO ?= walkero/amigagccondocker
-TAG ?= ppc-amigaos-$(GCC)
+TAG ?= ppc-base-gcc$(GCC)
 VOLUMES ?= -v "${PWD}/code":/opt/code
 WORKSPACE ?= -w /opt/code
-NAME ?= ppc-amigaos-gcc$(GCC)
+NAME ?= ppc-base-gcc$(GCC)
 
 .PHONY: build buildnc shell push logs clean test release
 
