@@ -29,7 +29,7 @@ WORKDIR /tmp
 RUN cd /tmp; \
     curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py; \
     python get-pip.py; \
-    pip2 install argcomplete; \
+    pip2 install --no-cache-dir argcomplete; \
     rm -rf /tmp/*;
 
 # Fix for the AmigaOS SDK download
