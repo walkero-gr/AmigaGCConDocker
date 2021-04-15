@@ -22,9 +22,9 @@ steps:
   settings:
     repo: walkero/amigagccondocker
     tags:
-      - "latest-base-gcc8"
+      - "ppc-base-gcc8"
     cache_from:
-      - walkero/amigagccondocker:latest-base-gcc8
+      - walkero/amigagccondocker:ppc-base-gcc8
     dockerfile: base/Dockerfile
     build_args:
       - GCC_VER=8
