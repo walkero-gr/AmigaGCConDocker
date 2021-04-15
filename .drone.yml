@@ -23,6 +23,7 @@ trigger:
   branch:
     include:
     - master
+    - main
   event:
     include:
     - push
