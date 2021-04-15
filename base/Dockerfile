@@ -39,7 +39,7 @@ COPY ${MAKEFILES_PATH} /opt/temp/native-build
 WORKDIR /opt
 ARG GCC_VER
 
-# Compile adtools ppc-amigaos-gcc8
+# Compile adtools ppc-amigaos-gcc
 RUN git config --global user.email "walkero@gmail.com"; \
     git config --global user.name "Georgios Sokianos"; \
     if [ ${GCC_VER} -eq 10 ] ; \

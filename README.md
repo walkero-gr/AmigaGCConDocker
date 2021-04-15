@@ -38,6 +38,9 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | MUI 5.x dev   | 5.0-2020R3      | http://muidev.de/downloads                                              |
 | SDL           | v1.2.16-rc2     | https://github.com/AmigaPorts/SDL/releases/tag/v1.2.16-rc2-amigaos4     |
 | SDL 2         | v2.0.14-update1 | https://github.com/AmigaPorts/SDL/releases/tag/v2.0.14-update1-amigaos4 |
+| AmiSSL SDK    | 4.7             | https://github.com/jens-maus/amissl/releases/tag/4.7                    |
+| FlexCat       | 2.18            | https://github.com/adtools/flexcat/releases/tag/2.18                    |
+| lha           | v2 PMA          | https://github.com/jca02266/lha.git                                     |
 
 
 ## How to create a docker container
@@ -96,6 +99,7 @@ The current ENV paths are:
 * **SDL_LIB**: /opt/sdk/SDL/lib
 * **SDL2_INC**: /opt/sdk/SDL2/include
 * **SDL2_LIB**: /opt/sdk/SDL2/lib
+* **AMISSL_INC**: /opt/sdk/AmiSSL/include
 
 New paths can be set, by using environment variables on docker execution or inside the docker-compose.yml file, like:
 
