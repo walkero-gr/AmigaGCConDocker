@@ -23,6 +23,8 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     ln -s /usr/bin/g++-10 /usr/bin/g++; \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
+WORKDIR /tmp
+
 # Install python2 pip
 RUN cd /tmp; \
     curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py; \

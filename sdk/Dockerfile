@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:21.04
 
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
