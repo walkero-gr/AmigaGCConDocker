@@ -12,12 +12,12 @@ steps:
       - "ppc-amigaos-sdks"
     cache_from:
       - walkero/amigagccondocker:ppc-amigaos-sdks
-    dockerfile: base/Dockerfile
+    dockerfile: sdk/Dockerfile
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-- name: build-base-image-gcc8
+- name: build-gcc8-base-image
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
