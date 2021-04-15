@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Added Changelog file
 - Added OS4 SDKs image
+- Added the complete development environment dockerfile
 
 ### Changed
 - ppc-amigaos-x tags change to latest-base-gccx, where x is the number of installed GCC
