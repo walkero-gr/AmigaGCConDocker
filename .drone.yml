@@ -1,0 +1,28 @@
+---
+kind: pipeline
+name: build-images
+
+steps:
+  - name: build-base-image-gcc8
+    image: plugins/docker
+    settings:
+      repo: walkero/amigagccondocker
+      tags:
+        - "latest-base-gcc8"
+      # cache_from:
+      #   - walkero/amigagccondocker:latest-base
+      dockerfile: base/Dockerfile
+      build_args:
+        - GCC_VER=8
+      username:
+        from_secret: DOCKERHUB_USERNAME
+      password:
+        from_secret: DOCKERHUB_PASSWORD
+
+trigger:
+  branch:
+    include:
+    - master
+  event:
+    include:
+    - push
