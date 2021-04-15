@@ -1,24 +1,38 @@
 ---
 kind: pipeline
+type: docker
 name: build-images
 
 steps:
-  - name: build-base-image-gcc8
-    image: plugins/docker
-    settings:
-      repo: walkero/amigagccondocker
-      tags:
-        - "latest-base-gcc8"
-      # cache_from:
-      #   - walkero/amigagccondocker:latest-base
-      dockerfile: base/Dockerfile
-      build_args:
-        - GCC_VER=8
-        - MAKEFILES_PATH=base/files/native-build
-      username:
-        from_secret: DOCKERHUB_USERNAME
-      password:
-        from_secret: DOCKERHUB_PASSWORD
+- name: build-ppc-amigaos-sdks-image
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-sdks"
+    cache_from:
+      - walkero/amigagccondocker:ppc-amigaos-sdks
+    dockerfile: base/Dockerfile
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+- name: build-base-image-gcc8
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "latest-base-gcc8"
+    cache_from:
+      - walkero/amigagccondocker:latest-base-gcc8
+    dockerfile: base/Dockerfile
+    build_args:
+      - GCC_VER=8
+      - MAKEFILES_PATH=base/files/native-build
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
 
 trigger:
   branch:
