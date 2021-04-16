@@ -57,8 +57,8 @@ WORKDIR /tmp
 RUN rm -rf ${APPC}/ppc-amigaos/SDK; \
     ln -s /opt/sdk/ppc-amigaos/ ${APPC}/ppc-amigaos/SDK;
 
-ENV AOS4_SDK_INC="${OS4_SDK_PATH}/Include/include_h" \
-    AOS4_NET_INC="${OS4_SDK_PATH}/Include/netinclude" \
+ENV AOS4_SDK_INC="${OS4_SDK_PATH}/include/include_h" \
+    AOS4_NET_INC="${OS4_SDK_PATH}/include/netinclude" \
     AOS4_NLIB_INC="${OS4_SDK_PATH}/newlib/include" \
     AOS4_CLIB_INC="${OS4_SDK_PATH}/clib2/include" \
     MUI50_INC="/opt/sdk/MUI_5.0/C/include" \
