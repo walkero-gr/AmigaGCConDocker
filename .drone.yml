@@ -10,8 +10,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-amigaos-sdks"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-sdks
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-sdks
     dockerfile: sdk/Dockerfile
     username:
       from_secret: DOCKERHUB_USERNAME
@@ -23,8 +23,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-base-gcc8"
-    cache_from:
-      - walkero/amigagccondocker:ppc-base-gcc8
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-base-gcc8
     dockerfile: base/Dockerfile
     build_args:
       - GCC_VER=8
@@ -39,8 +39,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-amigaos-gcc8"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc8
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc8
     dockerfile: Dockerfile
     build_args:
       - GCC_VER=8
@@ -57,8 +57,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-base-gcc9"
-    cache_from:
-      - walkero/amigagccondocker:ppc-base-gcc9
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-base-gcc9
     dockerfile: base/Dockerfile
     build_args:
       - GCC_VER=9
@@ -73,8 +73,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-amigaos-gcc9"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc9
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc9
     dockerfile: Dockerfile
     build_args:
       - GCC_VER=9
@@ -91,8 +91,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-base-gcc10"
-    cache_from:
-      - walkero/amigagccondocker:ppc-base-gcc10
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-base-gcc10
     dockerfile: base/Dockerfile
     build_args:
       - GCC_VER=10
@@ -107,8 +107,8 @@ steps:
     repo: walkero/amigagccondocker
     tags:
       - "ppc-amigaos-gcc10"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc10
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc10
     dockerfile: Dockerfile
     build_args:
       - GCC_VER=10
