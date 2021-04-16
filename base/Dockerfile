@@ -27,7 +27,7 @@ WORKDIR /tmp
 
 # Install python2 pip
 RUN cd /tmp; \
-    curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py; \
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py; \
     python get-pip.py; \
     pip2 install --no-cache-dir argcomplete; \
     rm -rf /tmp/*;
