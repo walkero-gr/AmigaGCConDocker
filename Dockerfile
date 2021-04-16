@@ -6,9 +6,6 @@ FROM walkero/docker4amigavbcc:latest-base
 
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
-
 # Remove from vbcc base image unused files
 RUN rm -rf /opt/vbcc;
 
@@ -68,7 +65,8 @@ ENV AOS4_SDK_INC="${OS4_SDK_PATH}/Include/include_h" \
     SDL_INC="/opt/sdk/SDL/include" \
     SDL_LIB="/opt/sdk/SDL/lib" \
     SDL2_INC="/opt/sdk/SDL2/include" \
-    SDL2_LIB="/opt/sdk/SDL2/lib"
+    SDL2_LIB="/opt/sdk/SDL2/lib" \
+    OO_INC="/opt/sdk/OOLib/include"
 
 WORKDIR /opt/code
 

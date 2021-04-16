@@ -65,10 +65,11 @@ RUN curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v2.0.14-upda
 # ENV GL4ES_INC="/opt/sdk/GL4ES/include"
 
 # TODO: Install OO Library
-# RUN curl -fsSL "http://os4depot.net/share/development/library/oo.lha" -o /tmp/oo.lha; \
-#     lha -xfq2 oo.lha; \
-#     mv ./SDK/Local /opt/sdk/libcurl; \
-#     rm -rf /tmp/*;
+RUN curl -fsSL "http://os4depot.net/share/development/library/oo.lha" -o /tmp/oo.lha && \
+    lha -xfq2 oo.lha && \
+    mv ./OO/SDK/local/common /opt/sdk/OOLib && \
+    mv /opt/sdk/OOLib/include/OO /opt/sdk/OOLib/include/oo && \
+    rm -rf /tmp/*;
 
 
 # TODO: Install libCurl

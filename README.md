@@ -1,4 +1,3 @@
-
 [![Build Status](https://drone-gh.intercube.gr/api/badges/walkero-gr/AmigaGCConDocker/status.svg)](https://drone-gh.intercube.gr/walkero-gr/AmigaGCConDocker)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a2a863e7754e46c7bafaed8e47e8e41a)](https://www.codacy.com/gh/walkero-gr/AmigaGCConDocker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=walkero-gr/AmigaGCConDocker&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker/badge)](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker)
@@ -29,6 +28,13 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 	- **ppc-base-gcc9**
 	- **ppc-base-gcc10**
 
+## GCC versions
+
+| docker image      | version |
+| ----------------- | ------- |
+| ppc-amigaos-gcc8  | v8.4.0  |
+| ppc-amigaos-gcc9  | v9.1.0  |
+| ppc-amigaos-gcc10 | v10.1.0 |
 
 ## Included SDKs
 
@@ -100,6 +106,7 @@ The current ENV paths are:
 * **SDL2_INC**: /opt/sdk/SDL2/include
 * **SDL2_LIB**: /opt/sdk/SDL2/lib
 * **AMISSL_INC**: /opt/sdk/AmiSSL/include
+* **OO_INC**: /opt/sdk/OOLib/include
 
 New paths can be set, by using environment variables on docker execution or inside the docker-compose.yml file, like:
 
