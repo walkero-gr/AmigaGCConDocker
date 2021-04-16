@@ -84,7 +84,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: build-images
+name: build-base-images
 
 steps:
 - name: build-gcc8-base-image
