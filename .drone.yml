@@ -17,6 +17,76 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
+- name: build-ppc-amigaos-gcc8-image
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc8"
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc8
+    dockerfile: Dockerfile
+    build_args:
+      - GCC_VER=8
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - build-ppc-amigaos-sdks-image
+  #   - build-gcc8-base-image
+- name: build-ppc-amigaos-gcc9-image
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc9"
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc9
+    dockerfile: Dockerfile
+    build_args:
+      - GCC_VER=9
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - build-ppc-amigaos-sdks-image
+  #   - build-gcc9-base-image
+- name: build-ppc-amigaos-gcc10-image
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc10"
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc10
+    dockerfile: Dockerfile
+    build_args:
+      - GCC_VER=10
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - build-ppc-amigaos-sdks-image
+  #   - build-gcc10-base-image
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
+
+---
+kind: pipeline
+type: docker
+name: build-images
+
+steps:
 - name: build-gcc8-base-image
   image: plugins/docker
   settings:
@@ -33,98 +103,43 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-- name: build-ppc-amigaos-gcc8-image
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc8"
-    # cache_from:
-    #   - walkero/amigagccondocker:ppc-amigaos-gcc8
-    dockerfile: Dockerfile
-    build_args:
-      - GCC_VER=8
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdks-image
-  #   - build-gcc8-base-image
-- name: build-gcc9-base-image
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-base-gcc9"
-    # cache_from:
-    #   - walkero/amigagccondocker:ppc-base-gcc9
-    dockerfile: base/Dockerfile
-    build_args:
-      - GCC_VER=9
-      - MAKEFILES_PATH=base/files/native-build
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-- name: build-ppc-amigaos-gcc9-image
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc9"
-    # cache_from:
-    #   - walkero/amigagccondocker:ppc-amigaos-gcc9
-    dockerfile: Dockerfile
-    build_args:
-      - GCC_VER=9
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdks-image
-  #   - build-gcc9-base-image
-- name: build-gcc10-base-image
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-base-gcc10"
-    # cache_from:
-    #   - walkero/amigagccondocker:ppc-base-gcc10
-    dockerfile: base/Dockerfile
-    build_args:
-      - GCC_VER=10
-      - MAKEFILES_PATH=base/files/native-build
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-- name: build-ppc-amigaos-gcc10-image
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc10"
-    # cache_from:
-    #   - walkero/amigagccondocker:ppc-amigaos-gcc10
-    dockerfile: Dockerfile
-    build_args:
-      - GCC_VER=10
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdks-image
-  #   - build-gcc10-base-image
+# - name: build-gcc9-base-image
+#   image: plugins/docker
+#   settings:
+#     repo: walkero/amigagccondocker
+#     tags:
+#       - "ppc-base-gcc9"
+#     # cache_from:
+#     #   - walkero/amigagccondocker:ppc-base-gcc9
+#     dockerfile: base/Dockerfile
+#     build_args:
+#       - GCC_VER=9
+#       - MAKEFILES_PATH=base/files/native-build
+#     username:
+#       from_secret: DOCKERHUB_USERNAME
+#     password:
+#       from_secret: DOCKERHUB_PASSWORD
+# - name: build-gcc10-base-image
+#   image: plugins/docker
+#   settings:
+#     repo: walkero/amigagccondocker
+#     tags:
+#       - "ppc-base-gcc10"
+#     # cache_from:
+#     #   - walkero/amigagccondocker:ppc-base-gcc10
+#     dockerfile: base/Dockerfile
+#     build_args:
+#       - GCC_VER=10
+#       - MAKEFILES_PATH=base/files/native-build
+#     username:
+#       from_secret: DOCKERHUB_USERNAME
+#     password:
+#       from_secret: DOCKERHUB_PASSWORD
 
 trigger:
   branch:
     include:
-    - master
-    - main
+    - base-images
   event:
     include:
     - push
