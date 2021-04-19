@@ -44,7 +44,7 @@ RUN git config --global user.email "walkero@gmail.com"; \
     git config --global user.name "Georgios Sokianos"; \
     if [ ${GCC_VER} -eq 10 ] ; \
     then \
-        git clone https://github.com/sodero/adtools -b topic/gcc10_support; \
+        git clone https://github.com/sodero/adtools; \
     else \
         git clone https://github.com/sba1/adtools; \
     fi; \

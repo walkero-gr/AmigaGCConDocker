@@ -2,7 +2,6 @@ GCC ?= 8
 MAKEFILESPATH ?= files/native-build
 REPO ?= walkero/amigagccondocker
 TAG ?= ppc-base-gcc$(GCC)
-VOLUMES ?= -v "${PWD}/code":/opt/code
 WORKSPACE ?= -w /opt/code
 NAME ?= ppc-base-gcc$(GCC)
 
@@ -21,7 +20,7 @@ buildnc:
 		--build-arg MAKEFILES_PATH=$(MAKEFILESPATH) .
 
 shell:
-	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+	docker run -it --rm --name $(NAME) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)

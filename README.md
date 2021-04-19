@@ -34,7 +34,7 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | ----------------- | ------- |
 | ppc-amigaos-gcc8  | v8.4.0  |
 | ppc-amigaos-gcc9  | v9.1.0  |
-| ppc-amigaos-gcc10 | v10.1.0 |
+| ppc-amigaos-gcc10 | v10.3.0 |
 
 ## Included SDKs
 
