@@ -1,7 +1,7 @@
 GCC ?= 8
 REPO ?= walkero/amigagccondocker
 TAG ?= ppc-amigaos-sdks
-VOLUMES ?= -v "${PWD}/code":/opt/code
+VOLUMES ?= 
 WORKSPACE ?= -w /opt/code
 NAME ?= ppc-amigaos-sdks
 

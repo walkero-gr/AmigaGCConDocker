@@ -19,7 +19,9 @@ COPY --from=sdk-image ${SDKS_PATH} ${SDKS_PATH}
 RUN apt-get update && apt-get -y --no-install-recommends install \
     bison \
     cmake \
+    cppcheck \
     cvs \
+    flawfinder \
     flex \
     gperf \
     libgmp-dev \
