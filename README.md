@@ -45,6 +45,7 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | SDL           | v1.2.16-rc2     | https://github.com/AmigaPorts/SDL/releases/tag/v1.2.16-rc2-amigaos4     |
 | SDL 2         | v2.0.14-update1 | https://github.com/AmigaPorts/SDL/releases/tag/v2.0.14-update1-amigaos4 |
 | AmiSSL SDK    | 4.7             | https://github.com/jens-maus/amissl/releases/tag/4.7                    |
+| OO library    | 1.16            | http://os4depot.net/?function=showfile&file=development/library/oo.lha  |
 | FlexCat       | 2.18            | https://github.com/adtools/flexcat/releases/tag/2.18                    |
 | lha           | v2 PMA          | https://github.com/jca02266/lha.git                                     |
 

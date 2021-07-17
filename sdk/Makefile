@@ -1,4 +1,3 @@
-GCC ?= 8
 REPO ?= walkero/amigagccondocker
 TAG ?= ppc-amigaos-sdks
 VOLUMES ?= 
