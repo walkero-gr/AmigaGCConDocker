@@ -6,8 +6,9 @@ All notable changes to this project will be documented in this file.
 - Added Changelog file
 - Added OS4 SDKs image
 - Added the complete development environment dockerfile
-- Added OO library in the SDK files
-- Added GCC 10.3.0
+- Added OO 1.16 library in the SDK files
+- Added GCC 10.3.0 image
+- Added GCC 11.1.0 image
 - Added flawfinder and cppcheck tools
 
 ### Changed

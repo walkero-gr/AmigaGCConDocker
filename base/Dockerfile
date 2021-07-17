@@ -1,4 +1,4 @@
-FROM phusion/baseimage:master-amd64
+FROM phusion/baseimage:master
 
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
@@ -42,8 +42,7 @@ ARG GCC_VER
 # Compile adtools ppc-amigaos-gcc
 RUN git config --global user.email "walkero@gmail.com"; \
     git config --global user.name "Georgios Sokianos"; \
-    if [ ${GCC_VER} -eq 10 ] ; \
-    then \
+    if [ ${GCC_VER} -eq 10 ] || [ ${GCC_VER} -eq 11 ]; then \
         git clone https://github.com/sodero/adtools; \
     else \
         git clone https://github.com/sba1/adtools; \

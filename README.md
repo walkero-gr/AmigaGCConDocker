@@ -17,6 +17,7 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 	- **ppc-amigaos-gcc8**
 	- **ppc-amigaos-gcc9**
 	- **ppc-amigaos-gcc10**
+	- **ppc-amigaos-gcc11**
 
 - The `ppc-amigaos-sdks` is a small image which includes the SDK's installation, and is included in `ppc-amigaos-gccX` images above.
 - The `ppc-base-gccX` images are the base images which are used to compile the different versions of gcc compiler from source. The binaries from these images are included in `ppc-amigaos-gccX` images above. 
@@ -27,6 +28,7 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 	- **ppc-base-gcc8**
 	- **ppc-base-gcc9**
 	- **ppc-base-gcc10**
+	- **ppc-base-gcc11**
 
 ## GCC versions
 
@@ -35,6 +37,7 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | ppc-amigaos-gcc8  | v8.4.0  |
 | ppc-amigaos-gcc9  | v9.1.0  |
 | ppc-amigaos-gcc10 | v10.3.0 |
+| ppc-amigaos-gcc11 | v11.1.0 |
 
 ## Included SDKs
 
@@ -58,6 +61,7 @@ To create a container based on one of these images, run in the terminal any of t
 docker run -it --rm --name gcc8-ppc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc8 /bin/bash
 docker run -it --rm --name gcc9-ppc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc9 /bin/bash
 docker run -it --rm --name gcc10-ppc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc10 /bin/bash
+docker run -it --rm --name gcc11-ppc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc11 /bin/bash
 ```
 
 If you want to use it with **docker-compose**, you can create a *docker-compose.yml* file, with the following content. You can keep the lines of the preferred GCC version:
@@ -80,6 +84,11 @@ services:
     image: 'amigagccondocker:ppc-amigaos-gcc10'
     volumes:
       - './code:/opt/code'
+
+  gcc11-ppc:
+    image: 'amigagccondocker:ppc-amigaos-gcc11'
+    volumes:
+      - './code:/opt/code'
 ```
 
 And then you can create and get into each container by doing the following:
@@ -89,6 +98,7 @@ docker-compose up -d
 docker-compose gcc8-ppc exec bash
 docker-compose gcc9-ppc exec bash
 docker-compose gcc10-ppc exec bash
+docker-compose gcc11-ppc exec bash
 ```
 
 To compile your project you have to get into the container, inside the */opt/code/projectname* folder, which is shared with the host machine, and execute the compilation.
@@ -138,6 +148,14 @@ services:
 
   gcc10-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc10'
+	environment:
+      MY_INC: "/opt/ext_sdk/MY/include_h"
+    volumes:
+      - './code:/opt/code'
+      - './ext_sdk:/opt/ext_sdk'
+
+  gcc11-ppc:
+    image: 'amigagccondocker:ppc-amigaos-gcc11'
 	environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:

@@ -34,7 +34,6 @@ steps:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
     - build-ppc-amigaos-sdks-image
-  #   - build-gcc8-base-image
 - name: build-ppc-amigaos-gcc9-image
   image: plugins/docker
   settings:
@@ -52,7 +51,6 @@ steps:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
     - build-ppc-amigaos-sdks-image
-  #   - build-gcc9-base-image
 - name: build-ppc-amigaos-gcc10-image
   image: plugins/docker
   settings:
@@ -70,7 +68,23 @@ steps:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
     - build-ppc-amigaos-sdks-image
-  #   - build-gcc10-base-image
+- name: build-ppc-amigaos-gcc11-image
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc11"
+    # cache_from:
+    #   - walkero/amigagccondocker:ppc-amigaos-gcc11
+    dockerfile: Dockerfile
+    build_args:
+      - GCC_VER=11
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - build-ppc-amigaos-sdks-image
 
 trigger:
   branch:
