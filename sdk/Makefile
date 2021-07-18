@@ -29,4 +29,4 @@ clean:
 test:
 	snyk test --docker $(REPO):$(TAG) --file=Dockerfile
 
-release: buildnc push
+release: build push
