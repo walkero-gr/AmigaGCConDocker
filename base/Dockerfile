@@ -1,13 +1,12 @@
-FROM phusion/baseimage:master
+FROM ubuntu:20.10
 
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
-
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    g++-10 \
+    ca-certificates \
+    curl \
     flex \
+    g++-10 \
     git \
     lhasa \
     libfl2 \
@@ -26,10 +25,9 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 WORKDIR /tmp
 
 # Install python2 pip
-RUN cd /tmp; \
-    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py; \
+RUN curl -fsSL https://bootstrap.pypa.io/pip/2.7/get-pip.py -o /tmp/get-pip.py; \
     python get-pip.py; \
-    pip2 install --no-cache-dir argcomplete; \
+    pip2 install --no-cache-dir argcomplete==1.12.3; \
     rm -rf /tmp/*;
 
 # Fix for the AmigaOS SDK download
@@ -42,18 +40,14 @@ ARG GCC_VER
 # Compile adtools ppc-amigaos-gcc
 RUN git config --global user.email "walkero@gmail.com"; \
     git config --global user.name "Georgios Sokianos"; \
-    if [ ${GCC_VER} -eq 10 ] || [ ${GCC_VER} -eq 11 ]; then \
-        git clone https://github.com/sodero/adtools; \
-    else \
-        git clone https://github.com/sba1/adtools; \
-    fi; \
+    git clone https://github.com/sba1/adtools; \
     cd /opt/adtools || exit; \
-    git submodule init; \
-    git submodule update; \
-    gild/bin/gild clone; \
-    gild/bin/gild checkout binutils 2.23.2; \
-    gild/bin/gild checkout gcc ${GCC_VER}; \
-    cp /opt/temp/native-build/makefile-${GCC_VER} /opt/adtools/native-build/; \
-    make -C native-build gcc-cross CROSS_PREFIX=/opt/ppc-amigaos -j4; \
+    git submodule init && \
+    git submodule update && \
+    gild/bin/gild clone && \
+    gild/bin/gild checkout binutils 2.23.2 && \
+    gild/bin/gild checkout gcc ${GCC_VER} && \
+    cp /opt/temp/native-build/makefile-${GCC_VER} /opt/adtools/native-build/ && \
+    make -C native-build gcc-cross CROSS_PREFIX=/opt/ppc-amigaos -j4 && \
     cd /opt || exit; \
     rm -rf /opt/adtools;
