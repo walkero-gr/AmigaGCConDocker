@@ -132,7 +132,7 @@ version: '3'
 services:
   gcc8-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc8'
-	environment:
+  environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:
       - './code:/opt/code'
@@ -140,7 +140,7 @@ services:
 
   gcc9-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc9'
-	environment:
+  environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:
       - './code:/opt/code'
@@ -148,7 +148,7 @@ services:
 
   gcc10-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc10'
-	environment:
+  environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:
       - './code:/opt/code'
@@ -156,7 +156,7 @@ services:
 
   gcc11-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc11'
-	environment:
+  environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:
       - './code:/opt/code'
