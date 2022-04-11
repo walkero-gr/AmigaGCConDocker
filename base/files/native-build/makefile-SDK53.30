@@ -19,6 +19,9 @@ CCACHE:=$(shell which ccache)
 HOST_GCC:=$(strip $(CCACHE) gcc)
 HOST_GXX:=$(strip $(CCACHE) g++)
 
+GNU_SERVER=http://ftp.gnu.org/gnu
+# GNU_SERVER=http://ftp.vim.org/ftp/gnu 
+
 GMP_ARCHIVE=gmp-5.1.3.tar.bz2
 MPFR_ARCHIVE=mpfr-3.1.6.tar.bz2
 MPC_ARCHIVE=mpc-1.0.3.tar.gz
@@ -47,7 +50,9 @@ COREUTILS_VERSION=5.2.1
 DIST_VERSION=$(shell date +%Y%m%d)-$(shell git rev-list --count HEAD)
 
 CLIB2_URL=https://github.com/sodero/clib2
-CLIB2_SHA1=3609972cb4c2c8ff60e4d79571d5eaabf5bf97b4
+CLIB2_SHA1=18ff2b535a59fff8aa5237c08fe32551cb0bfe45
+# CLIB2_URL=https://github.com/sba1/clib2-1
+# CLIB2_SHA1=b874ff71deb55016a20f87483beb1ecbe226c55e
 CLIB2_RELEASE_ARCHIVE_NAME=adtools-os4-clib2-$(DIST_VERSION).lha
 
 CROSS_PREFIX?=$(ROOT_DIR)/root-cross
@@ -80,9 +85,9 @@ downloads-done-clib2:
 #
 downloads-done: downloads-done-clib2
 	wget "$(SDK_URL)" -O downloads/SDK_$(SDK_VERSION).lha
-	cd downloads && wget -N http://ftp.gnu.org/gnu/gmp/$(GMP_ARCHIVE)
-	cd downloads && wget -N http://ftp.gnu.org/gnu/mpfr/$(MPFR_ARCHIVE)
-	cd downloads && wget -N http://ftp.gnu.org/gnu/mpc/$(MPC_ARCHIVE)
+	cd downloads && wget -N $(GNU_SERVER)/gmp/$(GMP_ARCHIVE)
+	cd downloads && wget -N $(GNU_SERVER)/mpfr/$(MPFR_ARCHIVE)
+	cd downloads && wget -N $(GNU_SERVER)/mpc/$(MPC_ARCHIVE)
 	touch $@
 
 #
@@ -182,6 +187,7 @@ clib2-cross-done-$(GCC_VERSION): $(CLIB2_CROSS_DONE_DEPENDENCY)
 	mkdir -p $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/include
 	cp -Rp $(CLIB2_DIR)/include/* $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/include
 	cp -Rp $(CLIB2_DIR)/lib/* $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/lib
+	cp $(CLIB2_DIR)/../LICENSE $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2
 	touch $@
 
 #
@@ -438,13 +444,13 @@ native-dist: native-strip-really
 #	sh -x .dedup
 #	rm .dedup
 
-	cd /tmp && lha ao5 $(realpath .)/$(DIST_FOLDER).lha $(DIST_FOLDER)/*
+	cd /tmp && lha -aq2o6 $(realpath .)/$(DIST_FOLDER).lha $(DIST_FOLDER)/*
 
 #
 # Clib2 distribution
 #
 clib2-dist: clib2-cross-done-$(GCC_VERSION)
-	cd root-cross/ppc-amigaos/SDK && lha ao5 $(realpath .)/$(CLIB2_RELEASE_ARCHIVE_NAME) clib2
+	cd root-cross/ppc-amigaos/SDK && lha -aq2o6 $(realpath .)/$(CLIB2_RELEASE_ARCHIVE_NAME) clib2
 
 #
 # Upload the binary archive to the main Aminet server
@@ -460,7 +466,7 @@ upload-release: native-dist
 
 .PHONY: clean-clib2
 clean-clib2:
-	$(MAKE) -C $(CLIB2_DIR) -f GNUmakefile.os4 clean
+	test ! -d $(CLIB2_DIR) && true || $(MAKE) -C $(CLIB2_DIR) -f GNUmakefile.os4 clean
 
 #
 # Cleanup gcc only
