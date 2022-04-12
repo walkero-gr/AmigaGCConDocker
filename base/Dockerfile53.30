@@ -1,3 +1,5 @@
+FROM walkero/lha-on-docker as lha-image
+
 # The ubuntu:latest tag points to the "latest LTS", since that's the version recommended for general use.
 FROM ubuntu:latest
 
@@ -7,7 +9,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG GCC_VER
 ARG SDK_VER
 ARG REPOS_PATH
+ARG FILES_PATH
 WORKDIR /tmp
+COPY --from=lha-image /usr/bin/lha /usr/bin/lha
 
 RUN dpkg --add-architecture i386 && apt-get update && apt-get -y --no-install-recommends install \
     ca-certificates \
@@ -27,7 +31,6 @@ ADD ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
 ADD ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
 
 # Get custom makefiles before we compile GCC
-ARG FILES_PATH
 COPY ${FILES_PATH}/native-build/makefile-SDK${SDK_VER} /opt/adtools/native-build/makefile
 
 ENV PACKAGES="autoconf \
@@ -58,16 +61,6 @@ RUN apt-get -y --no-install-recommends install ${PACKAGES}; \
     ln -s /usr/bin/g++-10 /usr/bin/g++; \
     rm /usr/bin/gcc; \
     ln -s /usr/bin/gcc-10 /usr/bin/gcc;
-
-# Install lha
-RUN git clone https://github.com/jca02266/lha.git && \
-    mkdir build && \
-    cd lha || exit && \
-    autoreconf -vfi && \
-    cd ../build && \
-    ../lha/configure --prefix=/usr && \
-    make && \
-    make install;
 
 # Compile gcc
 WORKDIR /opt/adtools
