@@ -4,15 +4,18 @@ type: docker
 name: build-images
 
 steps:
-- name: build-ppc-amigaos-sdks-image
+- name: build-ppc-amigaos-sdk-image
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
     tags:
-      - "ppc-amigaos-sdks"
+      - "ppc-amigaos-sdk"
     # cache_from:
-    #   - walkero/amigagccondocker:ppc-amigaos-sdks
+    #   - walkero/amigagccondocker:ppc-amigaos-sdk
     dockerfile: sdk/Dockerfile
+    purge: true
+    build_args:
+      - squash
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
@@ -26,14 +29,16 @@ steps:
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc8
     dockerfile: Dockerfile
+    purge: true
     build_args:
+      - squash
       - GCC_VER=8
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdks-image
+    - build-ppc-amigaos-sdk-image
 - name: build-ppc-amigaos-gcc9-image
   image: plugins/docker
   settings:
@@ -43,14 +48,16 @@ steps:
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc9
     dockerfile: Dockerfile
+    purge: true
     build_args:
+      - squash
       - GCC_VER=9
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdks-image
+    - build-ppc-amigaos-sdk-image
 - name: build-ppc-amigaos-gcc10-image
   image: plugins/docker
   settings:
@@ -60,14 +67,16 @@ steps:
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc10
     dockerfile: Dockerfile
+    purge: true
     build_args:
+      - squash
       - GCC_VER=10
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdks-image
+    - build-ppc-amigaos-sdk-image
 - name: build-ppc-amigaos-gcc11-image
   image: plugins/docker
   settings:
@@ -77,14 +86,16 @@ steps:
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc11
     dockerfile: Dockerfile
+    purge: true
     build_args:
+      - squash
       - GCC_VER=11
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdks-image
+    - build-ppc-amigaos-sdk-image
 
 trigger:
   branch:
@@ -95,28 +106,28 @@ trigger:
     include:
     - push
 
----
-kind: pipeline
-type: docker
-name: build-base-images
+# ---
+# kind: pipeline
+# type: docker
+# name: build-base-images
 
-steps:
-- name: build-gcc8-base-image
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-base-gcc8"
-    # cache_from:
-    #   - walkero/amigagccondocker:ppc-base-gcc8
-    dockerfile: base/Dockerfile
-    build_args:
-      - GCC_VER=8
-      - MAKEFILES_PATH=base/files/native-build
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
+# steps:
+# - name: build-gcc8-base-image
+#   image: plugins/docker
+#   settings:
+#     repo: walkero/amigagccondocker
+#     tags:
+#       - "ppc-base-gcc8"
+#     # cache_from:
+#     #   - walkero/amigagccondocker:ppc-base-gcc8
+#     dockerfile: base/Dockerfile
+#     build_args:
+#       - GCC_VER=8
+#       - MAKEFILES_PATH=base/files/native-build
+#     username:
+#       from_secret: DOCKERHUB_USERNAME
+#     password:
+#       from_secret: DOCKERHUB_PASSWORD
 # - name: build-gcc9-base-image
 #   image: plugins/docker
 #   settings:
@@ -150,10 +161,10 @@ steps:
 #     password:
 #       from_secret: DOCKERHUB_PASSWORD
 
-trigger:
-  branch:
-    include:
-    - base-images
-  event:
-    include:
-    - push
+# trigger:
+#   branch:
+#     include:
+#     - base-images
+#   event:
+#     include:
+#     - push

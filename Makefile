@@ -10,11 +10,13 @@ NAME ?= ppc-amigaos-gcc$(GCC)
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) \
+	docker build --squash \
+		-t $(REPO):$(TAG) \
 		--build-arg GCC_VER=$(GCC) .
 
 buildnc:
-	docker build --no-cache -t $(REPO):$(TAG) \
+	docker build --no-cache --squash \
+		-t $(REPO):$(TAG) \
 		--build-arg GCC_VER=$(GCC) .
 
 shell:

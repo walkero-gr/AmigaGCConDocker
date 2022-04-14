@@ -34,23 +34,23 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 
 | docker image      | version |
 | ----------------- | ------- |
-| ppc-amigaos-gcc8  | v8.4.0  |
-| ppc-amigaos-gcc9  | v9.1.0  |
-| ppc-amigaos-gcc10 | v10.3.0 |
-| ppc-amigaos-gcc11 | v11.1.0 |
+| ppc-amigaos-gcc8  | 8.4.0  |
+| ppc-amigaos-gcc9  | 9.1.0  |
+| ppc-amigaos-gcc10 | 10.3.0 |
+| ppc-amigaos-gcc11 | 11.2.0 |
 
 ## Included SDKs
 
-| app           | version         | source                                                                  |
-| ------------- | --------------- | ----------------------------------------------------------------------- |
-| AmigaOS 4 SDK | 53.30           | http://www.hyperion-entertainment.com/                                  |
-| MUI 5.x dev   | 5.0-2020R3      | http://muidev.de/downloads                                              |
-| SDL           | v1.2.16-rc2     | https://github.com/AmigaPorts/SDL/releases/tag/v1.2.16-rc2-amigaos4     |
-| SDL 2         | v2.0.14-update1 | https://github.com/AmigaPorts/SDL/releases/tag/v2.0.14-update1-amigaos4 |
-| AmiSSL SDK    | 4.7             | https://github.com/jens-maus/amissl/releases/tag/4.7                    |
-| OO library    | 1.16            | http://os4depot.net/?function=showfile&file=development/library/oo.lha  |
-| FlexCat       | 2.18            | https://github.com/adtools/flexcat/releases/tag/2.18                    |
-| lha           | v2 PMA          | https://github.com/jca02266/lha.git                                     |
+| app           | version      | source                                                                            |
+| ------------- | ------------ | --------------------------------------------------------------------------------- |
+| AmigaOS 4 SDK | 53.34        | http://www.hyperion-entertainment.com/                                            |
+| MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                                                        |
+| SDL           | v1.2.16-rc2  | https://github.com/AmigaPorts/SDL/releases/tag/v1.2.16-rc2-amigaos4               |
+| SDL 2         | v2.0.20      | https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.0.20-amigaos4/SDL2.lha |
+| AmiSSL SDK    | 4.12         | https://github.com/jens-maus/amissl/releases/tag/4.7                              |
+| OO library    | 1.16         | http://os4depot.net/?function=showfile&file=development/library/oo.lha            |
+| FlexCat       | 2.18         | https://github.com/adtools/flexcat/releases/tag/2.18                              |
+| lha           | v2 PMA       | https://github.com/jca02266/lha.git                                               |
 
 
 ## How to create a docker container
@@ -112,12 +112,6 @@ The current ENV paths are:
 * **AOS4_NLIB_INC**: /opt/sdk/ppc-amigaos/newlib/include
 * **AOS4_CLIB_INC**: /opt/sdk/ppc-amigaos/clib2/include
 * **MUI50_INC**: /opt/sdk/MUI_5.0/C/include
-* **SDL_INC**: /opt/sdk/SDL/include
-* **SDL_LIB**: /opt/sdk/SDL/lib
-* **SDL2_INC**: /opt/sdk/SDL2/include
-* **SDL2_LIB**: /opt/sdk/SDL2/lib
-* **AMISSL_INC**: /opt/sdk/AmiSSL/include
-* **OO_INC**: /opt/sdk/OOLib/include
 
 New paths can be set, by using environment variables on docker execution or inside the docker-compose.yml file, like:
 
@@ -164,7 +158,7 @@ services:
 ```
 
 
-## VBCC user
+## amidev user
 The images have a user named **amidev**, and a group with the same name. The user and group ID is 1000, which matches host's machine user IDs. This way both users, from the host and the container, should have the same permissions on created files.
 
 If you need to change the IDs with your own, set the following ENV variables when you start the docker containers
