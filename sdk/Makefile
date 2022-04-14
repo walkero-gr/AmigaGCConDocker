@@ -1,8 +1,8 @@
 REPO ?= walkero/amigagccondocker
-TAG ?= ppc-amigaos-sdks
+TAG ?= ppc-amigaos-sdk
 VOLUMES ?= 
 WORKSPACE ?= -w /opt/code
-NAME ?= ppc-amigaos-sdks
+NAME ?= ppc-amigaos-sdk
 
 .PHONY: build buildnc shell push logs clean test release
 
