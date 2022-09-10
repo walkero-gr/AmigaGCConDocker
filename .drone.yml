@@ -6,10 +6,10 @@ name: build-images
 steps:
 - name: setup-cache
   image: drillster/drone-volume-cache
-  # restore: true
-  ttl: 7
-  mount:
-    - /drone/docker
+  settings:
+    restore: true
+    mount:
+      - /drone/docker
   volumes:
     - /mnt/drone-cache:/cache
 - name: build-ppc-amigaos-sdk-image
