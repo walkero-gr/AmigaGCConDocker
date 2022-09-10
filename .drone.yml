@@ -37,8 +37,8 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdk-image
+  depends_on:
+    - build-ppc-amigaos-sdk-image
 - name: build-ppc-amigaos-gcc9-image
   image: plugins/docker
   settings:
@@ -56,8 +56,8 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdk-image
+  depends_on:
+    - build-ppc-amigaos-sdk-image
 - name: build-ppc-amigaos-gcc10-image
   image: plugins/docker
   settings:
@@ -75,8 +75,8 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdk-image
+  depends_on:
+    - build-ppc-amigaos-sdk-image
 - name: build-ppc-amigaos-gcc11-image
   image: plugins/docker
   settings:
@@ -94,8 +94,8 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-  # depends_on:
-  #   - build-ppc-amigaos-sdk-image
+  depends_on:
+    - build-ppc-amigaos-sdk-image
 
 trigger:
   branch:
