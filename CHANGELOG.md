@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## 2022-09-10
 ### Added
 - Experimental 68k setups. That's why I changed the file structure of this repo. WIP
+- Updated the SDK image with the files from AmigaOS 4.1 SDK exec archive, that were missing.
 
 ## 2022-05-05
 ### Fixed

@@ -35,6 +35,7 @@ RUN curl -fsSL "https://github.com/amiga-mui/muidev/releases/download/MUI-5.0-20
 RUN curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=125&amp;Itemid=125" -o /tmp/AmigaOS4-SDK.lha && \
     lha -xfq2 AmigaOS4-SDK.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/clib2*.lha && \
+    lha -xfq2w=${OS4_SDK_PATH} SDK_Install/exec*.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/newlib*.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/base.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/pthreads*.lha && \
@@ -144,11 +145,16 @@ RUN curl -fsSL "https://github.com/jens-maus/amissl/releases/download/4.12/AmiSS
 # ENV AMISSL_INC="/opt/sdk/AmiSSL/include"
 
 
+# TODO: install lrtmp and lpthread
+
+# TODO: install lua
+
+# TODO: install freetype 2
+
+
 # TODO: Install OO Library
 # RUN curl -fsSL "http://os4depot.net/share/development/library/oo.lha" -o /tmp/oo_1.17.lha && \
 #     lha -xfq2 oo_1.17.lha && \
 #     mv ./OO/SDK/local/common /opt/sdk/OOLib && \
 #     mv /opt/sdk/OOLib/include/OO /opt/sdk/OOLib/include/oo && \
 #     rm -rf /tmp/*;
-
-# TODO: install lrtmp and lpthread
