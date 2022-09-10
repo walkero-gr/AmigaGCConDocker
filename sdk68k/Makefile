@@ -1,23 +1,18 @@
-GCC ?= 8
 REPO ?= walkero/amigagccondocker
-TAG ?= ppc-amigaos-gcc$(GCC)
-VOLUMES ?= -v "${PWD}/code":/opt/code
+TAG ?= 68k-amigaos-sdk
+VOLUMES ?= 
 WORKSPACE ?= -w /opt/code
-NAME ?= ppc-amigaos-gcc$(GCC)
+NAME ?= 68k-amigaos-sdk
 
 .PHONY: build buildnc shell push logs clean test release
 
 default: build
 
 build:
-	docker build --squash \
-		-t $(REPO):$(TAG) \
-		--build-arg GCC_VER=$(GCC) .
+	docker build -t $(REPO):$(TAG) .
 
 buildnc:
-	docker build --no-cache --squash \
-		-t $(REPO):$(TAG) \
-		--build-arg GCC_VER=$(GCC) .
+	docker build --no-cache -t $(REPO):$(TAG) .
 
 shell:
 	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash

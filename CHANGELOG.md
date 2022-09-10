@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2022-09-10
+### Added
+- Experimental 68k setups. That's why I changed the file structure of this repo. WIP
+
+## 2022-05-05
+### Fixed
+- The ExecSG SDK was missing
+- The PATH was not added at the .bashrc file of the amidev user, so the compiler was not able to be found
+
 ## 2022-04-14
 ### Added
 - Added GCC 11.2.0 image
