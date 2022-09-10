@@ -9,9 +9,10 @@ steps:
   settings:
     restore: true
     mount:
-      - /drone/docker
+      - ./gcc-cache
   volumes:
-    - /mnt/drone-cache:/cache
+    - name: cache
+      path: /cache
 - name: build-ppc-amigaos-sdk-image
   image: plugins/docker
   settings:
@@ -28,7 +29,7 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-    storage_path: /drone/docker
+    storage_path: ./gcc-cache
 # - name: build-ppc-amigaos-gcc8-image
 #   image: plugins/docker
 #   settings:
@@ -114,6 +115,11 @@ trigger:
   event:
     include:
     - push
+
+volumes:
+  - name: cache
+    host:
+      path: /mnt/drone-cache
 
 # ---
 # kind: pipeline
