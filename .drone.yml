@@ -9,7 +9,7 @@ steps:
   settings:
     restore: true
     mount:
-      - ./gcc-cache
+      - /mnt/drone-cache/gcc-cache
   volumes:
     - name: cache
       path: /cache
@@ -29,7 +29,7 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-    storage_path: ./gcc-cache
+    storage_path: /mnt/drone-cache/gcc-cache
 # - name: build-ppc-amigaos-gcc8-image
 #   image: plugins/docker
 #   settings:
