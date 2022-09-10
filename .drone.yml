@@ -28,7 +28,7 @@ steps:
       - "ppc-amigaos-gcc8"
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc8
-    dockerfile: Dockerfile
+    dockerfile: gcc/Dockerfile
     purge: true
     build_args:
       - squash
@@ -47,7 +47,7 @@ steps:
       - "ppc-amigaos-gcc9"
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc9
-    dockerfile: Dockerfile
+    dockerfile: gcc/Dockerfile
     purge: true
     build_args:
       - squash
@@ -66,7 +66,7 @@ steps:
       - "ppc-amigaos-gcc10"
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc10
-    dockerfile: Dockerfile
+    dockerfile: gcc/Dockerfile
     purge: true
     build_args:
       - squash
@@ -85,7 +85,7 @@ steps:
       - "ppc-amigaos-gcc11"
     # cache_from:
     #   - walkero/amigagccondocker:ppc-amigaos-gcc11
-    dockerfile: Dockerfile
+    dockerfile: gcc/Dockerfile
     purge: true
     build_args:
       - squash
