@@ -137,7 +137,7 @@ steps:
     HCLOUD_TOKEN:
       from_secret: HCLOUD_TOKEN
   commands:
-    - hcloud server poweroff drone-agents
+    - docker ps | grep "drone-runner" | wc -l | while read var1; do if [ $var1 -eq 0 ]; then hcloud server poweroff drone-agents; fi ; done
 
 depends_on:
   - build-images
