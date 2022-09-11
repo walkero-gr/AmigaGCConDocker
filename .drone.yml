@@ -14,23 +14,6 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: drone-agents-end
-
-steps:
-- name: drone-agents-poweroff
-  image: walkero/hcloud:1.30
-  environment:
-    HCLOUD_TOKEN:
-      from_secret: HCLOUD_TOKEN
-  commands:
-    - hcloud server poweroff drone-agents
-
-depends_on:
-  - build-images
-
----
-kind: pipeline
-type: docker
 name: build-images
 
 steps:
@@ -141,6 +124,24 @@ depends_on:
 
 node:
   agents: builders
+
+---
+kind: pipeline
+type: docker
+name: drone-agents-end
+
+steps:
+- name: drone-agents-poweroff
+  image: walkero/hcloud:1.30
+  environment:
+    HCLOUD_TOKEN:
+      from_secret: HCLOUD_TOKEN
+  commands:
+    - hcloud server poweroff drone-agents
+
+depends_on:
+  - build-images
+
 
 # ---
 # kind: pipeline
