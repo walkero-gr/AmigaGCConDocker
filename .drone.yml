@@ -1,16 +1,39 @@
----
 kind: pipeline
 type: docker
-name: build-images
+name: drone-agents-init
 
 steps:
-- name: drone-agents-start
+- name: drone-agents-poweron
   image: walkero/hcloud:1.30
   environment:
     HCLOUD_TOKEN:
       from_secret: HCLOUD_TOKEN
   commands:
     - hcloud server poweron drone-agents
+
+---
+kind: pipeline
+type: docker
+name: drone-agents-end
+
+steps:
+- name: drone-agents-poweroff
+  image: walkero/hcloud:1.30
+  environment:
+    HCLOUD_TOKEN:
+      from_secret: HCLOUD_TOKEN
+  commands:
+    - hcloud server poweroff drone-agents
+
+depends_on:
+  - build-images
+
+---
+kind: pipeline
+type: docker
+name: build-images
+
+steps:
 - name: build-ppc-amigaos-sdk-image
   image: plugins/docker
   settings:
@@ -103,13 +126,6 @@ steps:
 #       from_secret: DOCKERHUB_PASSWORD
 #   depends_on:
 #     - build-ppc-amigaos-sdk-image
-- name: drone-agents-start
-  image: walkero/hcloud:1.30
-  environment:
-    HCLOUD_TOKEN:
-      from_secret: HCLOUD_TOKEN
-  commands:
-    - hcloud server poweroff drone-agents
 
 trigger:
   branch:
@@ -119,6 +135,12 @@ trigger:
   event:
     include:
     - push
+
+depends_on:
+  - drone-agents-init
+
+node:
+  agents: builders
 
 # ---
 # kind: pipeline
