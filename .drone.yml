@@ -2,6 +2,9 @@ kind: pipeline
 type: docker
 name: drone-agents-init
 
+clone:
+  disable: true
+
 steps:
 - name: drone-agents-poweron
   image: walkero/hcloud:1.30
@@ -129,6 +132,9 @@ node:
 kind: pipeline
 type: docker
 name: drone-agents-end
+
+clone:
+  disable: true
 
 steps:
 - name: drone-agents-poweroff
