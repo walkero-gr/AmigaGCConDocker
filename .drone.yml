@@ -142,6 +142,10 @@ steps:
 depends_on:
   - build-images
 
+trigger:
+  status:
+    - failure
+    - success
 
 # ---
 # kind: pipeline
