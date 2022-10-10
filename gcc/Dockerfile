@@ -1,9 +1,10 @@
 ARG GCC_VER
+ARG CLIB2_TAG
 
-FROM walkero/amigagccondocker:ppc-base-gcc${GCC_VER} as adtools-image
-FROM walkero/amigagccondocker:ppc-amigaos-sdk as sdk-image
+FROM walkero/amigagccondocker:ppc-base-gcc${GCC_VER}${CLIB2_TAG} as adtools-image
+FROM walkero/amigagccondocker:ppc-amigaos-sdk${CLIB2_TAG} as sdk-image
 FROM walkero/lha-on-docker as lha-image
-FROM phusion/baseimage:master
+FROM phusion/baseimage:jammy-1.0.1
 
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
@@ -21,8 +22,7 @@ COPY --from=adtools-image ${APPC} ${APPC}
 COPY --from=sdk-image ${SDK_PATH} ${SDK_PATH}
 COPY --from=lha-image /usr/bin/lha /usr/bin/lha
 
-RUN apt-get update && apt-get -y --no-install-recommends install \
-    bison \
+ENV PACKAGES="bison \
     cmake \
     cppcheck \
     curl \
@@ -31,21 +31,27 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     flex \
     git \
     gperf \
+    libfl2 \
     libgmp-dev \
     libisl-dev \
+    libmpc3 \
     libmpc-dev \
+    libmpfr6 \
     libmpfr-dev \
     make \
     mc \
     mercurial \
     meson \
     pkg-config \
-    python \
+    python2.7 \
+    python3 \
     splint \
     ruby \
     subversion \
     sudo \
-    wget; \
+    wget"
+
+RUN apt-get update && apt-get -y dist-upgrade && apt-get -y --no-install-recommends install ${PACKAGES}; \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 # Add amidev user and group
@@ -90,12 +96,6 @@ ENV AOS4_SDK_INC="${OS4_SDK_PATH}/include/include_h" \
     AOS4_NLIB_INC="${OS4_SDK_PATH}/newlib/include" \
     AOS4_CLIB_INC="${OS4_SDK_PATH}/clib2/include" \
     MUI50_INC="/opt/sdk/MUI_5.0/C/include" 
-    # \
-    # SDL_INC="/opt/sdk/SDL/include" \
-    # SDL_LIB="/opt/sdk/SDL/lib" \
-    # SDL2_INC="/opt/sdk/SDL2/include" \
-    # SDL2_LIB="/opt/sdk/SDL2/lib" \
-    # OO_INC="/opt/sdk/OOLib/include"
 
 WORKDIR /opt/code
 

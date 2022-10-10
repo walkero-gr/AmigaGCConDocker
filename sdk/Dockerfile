@@ -7,6 +7,7 @@ FROM ubuntu:latest
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG CLIB2_REPO
 
 COPY --from=lha-image /usr/bin/lha /usr/bin/lha
 
@@ -32,9 +33,14 @@ RUN curl -fsSL "https://github.com/amiga-mui/muidev/releases/download/MUI-5.0-20
     rm -rf /tmp/*;
 
 # Install AmigaOS 4 SDK
-RUN curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=125&amp;Itemid=125" -o /tmp/AmigaOS4-SDK.lha && \
+RUN curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=127&amp;Itemid=127" -o /tmp/AmigaOS4-SDK.lha && \
     lha -xfq2 AmigaOS4-SDK.lha && \
-    lha -xfq2w=${OS4_SDK_PATH} SDK_Install/clib2*.lha && \
+    if [ X"${CLIB2_REPO}" = X"afxgroup" ]; then \
+        curl -fskSL "https://github.com/afxgroup/clib2/releases/download/v1.0.0-beta-7/clib2.lha" -o /tmp/clib2-afxgroup.lha; \
+        lha -xfq2w=${OS4_SDK_PATH} clib2-afxgroup.lha; \
+    else \
+        lha -xfq2w=${OS4_SDK_PATH} SDK_Install/clib2*.lha; \
+    fi && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/exec*.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/newlib*.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/base.lha && \
@@ -58,7 +64,7 @@ RUN curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v1.2.16-rc2-
     rm -rf /tmp/*;
 
 # Install SDL 2 SDK
-RUN curl -fsSL "https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.0.20-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
+RUN curl -fsSL "https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.24.0-rc1-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
     lha -xfq2 SDL2.lha && \
     cp -r ./SDL2/SDK/local/* ${OS4_SDK_PATH}/local/ && \
     mkdir ${OS4_SDK_PATH}/local/Documentation/SDL2 && \
@@ -132,7 +138,6 @@ RUN curl -fsSL "http://os4depot.net/share/development/language/liblua.lha" -o /t
     cp -r ./SDK/local/* ${OS4_SDK_PATH}/local/ && \
     rm -rf /tmp/*;
 
-# TODO: Install AmiSSL
 # Install AMISSL SDK
 RUN curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.3/AmiSSL-5.3-SDK.lha" -o /tmp/AmiSSL.lha && \
     lha -xfq2 AmiSSL.lha && \

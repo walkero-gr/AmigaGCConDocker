@@ -20,7 +20,7 @@ type: docker
 name: build-images
 
 steps:
-- name: build-ppc-amigaos-sdk-image
+- name: ppc-amigaos-sdk
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
@@ -36,7 +36,7 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-- name: build-ppc-amigaos-gcc8-image
+- name: ppc-amigaos-gcc8
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
@@ -54,8 +54,8 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdk-image
-- name: build-ppc-amigaos-gcc9-image
+    - ppc-amigaos-sdk
+- name: ppc-amigaos-gcc9
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
@@ -73,8 +73,8 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdk-image
-- name: build-ppc-amigaos-gcc10-image
+    - ppc-amigaos-sdk
+- name: ppc-amigaos-gcc10
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
@@ -92,8 +92,8 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdk-image
-- name: build-ppc-amigaos-gcc11-image
+    - ppc-amigaos-sdk
+- name: ppc-amigaos-gcc11
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
@@ -111,7 +111,127 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   depends_on:
-    - build-ppc-amigaos-sdk-image
+    - ppc-amigaos-sdk
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
+
+depends_on:
+  - drone-agents-init
+
+node:
+  agents: builders
+
+
+---
+kind: pipeline
+type: docker
+name: build-images-newclib2
+
+steps:
+- name: ppc-amigaos-sdk-newclib2
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-sdk-newclib2"
+    cache_from:
+      - walkero/amigagccondocker:ppc-amigaos-sdk-newclib2
+    dockerfile: sdk/Dockerfile
+    purge: true
+    build_args:
+      - squash
+      - CLIB2REPO=afxgroup
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+- name: ppc-amigaos-gcc8-newclib2
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc8-newclib2"
+    cache_from:
+      - walkero/amigagccondocker:ppc-amigaos-gcc8-newclib2
+    dockerfile: gcc/Dockerfile
+    purge: true
+    build_args:
+      - squash
+      - GCC_VER=8
+      - CLIB2REPO=afxgroup
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - ppc-amigaos-sdk-newclib2
+- name: ppc-amigaos-gcc9-newclib2
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc9-newclib2"
+    cache_from:
+      - walkero/amigagccondocker:ppc-amigaos-gcc9-newclib2
+    dockerfile: gcc/Dockerfile
+    purge: true
+    build_args:
+      - squash
+      - GCC_VER=9
+      - CLIB2REPO=afxgroup
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - ppc-amigaos-sdk-newclib2
+- name: ppc-amigaos-gcc10-newclib2
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc10-newclib2"
+    cache_from:
+      - walkero/amigagccondocker:ppc-amigaos-gcc10-newclib2
+    dockerfile: gcc/Dockerfile
+    purge: true
+    build_args:
+      - squash
+      - GCC_VER=10
+      - CLIB2REPO=afxgroup
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - ppc-amigaos-sdk-newclib2
+- name: ppc-amigaos-gcc11-newclib2
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - "ppc-amigaos-gcc11-newclib2"
+    cache_from:
+      - walkero/amigagccondocker:ppc-amigaos-gcc11-newclib2
+    dockerfile: gcc/Dockerfile
+    purge: true
+    build_args:
+      - squash
+      - GCC_VER=11
+      - CLIB2REPO=afxgroup
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - ppc-amigaos-sdk-newclib2
 
 trigger:
   branch:

@@ -37,20 +37,28 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | ppc-amigaos-gcc8  | 8.4.0  |
 | ppc-amigaos-gcc9  | 9.1.0  |
 | ppc-amigaos-gcc10 | 10.3.0 |
-| ppc-amigaos-gcc11 | 11.2.0 |
+| ppc-amigaos-gcc11 | 11.3.0 |
 
 ## Included SDKs
 
-| app           | version      | source                                                                            |
+| SDK           | version      | source                                                                            |
 | ------------- | ------------ | --------------------------------------------------------------------------------- |
-| AmigaOS 4 SDK | 53.34        | http://www.hyperion-entertainment.com/                                            |
+| AmigaOS 4 SDK | 54.16        | http://www.hyperion-entertainment.com/                                            |
 | MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                                                        |
-| SDL           | v1.2.16-rc2  | https://github.com/AmigaPorts/SDL/releases/tag/v1.2.16-rc2-amigaos4               |
-| SDL 2         | v2.0.20      | https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.0.20-amigaos4/SDL2.lha |
-| AmiSSL SDK    | 4.12         | https://github.com/jens-maus/amissl/releases/tag/4.7                              |
-| OO library    | 1.16         | http://os4depot.net/?function=showfile&file=development/library/oo.lha            |
-| FlexCat       | 2.18         | https://github.com/adtools/flexcat/releases/tag/2.18                              |
+| SDL           | v1.2.16-rc2  | https://github.com/AmigaPorts/SDL/releases               |
+| SDL 2         | v2.24.0-rc1  | https://github.com/AmigaPorts/SDL-2.0/releases |
+| AmiSSL SDK    | 5.3          | https://github.com/jens-maus/amissl/releases    |
+| FlexCat       | 2.18         | https://github.com/adtools/flexcat/releases                              |
 | lha           | v2 PMA       | https://github.com/jca02266/lha.git                                               |
+| gl4es         | 1.2       | https://github.com/kas1e/GL4ES-SDK/releases                                               |
+| libcurl         | 7.79.1       | http://os4depot.net/?function=showfile&file=development/library/misc/libcurl.lha            |
+| jansson | 2.12.1 | http://os4depot.net/?function=showfile&file=development/library/misc/jansson_library.lha |
+| libopenssl | 1.1.1l | http://os4depot.net/?function=showfile&file=development/library/misc/libopenssl.lha
+| sqlite | 3.34.0 | http://aminet.net/package/biz/dbase/sqlite-3.34.0-amiga
+| minigl | 2.24 | http://os4depot.net/?function=showfile&file=driver/graphics/minigl.lha
+| libz | 1.2.11 | http://os4depot.net/?function=showfile&file=development/library/misc/libz.lha
+| liblua | 5.2.4 | http://os4depot.net/?function=showfile&file=development/language/liblua.lha
+
 
 
 ## How to create a docker container

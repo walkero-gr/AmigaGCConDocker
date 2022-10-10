@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2022-10-10
+### Changed
+- Changed the default SDK with 54.16 when building the gcc compilers
+- Changed the SDL 2 SDK to v2.24.0-rc1
+- Changed the makefiles for the base build for the cross compilers a lot, using the new clib2 by afxgroup
+- Changed all images to be able to create different ones with the new clib2 by afxgroup
+- Updated to newer version of Ubuntu at the gcc image
+
 ## 2022-09-10
 ### Added
 - Experimental 68k setups. That's why I changed the file structure of this repo. WIP

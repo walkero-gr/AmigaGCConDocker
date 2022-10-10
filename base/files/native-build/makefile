@@ -39,8 +39,10 @@ endif
 
 GCC_BRANCH_NAME:=$(word 1, $(subst ., , $(GCC_VERSION)))
 
-SDK_URL=https://www.hyperion-entertainment.biz/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=82&amp;Itemid=82
-SDK_VERSION=53.30
+# Setup SDK variables and URL
+SDK_VERSION:=54.16
+FILEID=127
+SDK_URL=https://www.hyperion-entertainment.biz/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=$(FILEID)&amp;Itemid=$(FILEID)
 
 # Native tools
 COREUTILS_SRC_DIR=../coreutils/repo
@@ -49,8 +51,16 @@ COREUTILS_VERSION=5.2.1
 # Distribution version, used as middle part of a distribution archive
 DIST_VERSION=$(shell date +%Y%m%d)-$(shell git rev-list --count HEAD)
 
+ifeq ($(CLIB2_REPO), afxgroup)
+# CLIB2_URL=https://github.com/afxgroup/clib2
+# CLIB2_SHA1=52e57e91812ede8783a82c6d14fccec65c29ebf8
+CLIB2_URL=https://github.com/afxgroup/clib2/releases/download/v1.0.0-beta-7/clib2.lha
+CLIB2_DIR=downloads/clib2
+else
 CLIB2_URL=https://github.com/sodero/clib2
-CLIB2_SHA1=18ff2b535a59fff8aa5237c08fe32551cb0bfe45
+CLIB2_SHA1=02ecf7d92448b5486502cd9e95fc838dca4804a7
+CLIB2_DIR=downloads/clib2/library
+endif
 # CLIB2_URL=https://github.com/sba1/clib2-1
 # CLIB2_SHA1=b874ff71deb55016a20f87483beb1ecbe226c55e
 CLIB2_RELEASE_ARCHIVE_NAME=adtools-os4-clib2-$(DIST_VERSION).lha
@@ -73,18 +83,45 @@ print-dist-version:
 	@echo $(DIST_VERSION)
 
 #
+# Downloads prepare
+#
+downloads-prepare:
+	mkdir -p downloads && exit $?
+	touch $@
+
+#
 # Downloads clib2
 #
 downloads-done-clib2:
-	mkdir -p downloads
-	cd downloads && (git clone $(CLIB2_URL) clib2 || true) && cd clib2 && git checkout $(CLIB2_SHA1)
+ifeq ($(CLIB2_REPO), afxgroup)
+	wget "$(CLIB2_URL)" -O ./downloads/clib2.lha
+else
+	git clone $(CLIB2_URL) ./downloads/clib2 && \
+		git -C ./downloads/clib2 checkout $(CLIB2_SHA1)
+endif
+
+# TODO: Probably this is not needed
+#	This file is necessary so that shared libraries work with afxgroup's clib2
+# ifeq ($(CLIB2_REPO), afxgroup)
+# 	cp -f /opt/misc/clib2-afxgroup/amigaos.h /opt/adtools/gcc/repo/gcc/config/rs6000/
+# endif
+	touch $@
+
+#
+# Downloads OS4 SDK
+#
+downloads-done-sdk:
+ifeq ("$(wildcard /opt/misc/SDK_$(SDK_VERSION).lha)", "")
+	wget "$(SDK_URL)" -O ./downloads/SDK_$(SDK_VERSION).lha
+else
+	cp /opt/misc/SDK_$(SDK_VERSION).lha ./downloads/
+endif
 	touch $@
 
 #
 # Downloads the SDK and libraries necesseary to build the cross compiler
 #
-downloads-done: downloads-done-clib2
-	wget "$(SDK_URL)" -O downloads/SDK_$(SDK_VERSION).lha
+downloads-done: downloads-prepare downloads-done-clib2 downloads-done-sdk
 	cd downloads && wget -N $(GNU_SERVER)/gmp/$(GMP_ARCHIVE)
 	cd downloads && wget -N $(GNU_SERVER)/mpfr/$(MPFR_ARCHIVE)
 	cd downloads && wget -N $(GNU_SERVER)/mpc/$(MPC_ARCHIVE)
@@ -115,15 +152,23 @@ binutils-install: binutils-cross-done-$(BINUTILS_VERSION)
 #
 includes-done: downloads-done
 	mkdir -p $(CROSS_PREFIX)/ppc-amigaos/SDK/include
-	cd downloads && lha x SDK_$(SDK_VERSION).lha
+	lha -xfw=downloads downloads/SDK_$(SDK_VERSION).lha
+
+# TODO: Decide if we need to remove it
 # We built clib2 inplace
 #	cd downloads/SDK_Install && lha xf clib2*.lha
-	cd downloads/SDK_Install && lha xf newlib*.lha
-	cd downloads/SDK_Install && lha xf base.lha
-	cd downloads/SDK_Install && rm -Rf *.lha
-	cd downloads/SDK_Install && mv newlib* $(CROSS_PREFIX)/ppc-amigaos/SDK
 #	cd downloads/SDK_Install && mv clib2* $(CROSS_PREFIX)/ppc-amigaos/SDK
-	cd downloads/SDK_Install && mv Include/* $(CROSS_PREFIX)/ppc-amigaos/SDK/include
+
+	lha -xfw=$(CROSS_PREFIX)/ppc-amigaos/SDK downloads/SDK_Install/newlib*.lha
+	lha -xfw=$(CROSS_PREFIX)/ppc-amigaos/SDK downloads/SDK_Install/execsg*.lha
+
+	lha -xfw=downloads/SDK_Install downloads/SDK_Install/base.lha
+	rm -rf downloads/SDK_Install/*.lha
+	mv downloads/SDK_Install/Include/* $(CROSS_PREFIX)/ppc-amigaos/SDK/include
+	
+	cp -r $(CROSS_PREFIX)/ppc-amigaos/SDK/Include/* $(CROSS_PREFIX)/ppc-amigaos/SDK/include
+	rm -rf $(CROSS_PREFIX)/ppc-amigaos/SDK/Include
+
 	rm -Rf downloads/SDK_Install downloads/SDK_Install.info
 	touch $@
 
@@ -153,8 +198,6 @@ CLIB2_CROSS_DONE_DEPENDENCY=xgcc-done-$(GCC_VERSION)
 
 endif
 
-CLIB2_DIR=downloads/clib2/library
-
 #
 # Prints the folder where the basic xg (xgcc or xg++) compilers
 # can be round.
@@ -179,15 +222,26 @@ xgcc-done-$(GCC_VERSION): includes-done binutils-cross-done-$(BINUTILS_VERSION)
 # Build clib2 via xgcc
 #
 clib2-cross-done-$(GCC_VERSION): $(CLIB2_CROSS_DONE_DEPENDENCY)
+ifeq ($(CLIB2_REPO), afxgroup)
+	lha xw=downloads downloads/clib2.lha
+else
 # Build clib2 using xgcc that have just been built
 	$(MAKE) -C $(CLIB2_DIR) -f GNUmakefile.os4 CC="$(XGCC_CC)" AR="$(XAR)" RANLIB="$(XRANLIB)"
+endif
+
 # Copy clib2 libs and includes
 	rm -Rf $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/lib $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/include
 	mkdir -p $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/lib
 	mkdir -p $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/include
 	cp -Rp $(CLIB2_DIR)/include/* $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/include
 	cp -Rp $(CLIB2_DIR)/lib/* $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2/lib
+
+ifeq ($(CLIB2_REPO), afxgroup)
+	cp $(CLIB2_DIR)/LICENSE $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2
+else
 	cp $(CLIB2_DIR)/../LICENSE $(CROSS_PREFIX)/ppc-amigaos/SDK/clib2
+endif
+
 	touch $@
 
 #
@@ -450,7 +504,7 @@ native-dist: native-strip-really
 # Clib2 distribution
 #
 clib2-dist: clib2-cross-done-$(GCC_VERSION)
-	cd root-cross/ppc-amigaos/SDK && lha -aq2o6 $(realpath .)/$(CLIB2_RELEASE_ARCHIVE_NAME) clib2
+	cd root-cross/SDK && lha -aq2o6 $(realpath .)/$(CLIB2_RELEASE_ARCHIVE_NAME) clib2
 
 #
 # Upload the binary archive to the main Aminet server
