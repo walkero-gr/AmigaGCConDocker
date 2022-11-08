@@ -11,33 +11,34 @@ The purpose of the project is to be an up to date, flexible and out of the box s
 ## Docker images
 AmigaGCConDocker is broken in different Docker images for better manipulation and updates. Those are separated by tags, which can be seen below, as well as their purpose.
 
-- The `ppc-amigaos-gccX` images are the complete images that should be used for development. These include the gcc compiler as well as the available SDKs. Different ENV variables are set for easier usage and access to the libraries.
+- The `ppc-amigaos-gccX` images are the complete images that should be used for development. These include the gcc compiler as well as the available SDKs. Different ENV variables are set for easier usage and access to the libraries. There are also the `ppc-amigaos-gccX-newclib2` that include the new [clib2 by afxgroup](https://github.com/afxgroup/clib2) which is a WIP and more experimental right now.
 
-	Available tags:
-	- **ppc-amigaos-gcc8**
-	- **ppc-amigaos-gcc9**
-	- **ppc-amigaos-gcc10**
-	- **ppc-amigaos-gcc11**
+  Available tags:
+  - GCC 8: `ppc-amigaos-gcc8`, `ppc-amigaos-gcc8-newclib2`
+  - GCC 9: `ppc-amigaos-gcc9`, `ppc-amigaos-gcc9-newclib2`
+  - GCC 10: `ppc-amigaos-gcc10`, `ppc-amigaos-gcc10-newclib2`
+  - GCC 11: `ppc-amigaos-gcc11`, `ppc-amigaos-gcc11-newclib2`
 
-- The `ppc-amigaos-sdks` is a small image which includes the SDK's installation, and is included in `ppc-amigaos-gccX` images above.
+- The `ppc-amigaos-sdk` and the `ppc-amigaos-sdk-newclib2` are small images which include the different SDK and libraries installation. This is already included in `ppc-amigaos-gccX` images above.
+
 - The `ppc-base-gccX` images are the base images which are used to compile the different versions of gcc compiler from source. The binaries from these images are included in `ppc-amigaos-gccX` images above. 
 	
 	These can be used in different projects, in case someone needs a new compiled adtools and gcc for other docker containers
 
-	Available tags:
-	- **ppc-base-gcc8**
-	- **ppc-base-gcc9**
-	- **ppc-base-gcc10**
-	- **ppc-base-gcc11**
+  Available tags:
+  - GCC 8: `ppc-base-gcc8`, `ppc-base-gcc8-newclib2`
+  - GCC 9: `ppc-base-gcc9`, `ppc-base-gcc9-newclib2`
+  - GCC 10: `ppc-base-gcc10`, `ppc-base-gcc10-newclib2`
+  - GCC 11: `ppc-base-gcc11`, `ppc-base-gcc11-newclib2`
 
 ## GCC versions
 
 | docker image      | version |
 | ----------------- | ------- |
-| ppc-amigaos-gcc8  | 8.4.0  |
-| ppc-amigaos-gcc9  | 9.1.0  |
-| ppc-amigaos-gcc10 | 10.3.0 |
-| ppc-amigaos-gcc11 | 11.3.0 |
+| ppc-amigaos-gcc8, ppc-amigaos-gcc8-newclib2  | 8.4.0  |
+| ppc-amigaos-gcc9, ppc-amigaos-gcc9-newclib2  | 9.1.0  |
+| ppc-amigaos-gcc10, ppc-amigaos-gcc10-newclib2 | 10.3.0 |
+| ppc-amigaos-gcc11, ppc-amigaos-gcc11-newclib2 | 11.3.0 |
 
 ## Included SDKs
 
@@ -58,7 +59,7 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | minigl | 2.24 | http://os4depot.net/?function=showfile&file=driver/graphics/minigl.lha
 | libz | 1.2.11 | http://os4depot.net/?function=showfile&file=development/library/misc/libz.lha
 | liblua | 5.2.4 | http://os4depot.net/?function=showfile&file=development/language/liblua.lha
-
+| codesets | 6.21 | https://github.com/jens-maus/libcodesets
 
 
 ## How to create a docker container
@@ -135,36 +136,43 @@ services:
   gcc8-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc8'
   environment:
-      MY_INC: "/opt/ext_sdk/MY/include_h"
-    volumes:
-      - './code:/opt/code'
-      - './ext_sdk:/opt/ext_sdk'
+    MY_INC: "/opt/ext_sdk/MY/include_h"
+  volumes:
+    - './code:/opt/code'
+    - './ext_sdk:/opt/ext_sdk'
 
   gcc9-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc9'
   environment:
-      MY_INC: "/opt/ext_sdk/MY/include_h"
-    volumes:
-      - './code:/opt/code'
-      - './ext_sdk:/opt/ext_sdk'
+    MY_INC: "/opt/ext_sdk/MY/include_h"
+  volumes:
+    - './code:/opt/code'
+    - './ext_sdk:/opt/ext_sdk'
 
   gcc10-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc10'
   environment:
-      MY_INC: "/opt/ext_sdk/MY/include_h"
-    volumes:
-      - './code:/opt/code'
-      - './ext_sdk:/opt/ext_sdk'
+    MY_INC: "/opt/ext_sdk/MY/include_h"
+  volumes:
+    - './code:/opt/code'
+    - './ext_sdk:/opt/ext_sdk'
 
   gcc11-ppc:
     image: 'amigagccondocker:ppc-amigaos-gcc11'
   environment:
-      MY_INC: "/opt/ext_sdk/MY/include_h"
-    volumes:
-      - './code:/opt/code'
-      - './ext_sdk:/opt/ext_sdk'
-```
+    MY_INC: "/opt/ext_sdk/MY/include_h"
+  volumes:
+    - './code:/opt/code'
+    - './ext_sdk:/opt/ext_sdk'
 
+  gcc11-ppc-newclib2:
+    image: 'amigagccondocker:ppc-amigaos-gcc11-newclib2'
+  environment:
+    MY_INC: "/opt/ext_sdk/MY/include_h"
+  volumes:
+    - './code:/opt/code'
+    - './ext_sdk:/opt/ext_sdk'
+```
 
 ## amidev user
 The images have a user named **amidev**, and a group with the same name. The user and group ID is 1000, which matches host's machine user IDs. This way both users, from the host and the container, should have the same permissions on created files.

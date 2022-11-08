@@ -47,7 +47,8 @@ RUN curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_reg
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/pthreads*.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/SDI-*.lha && \
     lha -xfq2w=${OS4_SDK_PATH} SDK_Install/cairo-*.lha && \
-    lha -xfq2w=${OS4_SDK_PATH} SDK_Install/expat-*.lha; \
+    lha -xfq2w=${OS4_SDK_PATH} SDK_Install/expat-*.lha && \
+    cp -r ${OS4_SDK_PATH}/Examples/Locale/include/internal/* ${OS4_SDK_PATH}/Include/include_h/ && \
     mv ${OS4_SDK_PATH}/Include/ ${OS4_SDK_PATH}/include/ && \
     cp -r ${OS4_SDK_PATH}/Local/* ${OS4_SDK_PATH}/local/ && \
     rm -rf ${OS4_SDK_PATH}/Local && \
@@ -63,8 +64,8 @@ RUN curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v1.2.16-rc2-
     mv ./SDL/docs ${OS4_SDK_PATH}/local/Documentation/SDL && \
     rm -rf /tmp/*;
 
-# Install SDL 2 SDK
-RUN curl -fsSL "https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.24.0-rc1-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
+# Install SDL2 SDK
+RUN curl -fsSL "https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.24.0-release-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
     lha -xfq2 SDL2.lha && \
     cp -r ./SDL2/SDK/local/* ${OS4_SDK_PATH}/local/ && \
     mkdir ${OS4_SDK_PATH}/local/Documentation/SDL2 && \
@@ -149,10 +150,18 @@ RUN curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.3/AmiSSL
 
 # ENV AMISSL_INC="/opt/sdk/AmiSSL/include"
 
+# Install codesets SDK
+RUN curl -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \
+    lha -xfq2 codesets.lha && \
+    cp -r ./codesets/Developer/include/* ${OS4_SDK_PATH}/local/common/include/ && \
+    mkdir -p ${OS4_SDK_PATH}/local/Documentation/codesets && \
+    cp -r ./codesets/Developer/Autodocs/* ${OS4_SDK_PATH}/local/Documentation/codesets && \
+    mkdir -p ${OS4_SDK_PATH}/local/examples/codesets && \
+    cp -r ./codesets/Developer/Examples/* ${OS4_SDK_PATH}/local/examples/codesets && \
+    rm -rf /tmp/*;
+
 
 # TODO: install lrtmp and lpthread
-
-# TODO: install lua
 
 # TODO: install freetype 2
 

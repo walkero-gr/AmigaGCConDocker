@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2022-11-08
+### Added
+- Added the latest codesets 6.21 in the SDK
+
+### Changed
+- Changed the SDL 2 SDK to v2.24.0
+
 ## 2022-10-10
 ### Changed
 - Changed the default SDK with 54.16 when building the gcc compilers
