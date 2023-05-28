@@ -50,6 +50,7 @@ steps:
       - CLIB2_REPO=adtools
       - GCC_VER=11
     dry_run: true
+    purge: false
 - name: os4-gcc11-adtools-tests
   image: walkero/amigagccondocker:os4-gcc11-adtools
   commands:
