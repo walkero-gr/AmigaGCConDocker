@@ -59,7 +59,6 @@ steps:
     - ppc-amigaos-g++ -athread=native test2.c -o test2
     - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
     - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
-    - ppc-amigaos-gcc curl.c -o curl -I$LIB_CURL_INC -L$LIB_CURL_CLIB -lcurl
   depends_on:
     - os4-gcc11-adtools
 - name: os4-gcc11-adtools-push
