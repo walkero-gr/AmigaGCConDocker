@@ -59,6 +59,10 @@ steps:
     - ppc-amigaos-g++ -athread=native test2.c -o test2
     - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
     - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
+    - cd /opt/sdk/ppc-amigaos/Examples/GUI/Window/
+    - ppc-amigaos-gcc -o Window Window.c -lauto
+    - ppc-amigaos-gcc -o WindowPopup WindowPopup.c -lauto
+    - ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto
   depends_on:
     - os4-gcc11-adtools
 - name: os4-gcc11-adtools-push
