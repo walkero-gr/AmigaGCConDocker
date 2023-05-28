@@ -47,8 +47,8 @@ AmigaGCConDocker is broken in different Docker images for better manipulation an
 | AmigaOS 4 SDK | 54.16        | http://www.hyperion-entertainment.com/                                            |
 | MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                                                        |
 | SDL           | v1.2.16-rc2  | https://github.com/AmigaPorts/SDL/releases               |
-| SDL 2         | v2.24.0-rc1  | https://github.com/AmigaPorts/SDL-2.0/releases |
-| AmiSSL SDK    | 5.3          | https://github.com/jens-maus/amissl/releases    |
+| SDL 2         | v2.26.5      | https://github.com/AmigaPorts/SDL-2.0/releases |
+| AmiSSL SDK    | 5.8          | https://github.com/jens-maus/amissl/releases    |
 | FlexCat       | 2.18         | https://github.com/adtools/flexcat/releases                              |
 | lha           | v2 PMA       | https://github.com/jca02266/lha.git                                               |
 | gl4es         | 1.2       | https://github.com/kas1e/GL4ES-SDK/releases                                               |

@@ -1,117 +1,87 @@
 kind: pipeline
 type: docker
-name: drone-agents-init
+name: awsbuilders-poweron
 
 clone:
   disable: true
 
 steps:
-- name: drone-agents-poweron
-  image: walkero/hcloud:1.30
+- name: start-aws-instances
+  pull: always
+  image: amazon/aws-cli
   environment:
-    HCLOUD_TOKEN:
-      from_secret: HCLOUD_TOKEN
+    AWS_ACCESS_KEY_ID:
+      from_secret: AWS_ACCESS_KEY
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: AWS_SECRET_ACCESS_KEY
   commands:
-    - hcloud server poweron drone-agents
+    - aws ec2 start-instances --region eu-north-1 --instance-ids i-01e3d598710a23947
+
+trigger:
+  branch:
+    include:
+    - master
+    - develop
+  event:
+    include:
+    - push
+    - pull_request
+    - tag
 
 ---
+
 kind: pipeline
 type: docker
-name: build-images
+name: build-os4-gcc11-adtools
 
 steps:
-- name: ppc-amigaos-sdk
+# - name: os4-gcc11-adtools
+#   image: plugins/docker
+#   pull: always
+#   settings:
+#     repo: walkero/amigagccondocker
+#     tags:
+#       - os4-gcc11-adtools
+#     cache_from:
+#       - walkero/amigagccondocker:os4-gcc11-adtools
+#     dockerfile: os4.Dockerfile
+#     build_args:
+#       - OS=os4
+#       - CLIB2_REPO=adtools
+#       - GCC_VER=11
+#     dry_run: true
+# - name: os4-gcc11-adtools-tests
+#   image: walkero/amigagccondocker:os4-gcc11-adtools
+#   commands:
+#     - cd /opt/code/tests/os4
+#     - su amidev
+#     - ppc-amigaos-gcc -o test test.c
+#     - ppc-amigaos-g++ -athread=native test2.c -o test2
+#     - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
+#     - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
+#     - ppc-amigaos-gcc curl.c -o curl -I$LIB_CURL_INC -L$LIB_CURL_CLIB -lcurl
+#   depends_on:
+#     - os4-gcc11-adtools
+- name: os4-gcc11-adtools-push
   image: plugins/docker
   settings:
     repo: walkero/amigagccondocker
     tags:
-      - "ppc-amigaos-sdk"
+      - os4-gcc11-adtools
     cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-sdk
-    dockerfile: sdk/Dockerfile
+      - walkero/amigagccondocker:os4-gcc11-adtools
+    dockerfile: os4.Dockerfile
     purge: true
     build_args:
-      - squash
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-- name: ppc-amigaos-gcc8
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc8"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc8
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=8
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk
-- name: ppc-amigaos-gcc9
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc9"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc9
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=9
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk
-- name: ppc-amigaos-gcc10
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc10"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc10
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=10
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk
-- name: ppc-amigaos-gcc11
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc11"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc11
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
+      - OS=os4
+      - CLIB2_REPO=adtools
       - GCC_VER=11
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk
+  # depends_on:
+  #   - os4-gcc11-adtools-tests
 
 trigger:
   branch:
@@ -123,215 +93,76 @@ trigger:
     - push
 
 depends_on:
-  - drone-agents-init
+  - awsbuilders-poweron
 
 node:
-  agents: builders
-
-
----
-kind: pipeline
-type: docker
-name: build-images-newclib2
-
-steps:
-- name: ppc-amigaos-sdk-newclib2
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-sdk-newclib2"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-sdk-newclib2
-    dockerfile: sdk/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - CLIB2REPO=afxgroup
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-- name: ppc-amigaos-gcc8-newclib2
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc8-newclib2"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc8-newclib2
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=8
-      - CLIB2REPO=afxgroup
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk-newclib2
-- name: ppc-amigaos-gcc9-newclib2
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc9-newclib2"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc9-newclib2
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=9
-      - CLIB2REPO=afxgroup
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk-newclib2
-- name: ppc-amigaos-gcc10-newclib2
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc10-newclib2"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc10-newclib2
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=10
-      - CLIB2REPO=afxgroup
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk-newclib2
-- name: ppc-amigaos-gcc11-newclib2
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - "ppc-amigaos-gcc11-newclib2"
-    cache_from:
-      - walkero/amigagccondocker:ppc-amigaos-gcc11-newclib2
-    dockerfile: gcc/Dockerfile
-    purge: true
-    build_args:
-      - squash
-      - GCC_VER=11
-      - CLIB2REPO=afxgroup
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - ppc-amigaos-sdk-newclib2
-
-trigger:
-  branch:
-    include:
-    - master
-    - main
-  event:
-    include:
-    - push
-
-depends_on:
-  - build-images
-
-node:
-  agents: builders
+  agents: awsbuilders
 
 ---
-kind: pipeline
-type: docker
-name: drone-agents-end
 
-clone:
-  disable: true
-
-steps:
-- name: drone-agents-poweroff
-  image: walkero/hcloud:1.30
-  environment:
-    HCLOUD_TOKEN:
-      from_secret: HCLOUD_TOKEN
-  commands:
-    - curl -sw "\n" "http://10.0.0.2:5000/container/count/drone-" | while read var1; do if [ $var1 -eq 1 ]; then hcloud server poweroff drone-agents; fi ; done
-
-depends_on:
-  - build-images-newclib2
-
-trigger:
-  status:
-    - failure
-    - success
-
-# ---
 # kind: pipeline
 # type: docker
-# name: build-base-images
+# name: build-os4-gcc11-afxgroup
 
 # steps:
-# - name: build-gcc8-base-image
+# - name: os4-gcc11-afxgroup
+#   image: plugins/docker
+#   pull: always
+#   settings:
+#     repo: walkero/amigagccondocker
+#     tags:
+#       - os4-gcc11-afxgroup
+#     cache_from:
+#       - walkero/amigagccondocker:os4-gcc11-afxgroup
+#     dockerfile: os4.Dockerfile
+#     build_args:
+#       - OS=os4
+#       - CLIB2_REPO=afxgroup
+#       - GCC_VER=11
+#     dry_run: true
+# - name: os4-gcc11-afxgroup-tests
+#   image: walkero/amigagccondocker:os4-gcc11-afxgroup
+#   commands:
+#     - cd /opt/code/tests/os4
+#     - su amidev
+#     - ppc-amigaos-gcc -o test test.c
+#     - ppc-amigaos-g++ -athread=native test2.c -o test2
+#     - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
+#     - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
+#     - ppc-amigaos-gcc curl.c -o curl -I$LIB_CURL_INC -L$LIB_CURL_CLIB -lcurl
+#   depends_on:
+#     - os4-gcc11-afxgroup
+# - name: os4-gcc11-afxgroup-push
 #   image: plugins/docker
 #   settings:
 #     repo: walkero/amigagccondocker
 #     tags:
-#       - "ppc-base-gcc8"
-#     # cache_from:
-#     #   - walkero/amigagccondocker:ppc-base-gcc8
-#     dockerfile: base/Dockerfile
+#       - os4-gcc11-afxgroup
+#     cache_from:
+#       - walkero/amigagccondocker:os4-gcc11-afxgroup
+#     dockerfile: os4.Dockerfile
+#     purge: true
 #     build_args:
-#       - GCC_VER=8
-#       - MAKEFILES_PATH=base/files/native-build
+#       - OS=os4
+#       - CLIB2_REPO=adtools
+#       - GCC_VER=11
 #     username:
 #       from_secret: DOCKERHUB_USERNAME
 #     password:
 #       from_secret: DOCKERHUB_PASSWORD
-# - name: build-gcc9-base-image
-#   image: plugins/docker
-#   settings:
-#     repo: walkero/amigagccondocker
-#     tags:
-#       - "ppc-base-gcc9"
-#     # cache_from:
-#     #   - walkero/amigagccondocker:ppc-base-gcc9
-#     dockerfile: base/Dockerfile
-#     build_args:
-#       - GCC_VER=9
-#       - MAKEFILES_PATH=base/files/native-build
-#     username:
-#       from_secret: DOCKERHUB_USERNAME
-#     password:
-#       from_secret: DOCKERHUB_PASSWORD
-# - name: build-gcc10-base-image
-#   image: plugins/docker
-#   settings:
-#     repo: walkero/amigagccondocker
-#     tags:
-#       - "ppc-base-gcc10"
-#     # cache_from:
-#     #   - walkero/amigagccondocker:ppc-base-gcc10
-#     dockerfile: base/Dockerfile
-#     build_args:
-#       - GCC_VER=10
-#       - MAKEFILES_PATH=base/files/native-build
-#     username:
-#       from_secret: DOCKERHUB_USERNAME
-#     password:
-#       from_secret: DOCKERHUB_PASSWORD
-
+#     depends_on:
+#       - os4-gcc11-adtools-tests
 # trigger:
 #   branch:
 #     include:
-#     - base-images
+#     - master
+#     - main
 #   event:
 #     include:
 #     - push
+
+# depends_on:
+#   - awsbuilders-poweron
+
+# node:
+#   agents: awsbuilders

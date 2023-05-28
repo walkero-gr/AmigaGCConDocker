@@ -1,3 +1,4 @@
 /code
-/base/files/native-build/downloads
-/base/repos
+/base/ppc/files/native-build/downloads
+/base/ppc/repos
+*-OBS
