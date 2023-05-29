@@ -102,71 +102,76 @@ depends_on:
 node:
   agents: awsbuilders
 
-# ---
+---
 
-# kind: pipeline
-# type: docker
-# name: build-os4-gcc11-afxgroup
+kind: pipeline
+type: docker
+name: build-os4-gcc11-afxgroup
 
-# steps:
-# - name: os4-gcc11-afxgroup
-#   image: plugins/docker
-#   pull: always
-#   settings:
-#     repo: walkero/amigagccondocker
-#     tags:
-#       - os4-gcc11-afxgroup
-#     cache_from:
-#       - walkero/amigagccondocker:os4-gcc11-afxgroup
-#     dockerfile: os4.Dockerfile
-#     build_args:
-#       - OS=os4
-#       - CLIB2_REPO=afxgroup
-#       - GCC_VER=11
-#     dry_run: true
-# - name: os4-gcc11-afxgroup-tests
-#   image: walkero/amigagccondocker:os4-gcc11-afxgroup
-#   commands:
-#     - cd /opt/code/tests/os4
-#     - su amidev
-#     - ppc-amigaos-gcc -o test test.c
-#     - ppc-amigaos-g++ -athread=native test2.c -o test2
-#     - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
-#     - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
-#     - ppc-amigaos-gcc curl.c -o curl -I$LIB_CURL_INC -L$LIB_CURL_CLIB -lcurl
-#   depends_on:
-#     - os4-gcc11-afxgroup
-# - name: os4-gcc11-afxgroup-push
-#   image: plugins/docker
-#   settings:
-#     repo: walkero/amigagccondocker
-#     tags:
-#       - os4-gcc11-afxgroup
-#     cache_from:
-#       - walkero/amigagccondocker:os4-gcc11-afxgroup
-#     dockerfile: os4.Dockerfile
-#     purge: true
-#     build_args:
-#       - OS=os4
-#       - CLIB2_REPO=adtools
-#       - GCC_VER=11
-#     username:
-#       from_secret: DOCKERHUB_USERNAME
-#     password:
-#       from_secret: DOCKERHUB_PASSWORD
-#     depends_on:
-#       - os4-gcc11-adtools-tests
-# trigger:
-#   branch:
-#     include:
-#     - master
-#     - main
-#   event:
-#     include:
-#     - push
+steps:
+- name: os4-gcc11-afxgroup
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - os4-gcc11-afxgroup
+    cache_from:
+      - walkero/amigagccondocker:os4-gcc11-afxgroup
+    dockerfile: os4.Dockerfile
+    build_args:
+      - OS=os4
+      - CLIB2_REPO=afxgroup
+      - GCC_VER=11
+    dry_run: true
+    purge: false
+- name: os4-gcc11-afxgroup-tests
+  image: walkero/amigagccondocker:os4-gcc11-afxgroup
+  commands:
+    - cd tests/os4
+    - su amidev
+    - ppc-amigaos-gcc -o test test.c
+    - ppc-amigaos-g++ -athread=native test2.c -o test2
+    - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
+    - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
+    - cd /opt/sdk/ppc-amigaos/Examples/GUI/Window/
+    - ppc-amigaos-gcc -o Window Window.c -lauto
+    - ppc-amigaos-gcc -o WindowPopup WindowPopup.c -lauto
+    - ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto
+  depends_on:
+    - os4-gcc11-afxgroup
+- name: os4-gcc11-afxgroup-push
+  image: plugins/docker
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - os4-gcc11-afxgroup
+    cache_from:
+      - walkero/amigagccondocker:os4-gcc11-afxgroup
+    dockerfile: os4.Dockerfile
+    purge: true
+    build_args:
+      - OS=os4
+      - CLIB2_REPO=afxgroup
+      - GCC_VER=11
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  depends_on:
+    - os4-gcc11-afxgroup-tests
 
-# depends_on:
-#   - awsbuilders-poweron
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
 
-# node:
-#   agents: awsbuilders
+depends_on:
+  - awsbuilders-poweron
+
+node:
+  agents: awsbuilders
