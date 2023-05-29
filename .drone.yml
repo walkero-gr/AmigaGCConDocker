@@ -45,12 +45,15 @@ steps:
     cache_from:
       - walkero/amigagccondocker:os4-gcc11-adtools
     dockerfile: os4.Dockerfile
+    purge: true
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
       - GCC_VER=11
-    dry_run: true
-    purge: false
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
 - name: os4-gcc11-adtools-tests
   image: walkero/amigagccondocker:os4-gcc11-adtools
   commands:
@@ -66,26 +69,6 @@ steps:
     - ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto
   depends_on:
     - os4-gcc11-adtools
-- name: os4-gcc11-adtools-push
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - os4-gcc11-adtools
-    cache_from:
-      - walkero/amigagccondocker:os4-gcc11-adtools
-    dockerfile: os4.Dockerfile
-    purge: true
-    build_args:
-      - OS=os4
-      - CLIB2_REPO=adtools
-      - GCC_VER=11
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - os4-gcc11-adtools-tests
 
 trigger:
   branch:
@@ -119,12 +102,15 @@ steps:
     cache_from:
       - walkero/amigagccondocker:os4-gcc11-afxgroup
     dockerfile: os4.Dockerfile
+    purge: true
     build_args:
       - OS=os4
       - CLIB2_REPO=afxgroup
       - GCC_VER=11
-    dry_run: true
-    purge: false
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
 - name: os4-gcc11-afxgroup-tests
   image: walkero/amigagccondocker:os4-gcc11-afxgroup
   commands:
@@ -140,26 +126,6 @@ steps:
     - ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto
   depends_on:
     - os4-gcc11-afxgroup
-- name: os4-gcc11-afxgroup-push
-  image: plugins/docker
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - os4-gcc11-afxgroup
-    cache_from:
-      - walkero/amigagccondocker:os4-gcc11-afxgroup
-    dockerfile: os4.Dockerfile
-    purge: true
-    build_args:
-      - OS=os4
-      - CLIB2_REPO=afxgroup
-      - GCC_VER=11
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  depends_on:
-    - os4-gcc11-afxgroup-tests
 
 trigger:
   branch:
