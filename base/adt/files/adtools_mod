@@ -1,0 +1,10 @@
+#!/bin/bash --
+# Insert any modifications to ADTOOLS before building it here:
+set -e
+set -u
+
+# overwrite the configure file for clib2 (BTW, doesn't this also affect newlib which is probably not desired? @afxgroup)
+cp /opt/misc/configure gcc/repo/libstdc++-v3/
+
+# overwrite the rs6k file with the one from CLIB2.
+sed -i '115i\	cp /opt/misc/amigaos.h ../gcc/repo/gcc/config/rs6000/' native-build/makefile
