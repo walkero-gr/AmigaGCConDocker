@@ -4,6 +4,8 @@ OS?=os4
 GCC?=8
 # adtools, afxgroup
 CLIB2_REPO?=adtools
+# apt,git,release
+CLIB2_SRC?=apt
 
 REPO=walkero/amigagccondocker
 TAG?=$(OS)-base-gcc$(GCC)-$(CLIB2_REPO)
@@ -34,6 +36,9 @@ help:
 	@echo "                   Possible values: 8 (default)/9/10/11"
 	@echo "CLIB2_REPO       - defines the clib2 repo to be cloned and used."
 	@echo "                   Possible values: adtools (default)/afxgroup"
+	@echo "CLIB2_SRC        - defines the afgroup clib2 source to be used."
+	@echo "                   Possible values: apt (default)/git/release"
+	@echo "                   Used only when CLIB2_REPO is set to afxgroup"
 	@echo "OS               - defines the cross-compiler target OS"
 	@echo "                   Possible values: os4 (default)/os3/mos"
 	@echo ""
@@ -46,9 +51,10 @@ build:
 		--build-arg REPOS_PATH=$(REPOSPATH) \
 		--build-arg FILES_PATH=$(FILESPATH) \
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
+		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
 		--build-arg SDK_VER=$(SDK) .
 
-buildnc: pullrepos
+buildnc:
 	docker build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
@@ -56,6 +62,7 @@ buildnc: pullrepos
 		--build-arg REPOS_PATH=$(REPOSPATH) \
 		--build-arg FILES_PATH=$(FILESPATH) \
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
+		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
 		--build-arg SDK_VER=$(SDK) .
 
 shell:

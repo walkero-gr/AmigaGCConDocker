@@ -7,6 +7,11 @@ ARG GCC_VER
 ARG REPOS_PATH
 ARG FILES_PATH
 ARG CLIB2_REPO
+ARG CLIB2_SRC
+
+ENV GCC_VER=${GCC_VER}
+ENV CLIB2_REPO=${CLIB2_REPO}
+ENV CLIB2_SRC=${CLIB2_SRC}
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 
@@ -22,6 +27,7 @@ ENV PACKAGES="autoconf \
     gettext \
     git \
     gperf \
+    gpg \
     libfl2 \
     libgmp-dev \
     libmpc3 \
@@ -44,30 +50,26 @@ RUN dpkg --add-architecture i386 && apt-get update && \
     ln -s /usr/bin/gcc-10 /usr/bin/gcc;
 
 # Add necessary repos
-ADD ${REPOS_PATH}/adtools /opt/adtools
-ADD ${REPOS_PATH}/binutils-gdb /opt/adtools/binutils/repo
-ADD ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
-ADD ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
-ADD ${REPOS_PATH}/misc /opt/misc
+COPY ${REPOS_PATH}/adtools /opt/adtools
+COPY ${REPOS_PATH}/binutils-gdb /opt/adtools/binutils/repo
+COPY ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
+COPY ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
+COPY misc /opt/misc
 
 # Get custom makefiles before we compile GCC
 COPY ${FILES_PATH}/native-build/makefile /opt/adtools/native-build/makefile
 
-# Compile gcc
 WORKDIR /opt/adtools
-RUN git config --global user.email "walkero@gmail.com"; \
-    git config --global user.name "Georgios Sokianos"; \
-    git submodule init && \
-    git submodule update && \
-    gild/bin/gild checkout binutils 2.23.2 && \
-    gild/bin/gild checkout gcc ${GCC_VER} && \
-    make -C native-build gcc-cross CROSS_PREFIX=/opt/ppc-amigaos \
-    CLIB2_REPO=${CLIB2_REPO} -j4; \
-    apt-get -y remove ${PACKAGES} \
+
+COPY scripts/compile-adtools.sh /compile-adtools.sh
+RUN chmod +x /compile-adtools.sh && bash /compile-adtools.sh
+
+# Clean up
+RUN apt-get -y remove ${PACKAGES} \
         curl \
         python3; \
     apt-get -y autoremove; \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/adtools /opt/misc;
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/adtools;
 
 FROM ubuntu:latest
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
