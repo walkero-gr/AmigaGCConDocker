@@ -52,12 +52,22 @@ COREUTILS_VERSION=5.2.1
 DIST_VERSION=$(shell date +%Y%m%d)-$(shell git rev-list --count HEAD)
 
 ifeq ($(CLIB2_REPO), afxgroup)
+ifeq ($(CLIB2_SRC), git)
 CLIB2_URL=https://github.com/afxgroup/clib2
 CLIB2_SHA1=beta10
 # CLIB2_SHA1=4ffb456ea162206dbdb0800fa30907a04c5c4453
-# CLIB2_URL=https://github.com/afxgroup/clib2/releases/download/v1.0.0-beta-9/clib2.lha
+endif
+
+ifeq ($(CLIB2_SRC), release)
+CLIB2_URL=https://github.com/afxgroup/clib2/releases/download/v1.0.0-beta-9/clib2.lha
+endif
+
+ifeq ($(CLIB2_SRC), apt)
+CLIB2_PATH=/usr/ppc-amigaos
+endif
+
 CLIB2_DIR=downloads/clib2
-else
+else # adtools
 CLIB2_URL=https://github.com/sodero/clib2
 CLIB2_SHA1=02ecf7d92448b5486502cd9e95fc838dca4804a7
 CLIB2_DIR=downloads/clib2/library
@@ -96,23 +106,19 @@ downloads-prepare:
 downloads-done-clib2:
 ifeq ($(CLIB2_REPO), afxgroup)
 
-ifdef CLIB2_SHA1
+ifeq ($(CLIB2_SRC), git)
 	git clone $(CLIB2_URL) ./downloads/clib2 && \
 		git -C ./downloads/clib2 checkout $(CLIB2_SHA1)
-else
+endif
+
+ifeq ($(CLIB2_SRC), release)
 	wget "$(CLIB2_URL)" -O ./downloads/clib2.lha
 endif
 
-else
+else # adtools
 	git clone $(CLIB2_URL) ./downloads/clib2 && \
 		git -C ./downloads/clib2 checkout $(CLIB2_SHA1)
 endif
-
-# TODO: Probably this is not needed
-#	This file is necessary so that shared libraries work with afxgroup's clib2
-# ifeq ($(CLIB2_REPO), afxgroup)
-# 	cp -f /opt/misc/clib2-afxgroup/amigaos.h /opt/adtools/gcc/repo/gcc/config/rs6000/
-# endif
 	touch $@
 
 #
@@ -239,7 +245,14 @@ ifdef CLIB2_SHA1
 	\cp -Rp $(CLIB2_DIR)/library/include/* $(CLIB2_DIR)/include/ 
 	\cp -Rp $(CLIB2_DIR)/build/lib/* $(CLIB2_DIR)/libs/libauto.a $(CLIB2_DIR)/lib/
 else
+ifeq ($(CLIB2_REPO), afxgroup)
+ifeq ($(CLIB2_SRC), apt)
+	\cp -r $(CLIB2_PATH)/SDK/clib2 downloads/
+	touch downloads/clib2/LICENSE
+else
 	lha xw=downloads downloads/clib2.lha
+endif
+endif
 endif
 
 else
@@ -516,7 +529,7 @@ native-dist: native-strip-really
 	../bin/dedup /tmp/$(DIST_FOLDER) >.dedup
 	echo "; Create alternative filenames" >/tmp/$(DIST_FOLDER)/RestoreLinks
 	../bin/dedup /tmp/$(DIST_FOLDER) --amigaos --folder-is-pwd >>/tmp/$(DIST_FOLDER)/RestoreLinks
-# Disbaled until we find a way to keep softlinks via lha
+# Disabled until we find a way to keep softlinks via lha
 #	sh -x .dedup
 #	rm .dedup
 
