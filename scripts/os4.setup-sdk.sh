@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
 apt-get update && apt-get -y --no-install-recommends install \
-    ca-certificates \
-    curl \
-    gpg;
+	ca-certificates \
+	curl \
+	gpg;
 
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
@@ -11,33 +11,45 @@ OS4_SDK_PATH="/opt/sdk/ppc-amigaos"
 mkdir -p $OS4_SDK_PATH
 
 CLIB2_PACKAGES="\
-	amigaos4-clib2          \
-	freetype2-clib2         \
-	gdbm-clib2              \
-	jpeg9d-clib2            \
-	libbz2-clib2            \
-	libcairo-clib2          \
-	libflac-clib2           \
-	libfontconfig-clib2     \
-	libharfbuzz-clib2       \
-	libicu-clib2            \
-	libmad-clib2            \
-	libmodplug-clib2        \
-	libogg-clib2            \
-	libpng16-clib2          \
-	libsdl2-clib2           \
-	libsdl2-image-clib2     \
-	libsdl2-mixer-clib2     \
-	libsdl2-net-clib2       \
-	libsdl2-ttf-clib2       \
-	libtiff-clib2           \
-	libvorbis-clib2         \
-	libxml2-clib2           \
-	libxslt-clib2           \
-	mpeg123-clib2           \
-	openal-clib2            \
-	pixman1-clib2           \
-	theora-clib2            \
+	agg-clib2			\
+	amigaos4-clib2		\
+	freetype2-clib2		\
+	gdbm-clib2			\
+	gmp-clib2			\
+	jansson-clib2		\
+	jpeg9d-clib2		\
+	libbz2-clib2		\
+	libcairo-clib2		\
+	libcares-clib2		\
+	libexpat-clib2		\
+	libflac-clib2		\
+	libfontconfig-clib2	\
+	libharfbuzz-clib2	\
+	libicu-clib2		\
+	libidn2-clib2		\
+	libmad-clib2		\
+	libmodplug-clib2	\
+	libogg-clib2		\
+	libopenjp2-clib2	\
+	libpng16-clib2		\
+	libpsl-clib2		\
+	libsdl2-clib2		\
+	libsdl2-image-clib2	\
+	libsdl2-mixer-clib2	\
+	libsdl2-net-clib2	\
+	libsdl2-ttf-clib2	\
+	libtiff-clib2		\
+	libunistring-clib2	\
+	libvorbis-clib2		\
+	libxml2-clib2		\
+	libxslt-clib2		\
+	little-cms-clib2	\
+	mpeg123-clib2		\
+	openal-clib2		\
+	pcre-clib2			\
+	pcre2-clib2			\
+	pixman1-clib2		\
+	theora-clib2		\
 	zlib-clib2"
 
 cd /tmp
@@ -89,6 +101,30 @@ echo "-> Install AmigaOS 4 SDK";
 			$OS4_SDK_PATH/AmigaOS\ 4.1\ SDK.pdf.info \
 			$OS4_SDK_PATH/Documentation.info;
 	rm -rf /tmp/*;
+
+	# Necessary links
+	ln -s $OS4_SDK_PATH/clib2/lib/libamiga.a 	$OS4_SDK_PATH/newlib/lib/
+	ln -s $OS4_SDK_PATH/clib2/lib/libamiga.a 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/clib2/lib/libamiga.a 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/clib2/lib/libdebug.a 	$OS4_SDK_PATH/newlib/lib/
+	ln -s $OS4_SDK_PATH/clib2/lib/libdebug.a 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/clib2/lib/libdebug.a 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/crtbegin.o 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/crtend.o 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/crtend.o 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/libauto.a 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/libauto.a 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/libc.a 		$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/libm.a 		$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/libm.a 		$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/librauto.a 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/librauto.a 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/libsocket.a 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/libsocket.a 	$OS4_SDK_PATH/newlib/lib/small-data/
+	ln -s $OS4_SDK_PATH/newlib/lib/libunix.a 	$OS4_SDK_PATH/newlib/lib/baserel/
+	ln -s $OS4_SDK_PATH/newlib/lib/libunix.a 	$OS4_SDK_PATH/newlib/lib/small-data/
+
+
 
 # Install SDL SDK
 echo "-> Install SDL SDK";
@@ -182,9 +218,9 @@ echo "-> Install liblua";
 		cp -r ./SDK/local/* ${OS4_SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
 
-# Install AMISSL SDK
-echo "-> Install AMISSL SDK";
-	curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.8/AmiSSL-5.8-SDK.lha" -o /tmp/AmiSSL.lha && \
+# Install AmiSSL SDK
+echo "-> Install AmiSSL SDK";
+	curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.9/AmiSSL-5.9-SDK.lha" -o /tmp/AmiSSL.lha && \
 		lha -xfq2 AmiSSL.lha && \
 		cp -r ./AmiSSL/Developer/include/* ${OS4_SDK_PATH}/include/include_h/ && \
 		cp -r ./AmiSSL/Developer/xml/* ${OS4_SDK_PATH}/include/interfaces/ && \
@@ -192,8 +228,8 @@ echo "-> Install AMISSL SDK";
 		cp -r ./AmiSSL/Developer/lib/AmigaOS4/newlib/* ${OS4_SDK_PATH}/local/newlib/lib/ && \
 		rm -rf /tmp/*;
 
-# Install codesets SDK
-echo "-> Install codesets SDK";
+# Install codesets library
+echo "-> Install codesets library";
 	curl -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \
 		lha -xfq2 codesets.lha && \
 		cp -r ./codesets/Developer/include/* ${OS4_SDK_PATH}/local/common/include/ && \

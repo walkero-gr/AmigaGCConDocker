@@ -38,9 +38,23 @@ ENV AMIDEV_USER_ID=1000 \
     SDK_PATH="/opt/sdk/ppc-amigaos" \
     MUI50_INC="/opt/sdk/MUI_5.0/C/include"
 
+ENV AS=${APPC}/bin/ppc-amigaos-as \
+    LD=${APPC}/bin/ppc-amigaos-ld \
+    AR=${APPC}/bin/ppc-amigaos-ar \
+    CC=${APPC}/bin/ppc-amigaos-gcc \
+    CXX=${APPC}/bin/ppc-amigaos-g++ \
+    RANLIB=${APPC}/bin/ppc-amigaos-ranlib
+
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 COPY --from=sdk-builder /opt/sdk /opt/sdk
 COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
+
+RUN ln -sf ${APPC}/bin/ppc-amigaos-as /usr/bin/as && \
+    ln -sf ${APPC}/bin/ppc-amigaos-ar /usr/bin/ar && \
+    ln -sf ${APPC}/bin/ppc-amigaos-ld /usr/bin/ld && \
+    ln -sf ${APPC}/bin/ppc-amigaos-gcc /usr/bin/gcc && \
+    ln -sf ${APPC}/bin/ppc-amigaos-g++ /usr/bin/g++ && \
+    ln -sf ${APPC}/bin/ppc-amigaos-ranlib /usr/bin/ranlib;
 
 COPY scripts/setup-user.sh /setup-user.sh
 COPY scripts/setup-tools.sh /setup-tools.sh

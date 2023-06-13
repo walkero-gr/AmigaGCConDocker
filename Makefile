@@ -10,12 +10,6 @@ TAG?=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
 VOLUMES?=-v "${PWD}/code":/opt/code
 WORKSPACE?=-w /opt/code
 NAME?=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
-CLIB2TAG := 
-
-ifeq ($(CLIB2_REPO), afxgroup)
-override CLIB2TAG = -newclib2
-override TAG = $(OS)-gcc$(GCC)$(CLIB2TAG)
-endif
 
 .PHONY: build buildnc shell push logs clean test release
 
@@ -59,7 +53,7 @@ buildnc:
 		--build-arg GCC_VER=$(GCC) .
 
 shell:
-	docker run -it --rm --name $(NAME)$(CLIB2TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+	docker run -it --rm --name $(NAME)$(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)
