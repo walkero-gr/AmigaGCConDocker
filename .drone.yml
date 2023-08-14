@@ -56,8 +56,8 @@ steps:
       - OS=os4
       - CLIB2_REPO=adtools
       - GCC_VER=11
-      - FILESPATH=./files
-      - REPOSPATH=./repos
+      - FILES_PATH=./files
+      - REPOS_PATH=./repos
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
