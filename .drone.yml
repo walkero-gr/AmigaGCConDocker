@@ -15,7 +15,7 @@ steps:
     AWS_SECRET_ACCESS_KEY:
       from_secret: AWS_SECRET_ACCESS_KEY
   commands:
-    - aws ec2 start-instances --region eu-north-1 --instance-ids i-01e3d598710a23947
+    - aws ec2 start-instances --region eu-north-1 --instance-ids i-01e3d598710a23947 i-02bb3cbe63a2b3fef
 
 trigger:
   branch:
@@ -32,20 +32,26 @@ trigger:
 
 kind: pipeline
 type: docker
-name: build-os4-gcc11-adtools
+name: build-os4-base-gcc11-adtools-amd64
+
+platform:
+  arch: amd64
+  os: linux
 
 steps:
-- name: os4-gcc11-adtools
+- name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
   settings:
     repo: walkero/amigagccondocker
     tags:
-      - os4-gcc11-adtools
+      - os4-base-gcc11-adtools-amd64
     cache_from:
-      - walkero/amigagccondocker:os4-gcc11-adtools
-    dockerfile: os4.Dockerfile
-    purge: true
+      - walkero/amigagccondocker:os4-base-gcc11-adtools-amd64
+    dockerfile: base/os4/Dockerfile
+    context: base/os4
+    # purge: true
+    dry_run: true
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
@@ -54,78 +60,6 @@ steps:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-- name: os4-gcc11-adtools-tests
-  image: walkero/amigagccondocker:os4-gcc11-adtools
-  commands:
-    - cd tests/os4
-    - su amidev
-    - ppc-amigaos-gcc -o test test.c
-    - ppc-amigaos-g++ -athread=native test2.c -o test2
-    - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
-    - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
-    - cd /opt/sdk/ppc-amigaos/Examples/GUI/Window/
-    - ppc-amigaos-gcc -o Window Window.c -lauto
-    - ppc-amigaos-gcc -o WindowPopup WindowPopup.c -lauto
-    - ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto
-  depends_on:
-    - os4-gcc11-adtools
-
-trigger:
-  branch:
-    include:
-    - master
-    - main
-  event:
-    include:
-    - push
-
-depends_on:
-  - awsbuilders-poweron
-
-node:
-  agents: awsbuilders
-
----
-
-kind: pipeline
-type: docker
-name: build-os4-gcc11-afxgroup
-
-steps:
-- name: os4-gcc11-afxgroup
-  image: plugins/docker
-  pull: always
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - os4-gcc11-afxgroup
-    cache_from:
-      - walkero/amigagccondocker:os4-gcc11-afxgroup
-    dockerfile: os4.Dockerfile
-    purge: true
-    build_args:
-      - OS=os4
-      - CLIB2_REPO=afxgroup
-      - GCC_VER=11
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-- name: os4-gcc11-afxgroup-tests
-  image: walkero/amigagccondocker:os4-gcc11-afxgroup
-  commands:
-    - cd tests/os4
-    - su amidev
-    - ppc-amigaos-gcc -o test test.c
-    - ppc-amigaos-g++ -athread=native test2.c -o test2
-    - ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread
-    - ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget
-    - cd /opt/sdk/ppc-amigaos/Examples/GUI/Window/
-    - ppc-amigaos-gcc -o Window Window.c -lauto
-    - ppc-amigaos-gcc -o WindowPopup WindowPopup.c -lauto
-    - ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto
-  depends_on:
-    - os4-gcc11-afxgroup
 
 trigger:
   branch:

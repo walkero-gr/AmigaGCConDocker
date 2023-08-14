@@ -6,10 +6,13 @@ GCC?=8
 CLIB2_REPO?=adtools
 # apt,git,release
 CLIB2_SRC?=apt
+# OS4 SDK version
+SDK?=54.16
 
 REPO=walkero/amigagccondocker
 TAG?=$(OS)-base-gcc$(GCC)-$(CLIB2_REPO)
 NAME=$(TAG)
+# VOLUMES?=-v "${PWD}/misc":/opt/misc
 WORKSPACE=-w /opt/adtools
 FILESPATH=./files
 REPOSPATH=./repos
@@ -66,7 +69,7 @@ buildnc:
 		--build-arg SDK_VER=$(SDK) .
 
 shell:
-	docker run -it --rm --name $(NAME) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)

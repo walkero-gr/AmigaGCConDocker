@@ -43,7 +43,7 @@ ENV PACKAGES="autoconf \
     wget \
     xz-utils"
 
-RUN dpkg --add-architecture i386 && apt-get update && \
+RUN apt-get update && \
     apt-get -y --no-install-recommends install ${PACKAGES}; \
     ln -s /usr/bin/g++-10 /usr/bin/g++; \
     rm /usr/bin/gcc; \
