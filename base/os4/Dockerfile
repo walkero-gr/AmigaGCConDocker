@@ -2,11 +2,11 @@
 FROM alpine/git AS git-clone
 
 RUN mkdir /repos; \
-    - git clone https://github.com/sba1/adtools           /repos/adtools --depth 1; \
-    - git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1; \
-    - git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb --depth 1; \
-    - git clone https://github.com/coreutils/coreutils    /repos/coreutils --depth 1; \
-    - git clone https://github.com/coreutils/gnulib       /repos/gnulib --depth 1
+    git clone https://github.com/sba1/adtools           /repos/adtools --depth 1; \
+    git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1; \
+    git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb --depth 1; \
+    git clone https://github.com/coreutils/coreutils    /repos/coreutils --depth 1; \
+    git clone https://github.com/coreutils/gnulib       /repos/gnulib --depth 1
 
 # The ubuntu:latest tag points to the "latest LTS", since that's the version recommended for general use.
 FROM ubuntu:latest AS builder
