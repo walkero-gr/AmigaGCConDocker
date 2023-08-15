@@ -46,8 +46,8 @@ ENV PACKAGES="autoconf \
 # Debug
 RUN echo ${REPOS_PATH}; \
     ls -la .; \
-    ls -la /drone/src; \
-    ls -la /drone/src/base/os4/repos/;
+    ls -la ${REPOS_PATH}; 
+
 # RUN apt-get update && \
 #     apt-get -y --no-install-recommends install ${PACKAGES}; \
 #     ln -s /usr/bin/g++-10 /usr/bin/g++; \
