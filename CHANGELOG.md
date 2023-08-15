@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2023-08-15
+### Added
+- Added Arm based images for GCC 11
+
 ## 2022-11-08
 ### Added
 - Added the latest codesets 6.21 in the SDK
