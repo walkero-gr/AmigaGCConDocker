@@ -38,6 +38,9 @@ platform:
   arch: amd64
   os: linux
 
+workspace:
+  path: /drone/src
+
 steps:
 - name: clone-repos
   image: drone/git
