@@ -52,42 +52,35 @@ ENV PACKAGES="autoconf \
     wget \
     xz-utils"
 
+RUN apt-get update && \
+    apt-get -y --no-install-recommends install ${PACKAGES}; \
+    ln -s /usr/bin/g++-10 /usr/bin/g++; \
+    rm /usr/bin/gcc; \
+    ln -s /usr/bin/gcc-10 /usr/bin/gcc;
+
 # COPY necessary repos
 COPY --from=git-clone /repos base/os4/repos
-
-# Debug
-RUN echo ${REPOS_PATH}; \
-    ls -la .; \
-    ls -la base/os4/${REPOS_PATH}; 
-
-# RUN apt-get update && \
-#     apt-get -y --no-install-recommends install ${PACKAGES}; \
-#     ln -s /usr/bin/g++-10 /usr/bin/g++; \
-#     rm /usr/bin/gcc; \
-#     ln -s /usr/bin/gcc-10 /usr/bin/gcc;
-
-# # Add necessary repos
 # COPY ${REPOS_PATH}/adtools /opt/adtools
 # COPY ${REPOS_PATH}/binutils-gdb /opt/adtools/binutils/repo
 # COPY ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
 # COPY ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
-# COPY misc /opt/misc
+COPY misc /opt/misc
 
-# # Get custom makefiles before we compile GCC
-# COPY ${FILES_PATH}/native-build/makefile /opt/adtools/native-build/makefile
+# Get custom makefiles before we compile GCC
+COPY ${FILES_PATH}/native-build/makefile /opt/adtools/native-build/makefile
 
-# WORKDIR /opt/adtools
+WORKDIR /opt/adtools
 
-# COPY scripts/compile-adtools.sh /compile-adtools.sh
-# RUN chmod +x /compile-adtools.sh && bash /compile-adtools.sh
+COPY scripts/compile-adtools.sh /compile-adtools.sh
+RUN chmod +x /compile-adtools.sh && bash /compile-adtools.sh
 
-# # Clean up
-# RUN apt-get -y remove ${PACKAGES} \
-#         curl \
-#         python3; \
-#     apt-get -y autoremove; \
-#     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/adtools;
+# Clean up
+RUN apt-get -y remove ${PACKAGES} \
+        curl \
+        python3; \
+    apt-get -y autoremove; \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /opt/adtools;
 
-# FROM ubuntu:latest
-# LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
-# COPY --from=builder /opt/ppc-amigaos /opt/ppc-amigaos
+FROM ubuntu:latest
+LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
+COPY --from=builder /opt/ppc-amigaos /opt/ppc-amigaos
