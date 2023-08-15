@@ -50,6 +50,9 @@ steps:
     - git clone https://github.com/bminor/binutils-gdb    ./base/os4/repos/binutils-gdb --depth 1
     - git clone https://github.com/coreutils/coreutils    ./base/os4/repos/coreutils --depth 1
     - git clone https://github.com/coreutils/gnulib       ./base/os4/repos/gnulib --depth 1
+    - ls -la .
+    - ls -la /drone/src
+    - ls -la /drone/src/base/os4/repos/
 - name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
