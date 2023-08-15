@@ -45,8 +45,8 @@ steps:
 - name: clone-repos
   image: drone/git
   volumes:
-  - name: cache
-    path: /repos
+    - name: cache
+      path: /repos
   commands:
     - git clone https://github.com/sba1/adtools           /repos/adtools --depth 1
     - git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1
@@ -58,9 +58,6 @@ steps:
 - name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
-  volumes:
-  - name: cache
-    path: /repos
   settings:
     repo: walkero/amigagccondocker
     tags:
@@ -71,6 +68,7 @@ steps:
     context: base/os4
     purge: true
     dry_run: true
+    storage_path: /repos
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
