@@ -40,7 +40,6 @@ platform:
 steps:
 - name: clone-repos
   image: drone/git
-  pull: always
   commands:
     - git clone https://github.com/sba1/adtools           ./base/os4/repos/adtools --depth 1
     - git clone https://github.com/3246251196/adtools.git ./base/os4/repos/adtools-rjd324 --depth 1
@@ -76,7 +75,7 @@ steps:
       - walkero/amigagccondocker:os4-base-gcc11-adtools-amd64
     dockerfile: base/os4/Dockerfile
     context: base/os4
-    # purge: true
+    purge: true
     dry_run: true
     build_args:
       - OS=os4
