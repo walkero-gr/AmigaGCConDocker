@@ -38,23 +38,23 @@ platform:
   arch: amd64
   os: linux
 
-workspace:
-  path: /drone/src
+# workspace:
+#   path: /drone/src
 
 steps:
-- name: clone-repos
-  image: drone/git
-  volumes:
-    - name: cache
-      path: /repos
-  commands:
-    - git clone https://github.com/sba1/adtools           /repos/adtools --depth 1
-    - git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1
-    - git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb --depth 1
-    - git clone https://github.com/coreutils/coreutils    /repos/coreutils --depth 1
-    - git clone https://github.com/coreutils/gnulib       /repos/gnulib --depth 1
-    - ls -la .
-    - ls -la /repos/
+# - name: clone-repos
+#   image: drone/git
+#   volumes:
+#     - name: cache
+#       path: /repos
+#   commands:
+#     - git clone https://github.com/sba1/adtools           /repos/adtools --depth 1
+#     - git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1
+#     - git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb --depth 1
+#     - git clone https://github.com/coreutils/coreutils    /repos/coreutils --depth 1
+#     - git clone https://github.com/coreutils/gnulib       /repos/gnulib --depth 1
+#     - ls -la .
+#     - ls -la /repos/
 - name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
@@ -68,21 +68,20 @@ steps:
     context: base/os4
     purge: true
     dry_run: true
-    storage_path: /repos
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
       - GCC_VER=11
       - FILES_PATH=./files
-      - REPOS_PATH=/repos
+      - REPOS_PATH=./repos
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
 
-volumes:
-- name: cache
-  temp: {}
+# volumes:
+# - name: cache
+#   temp: {}
 
 trigger:
   branch:
