@@ -50,10 +50,10 @@ RUN apt-get update && \
     ln -s /usr/bin/gcc-10 /usr/bin/gcc;
 
 # Add necessary repos
-# COPY ${REPOS_PATH}/adtools /opt/adtools
-# COPY ${REPOS_PATH}/binutils-gdb /opt/adtools/binutils/repo
-# COPY ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
-# COPY ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
+COPY ${REPOS_PATH}/adtools /opt/adtools
+COPY ${REPOS_PATH}/binutils-gdb /opt/adtools/binutils/repo
+COPY ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
+COPY ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
 COPY misc /opt/misc
 
 # Get custom makefiles before we compile GCC

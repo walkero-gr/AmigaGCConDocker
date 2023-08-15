@@ -31,7 +31,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: clone-repos
+name: clone-repos-amd
 
 platform:
   os: linux
@@ -54,53 +54,52 @@ depends_on:
 node:
   agents: awsbuilders
 
+---
 
-# ---
+kind: pipeline
+type: docker
+name: build-os4-base-gcc11-adtools-amd64
 
-# kind: pipeline
-# type: docker
-# name: build-os4-base-gcc11-adtools-amd64
+platform:
+  arch: amd64
+  os: linux
 
-# platform:
-#   arch: amd64
-#   os: linux
+steps:
+- name: os4-base-gcc11-adtools-amd64
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - os4-base-gcc11-adtools-amd64
+    cache_from:
+      - walkero/amigagccondocker:os4-base-gcc11-adtools-amd64
+    dockerfile: base/os4/Dockerfile
+    context: base/os4
+    # purge: true
+    dry_run: true
+    build_args:
+      - OS=os4
+      - CLIB2_REPO=adtools
+      - GCC_VER=11
+      - FILES_PATH=./files
+      - REPOS_PATH=./repos
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
 
-# steps:
-# - name: os4-base-gcc11-adtools-amd64
-#   image: plugins/docker
-#   pull: always
-#   settings:
-#     repo: walkero/amigagccondocker
-#     tags:
-#       - os4-base-gcc11-adtools-amd64
-#     cache_from:
-#       - walkero/amigagccondocker:os4-base-gcc11-adtools-amd64
-#     dockerfile: base/os4/Dockerfile
-#     context: base/os4
-#     # purge: true
-#     dry_run: true
-#     build_args:
-#       - OS=os4
-#       - CLIB2_REPO=adtools
-#       - GCC_VER=11
-#       - FILES_PATH=./files
-#       - REPOS_PATH=./repos
-#     username:
-#       from_secret: DOCKERHUB_USERNAME
-#     password:
-#       from_secret: DOCKERHUB_PASSWORD
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
 
-# trigger:
-#   branch:
-#     include:
-#     - master
-#     - main
-#   event:
-#     include:
-#     - push
+depends_on:
+  - clone-repos-amd
 
-# depends_on:
-#   - awsbuilders-poweron
-
-# node:
-#   agents: awsbuilders
+node:
+  agents: awsbuilders

@@ -112,7 +112,7 @@ ifeq ($(CLIB2_SRC), git)
 endif
 
 ifeq ($(CLIB2_SRC), release)
-	wget "$(CLIB2_URL)" -O ./downloads/clib2.lha
+	wget -q "$(CLIB2_URL)" -O ./downloads/clib2.lha
 endif
 
 else # adtools
@@ -126,7 +126,7 @@ endif
 #
 downloads-done-sdk:
 ifeq ("$(wildcard /opt/misc/SDK_$(SDK_VERSION).lha)", "")
-	wget "$(SDK_URL)" -O ./downloads/SDK_$(SDK_VERSION).lha
+	wget -q "$(SDK_URL)" -O ./downloads/SDK_$(SDK_VERSION).lha
 else
 	cp /opt/misc/SDK_$(SDK_VERSION).lha ./downloads/
 endif
