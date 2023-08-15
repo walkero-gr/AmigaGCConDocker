@@ -54,8 +54,6 @@ steps:
     context: base/os4
     purge: true
     compress: true
-    # squash: true
-    # dry_run: true
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
@@ -107,8 +105,6 @@ steps:
     context: base/os4
     purge: true
     compress: true
-    # squash: true
-    # dry_run: true
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
@@ -139,10 +135,10 @@ node:
 # OS4 base GCC11 Adtools Manifest #####################################################
 #
 kind: pipeline
-name: build-manifest-base-os4
+name: build-manifest-os4-base-gcc11-adtools
 
 steps:
-- name: manifest-base-os4
+- name: manifest-os4-base-gcc11-adtools
   image: plugins/manifest
   settings:
     username:
@@ -158,6 +154,144 @@ steps:
 depends_on:
   - build-os4-base-gcc11-adtools-amd64
   - build-os4-base-gcc11-adtools-arm64
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
+
+---
+#######################################################################################
+# OS4 base GCC11 afxgroup for Amd64 ###################################################
+#
+kind: pipeline
+type: docker
+name: build-os4-base-gcc11-afxgroup-amd64
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: os4-base-gcc11-afxgroup-amd64
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - os4-base-gcc11-afxgroup-amd64
+    cache_from:
+      - walkero/amigagccondocker:os4-base-gcc11-afxgroup-amd64
+    dockerfile: base/os4/Dockerfile
+    context: base/os4
+    purge: true
+    compress: true
+    build_args:
+      - OS=os4
+      - CLIB2_REPO=afxgroup
+      - CLIB2_SRC=git
+      - GCC_VER=11
+      - FILES_PATH=./files
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
+
+depends_on:
+  - awsbuilders-poweron
+
+node:
+  agents: awsbuilders
+
+---
+#######################################################################################
+# OS4 base GCC11 afxgroup for Arm64 ###################################################
+#
+kind: pipeline
+type: docker
+name: build-os4-base-gcc11-afxgroup-arm64
+
+platform:
+  arch: arm64
+  os: linux
+
+steps:
+- name: os4-base-gcc11-afxgroup-arm64
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - os4-base-gcc11-afxgroup-arm64
+    cache_from:
+      - walkero/amigagccondocker:os4-base-gcc11-afxgroup-arm64
+    dockerfile: base/os4/Dockerfile
+    context: base/os4
+    purge: true
+    compress: true
+    build_args:
+      - OS=os4
+      - CLIB2_REPO=afxgroup
+      - CLIB2_SRC=git
+      - GCC_VER=11
+      - FILES_PATH=./files
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
+
+depends_on:
+  - awsbuilders-poweron
+
+node:
+  agents: awsbuilders
+
+---
+#######################################################################################
+# OS4 base GCC11 afxgroup Manifest ####################################################
+#
+kind: pipeline
+name: build-manifest-os4-base-gcc11-afxgroup
+
+steps:
+- name: manifest-os4-base-gcc11-afxgroup
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+    target: walkero/amigagccondocker:os4-base-gcc11-afxgroup
+    template: walkero/amigagccondocker:os4-base-gcc11-afxgroup-ARCH
+    platforms:
+      - linux/amd64
+      - linux/arm64
+
+depends_on:
+  - build-os4-base-gcc11-afxgroup-amd64
+  - build-os4-base-gcc11-afxgroup-arm64
 
 trigger:
   branch:
