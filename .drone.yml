@@ -28,7 +28,7 @@
 #     - pull_request
 #     - tag
 
----
+# ---
 kind: pipeline
 type: exec
 name: clone-repos
