@@ -29,7 +29,9 @@ trigger:
     - tag
 
 ---
-
+#######################################################################################
+# OS4 base GCC11 Adtools for Amd64 ####################################################
+#
 kind: pipeline
 type: docker
 name: build-os4-base-gcc11-adtools-amd64
@@ -38,23 +40,7 @@ platform:
   arch: amd64
   os: linux
 
-# workspace:
-#   path: /drone/src
-
 steps:
-# - name: clone-repos
-#   image: drone/git
-#   volumes:
-#     - name: cache
-#       path: /repos
-#   commands:
-#     - git clone https://github.com/sba1/adtools           /repos/adtools --depth 1
-#     - git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1
-#     - git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb --depth 1
-#     - git clone https://github.com/coreutils/coreutils    /repos/coreutils --depth 1
-#     - git clone https://github.com/coreutils/gnulib       /repos/gnulib --depth 1
-#     - ls -la .
-#     - ls -la /repos/
 - name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
@@ -67,21 +53,18 @@ steps:
     dockerfile: base/os4/Dockerfile
     context: base/os4
     purge: true
-    dry_run: true
+    compress: true
+    # squash: true
+    # dry_run: true
     build_args:
       - OS=os4
       - CLIB2_REPO=adtools
       - GCC_VER=11
       - FILES_PATH=./files
-      - REPOS_PATH=./repos
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
-
-# volumes:
-# - name: cache
-#   temp: {}
 
 trigger:
   branch:
@@ -94,6 +77,96 @@ trigger:
 
 depends_on:
   - awsbuilders-poweron
+
+node:
+  agents: awsbuilders
+
+---
+#######################################################################################
+# OS4 base GCC11 Adtools for Arm64 ####################################################
+#
+kind: pipeline
+type: docker
+name: build-os4-base-gcc11-adtools-arm64
+
+platform:
+  arch: arm64
+  os: linux
+
+steps:
+- name: os4-base-gcc11-adtools-arm64
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: walkero/amigagccondocker
+    tags:
+      - os4-base-gcc11-adtools-arm64
+    cache_from:
+      - walkero/amigagccondocker:os4-base-gcc11-adtools-arm64
+    dockerfile: base/os4/Dockerfile
+    context: base/os4
+    purge: true
+    compress: true
+    # squash: true
+    # dry_run: true
+    build_args:
+      - OS=os4
+      - CLIB2_REPO=adtools
+      - GCC_VER=11
+      - FILES_PATH=./files
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
+
+depends_on:
+  - awsbuilders-poweron
+
+node:
+  agents: awsbuilders
+
+---
+#######################################################################################
+# OS4 base GCC11 Adtools Manifest #####################################################
+#
+kind: pipeline
+name: build-manifest-base-os4
+
+steps:
+- name: manifest-base-os4
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+    target: walkero/amigagccondocker:os4-base-gcc11-adtools
+    template: walkero/amigagccondocker:os4-base-gcc11-adtools-ARCH
+    platforms:
+      - linux/amd64
+      - linux/arm64
+
+depends_on:
+  - build-os4-base-gcc11-adtools-amd64
+  - build-os4-base-gcc11-adtools-arm64
+
+trigger:
+  branch:
+    include:
+    - master
+    - main
+  event:
+    include:
+    - push
 
 node:
   agents: awsbuilders
