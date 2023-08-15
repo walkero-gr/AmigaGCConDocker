@@ -1,79 +1,109 @@
-kind: pipeline
-type: docker
-name: awsbuilders-poweron
+# kind: pipeline
+# type: docker
+# name: awsbuilders-poweron
 
-clone:
-  disable: true
+# clone:
+#   disable: true
 
-steps:
-- name: start-aws-instances
-  pull: always
-  image: amazon/aws-cli
-  environment:
-    AWS_ACCESS_KEY_ID:
-      from_secret: AWS_ACCESS_KEY
-    AWS_SECRET_ACCESS_KEY:
-      from_secret: AWS_SECRET_ACCESS_KEY
-  commands:
-    - aws ec2 start-instances --region eu-north-1 --instance-ids i-01e3d598710a23947 i-02bb3cbe63a2b3fef
+# steps:
+# - name: start-aws-instances
+#   pull: always
+#   image: amazon/aws-cli
+#   environment:
+#     AWS_ACCESS_KEY_ID:
+#       from_secret: AWS_ACCESS_KEY
+#     AWS_SECRET_ACCESS_KEY:
+#       from_secret: AWS_SECRET_ACCESS_KEY
+#   commands:
+#     - aws ec2 start-instances --region eu-north-1 --instance-ids i-01e3d598710a23947 i-02bb3cbe63a2b3fef
 
-trigger:
-  branch:
-    include:
-    - master
-    - main
-  event:
-    include:
-    - push
-    - pull_request
-    - tag
+# trigger:
+#   branch:
+#     include:
+#     - master
+#     - main
+#   event:
+#     include:
+#     - push
+#     - pull_request
+#     - tag
 
 ---
-
 kind: pipeline
-type: docker
-name: build-os4-base-gcc11-adtools-amd64
+type: exec
+name: clone-repos
 
 platform:
-  arch: amd64
   os: linux
+  arch: amd64
 
 steps:
-- name: os4-base-gcc11-adtools-amd64
-  image: plugins/docker
-  pull: always
-  settings:
-    repo: walkero/amigagccondocker
-    tags:
-      - os4-base-gcc11-adtools-amd64
-    cache_from:
-      - walkero/amigagccondocker:os4-base-gcc11-adtools-amd64
-    dockerfile: base/os4/Dockerfile
-    context: base/os4
-    # purge: true
-    dry_run: true
-    build_args:
-      - OS=os4
-      - CLIB2_REPO=adtools
-      - GCC_VER=11
-      - FILES_PATH=./files
-      - REPOS_PATH=./repos
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
+- name: greeting
+  commands:
+  - ls -la
+  - ls -la base/os4
 
-trigger:
-  branch:
-    include:
-    - master
-    - main
-  event:
-    include:
-    - push
+---
+kind: pipeline
+type: exec
+name: clone-repos2
 
-depends_on:
-  - awsbuilders-poweron
+platform:
+  os: linux
+  arch: amd64
 
-node:
-  agents: awsbuilders
+steps:
+- name: greeting
+  commands:
+  - ls -la
+  - ls -la base/os4
+
+# ---
+
+# kind: pipeline
+# type: docker
+# name: build-os4-base-gcc11-adtools-amd64
+
+# platform:
+#   arch: amd64
+#   os: linux
+
+# steps:
+# - name: os4-base-gcc11-adtools-amd64
+#   image: plugins/docker
+#   pull: always
+#   settings:
+#     repo: walkero/amigagccondocker
+#     tags:
+#       - os4-base-gcc11-adtools-amd64
+#     cache_from:
+#       - walkero/amigagccondocker:os4-base-gcc11-adtools-amd64
+#     dockerfile: base/os4/Dockerfile
+#     context: base/os4
+#     # purge: true
+#     dry_run: true
+#     build_args:
+#       - OS=os4
+#       - CLIB2_REPO=adtools
+#       - GCC_VER=11
+#       - FILES_PATH=./files
+#       - REPOS_PATH=./repos
+#     username:
+#       from_secret: DOCKERHUB_USERNAME
+#     password:
+#       from_secret: DOCKERHUB_PASSWORD
+
+# trigger:
+#   branch:
+#     include:
+#     - master
+#     - main
+#   event:
+#     include:
+#     - push
+
+# depends_on:
+#   - awsbuilders-poweron
+
+# node:
+#   agents: awsbuilders
