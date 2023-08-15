@@ -29,31 +29,6 @@ trigger:
     - tag
 
 ---
-kind: pipeline
-type: docker
-name: clone-repos-amd
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: clone-repos
-  image: drone/git
-  commands:
-    - git clone https://github.com/sba1/adtools           ./base/os4/repos/adtools --depth 1
-    - git clone https://github.com/3246251196/adtools.git ./base/os4/repos/adtools-rjd324 --depth 1
-    - git clone https://github.com/bminor/binutils-gdb    ./base/os4/repos/binutils-gdb --depth 1
-    - git clone https://github.com/coreutils/coreutils    ./base/os4/repos/coreutils --depth 1
-    - git clone https://github.com/coreutils/gnulib       ./base/os4/repos/gnulib --depth 1
-
-depends_on:
-  - awsbuilders-poweron
-
-node:
-  agents: awsbuilders
-
----
 
 kind: pipeline
 type: docker
@@ -64,6 +39,14 @@ platform:
   os: linux
 
 steps:
+- name: clone-repos
+  image: drone/git
+  commands:
+    - git clone https://github.com/sba1/adtools           ./base/os4/repos/adtools --depth 1
+    - git clone https://github.com/3246251196/adtools.git ./base/os4/repos/adtools-rjd324 --depth 1
+    - git clone https://github.com/bminor/binutils-gdb    ./base/os4/repos/binutils-gdb --depth 1
+    - git clone https://github.com/coreutils/coreutils    ./base/os4/repos/coreutils --depth 1
+    - git clone https://github.com/coreutils/gnulib       ./base/os4/repos/gnulib --depth 1
 - name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
@@ -98,7 +81,7 @@ trigger:
     - push
 
 depends_on:
-  - clone-repos-amd
+  - awsbuilders-poweron
 
 node:
   agents: awsbuilders
