@@ -58,7 +58,7 @@ COPY --from=git-clone /repos base/os4/repos
 # Debug
 RUN echo ${REPOS_PATH}; \
     ls -la .; \
-    ls -la ${REPOS_PATH}; 
+    ls -la base/os4/${REPOS_PATH}; 
 
 # RUN apt-get update && \
 #     apt-get -y --no-install-recommends install ${PACKAGES}; \
