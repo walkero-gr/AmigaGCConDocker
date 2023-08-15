@@ -44,18 +44,23 @@ workspace:
 steps:
 - name: clone-repos
   image: drone/git
+  volumes:
+  - name: cache
+    path: /repos
   commands:
-    - git clone https://github.com/sba1/adtools           ./repos/adtools --depth 1
-    - git clone https://github.com/3246251196/adtools.git ./repos/adtools-rjd324 --depth 1
-    - git clone https://github.com/bminor/binutils-gdb    ./repos/binutils-gdb --depth 1
-    - git clone https://github.com/coreutils/coreutils    ./repos/coreutils --depth 1
-    - git clone https://github.com/coreutils/gnulib       ./repos/gnulib --depth 1
+    - git clone https://github.com/sba1/adtools           /repos/adtools --depth 1
+    - git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1
+    - git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb --depth 1
+    - git clone https://github.com/coreutils/coreutils    /repos/coreutils --depth 1
+    - git clone https://github.com/coreutils/gnulib       /repos/gnulib --depth 1
     - ls -la .
-    - ls -la /drone/src
-    - ls -la /drone/src/repos/
+    - ls -la /repos/
 - name: os4-base-gcc11-adtools-amd64
   image: plugins/docker
   pull: always
+  volumes:
+  - name: cache
+    path: /repos
   settings:
     repo: walkero/amigagccondocker
     tags:
@@ -71,11 +76,15 @@ steps:
       - CLIB2_REPO=adtools
       - GCC_VER=11
       - FILES_PATH=./files
-      - REPOS_PATH=/drone/src/repos
+      - REPOS_PATH=/repos
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
       from_secret: DOCKERHUB_PASSWORD
+
+volumes:
+- name: cache
+  temp: {}
 
 trigger:
   branch:
