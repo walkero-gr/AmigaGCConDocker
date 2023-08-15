@@ -13,7 +13,6 @@ FROM ubuntu:latest AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG GCC_VER
-ARG REPOS_PATH
 ARG FILES_PATH
 ARG CLIB2_REPO
 ARG CLIB2_SRC
@@ -58,12 +57,11 @@ RUN apt-get update && \
     rm /usr/bin/gcc; \
     ln -s /usr/bin/gcc-10 /usr/bin/gcc;
 
-# COPY necessary repos
-COPY --from=git-clone /repos base/os4/repos
-# COPY ${REPOS_PATH}/adtools /opt/adtools
-# COPY ${REPOS_PATH}/binutils-gdb /opt/adtools/binutils/repo
-# COPY ${REPOS_PATH}/coreutils /opt/adtools/coreutils/repo
-# COPY ${REPOS_PATH}/gnulib /opt/adtools/gnulib/repo
+# Copy necessary repos from git-clone
+COPY --from=git-clone /repos/adtools /opt/adtools
+COPY --from=git-clone /repos/binutils-gdb /opt/adtools/binutils/repo
+COPY --from=git-clone /repos/coreutils /opt/adtools/coreutils/repo
+COPY --from=git-clone /repos/gnulib /opt/adtools/gnulib/repo
 COPY misc /opt/misc
 
 # Get custom makefiles before we compile GCC

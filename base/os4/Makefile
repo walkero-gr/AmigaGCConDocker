@@ -51,7 +51,6 @@ build:
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg GCC_VER=$(GCC) \
-		--build-arg REPOS_PATH=$(REPOSPATH) \
 		--build-arg FILES_PATH=$(FILESPATH) \
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
@@ -62,7 +61,6 @@ buildnc:
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg GCC_VER=$(GCC) \
-		--build-arg REPOS_PATH=$(REPOSPATH) \
 		--build-arg FILES_PATH=$(FILESPATH) \
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
