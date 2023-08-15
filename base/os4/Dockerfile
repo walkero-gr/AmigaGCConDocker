@@ -1,5 +1,5 @@
 
-FROM alpine/git AS git-clone
+FROM alpine/git:2.40.1 AS git-clone
 
 RUN mkdir /repos; \
     git clone https://github.com/sba1/adtools           /repos/adtools --depth 1; \

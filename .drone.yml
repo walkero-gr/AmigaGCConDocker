@@ -156,7 +156,6 @@ steps:
       - linux/arm64
 
 depends_on:
-  - awsbuilders-poweron
   - build-os4-base-gcc11-adtools-amd64
   - build-os4-base-gcc11-adtools-arm64
 
@@ -168,6 +167,3 @@ trigger:
   event:
     include:
     - push
-
-node:
-  agents: awsbuilders
