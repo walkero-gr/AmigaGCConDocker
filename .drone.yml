@@ -45,6 +45,10 @@ steps:
 
 depends_on:
   - awsbuilders-poweron
+
+node:
+  agents: awsbuilders
+
 ---
 kind: pipeline
 type: exec
@@ -52,7 +56,7 @@ name: clone-repos2
 
 platform:
   os: linux
-  arch: amd64
+  arch: arm
 
 steps:
 - name: greeting
@@ -62,6 +66,10 @@ steps:
 
 depends_on:
   - clone-repos
+
+node:
+  agents: awsbuilders
+  
 # ---
 
 # kind: pipeline
