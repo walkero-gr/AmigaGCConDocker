@@ -23,7 +23,7 @@ local buildMain(_arch='amd64', _clib2_repo='adtools', _os='os4', _gcc=11) =
 					],
 					"dockerfile": 'os4.Dockerfile',
 					// "purge": true,
-					"dry_run": true,
+					// "dry_run": true,
 					"compress": true,
 					"build_args": [
 						'OS=' + _os,
