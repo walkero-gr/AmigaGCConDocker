@@ -37,6 +37,11 @@
 					'pull_request',
 					'tag'
 				]
+			},
+			"ref": {
+				"include": [
+					'base-*'
+				]
 			}
 		}
 	}
