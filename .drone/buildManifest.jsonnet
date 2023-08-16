@@ -43,6 +43,6 @@ local buildManifest(_clib2_repo='adtools', _os='os4', _gcc=11) = {
 };
 
 {
-	os4_gcc11: buildManifest(),
-	os4_gcc11_afxgroup: buildManifest('afxgroup')
+	os4_gcc11_adtools: buildManifest('adtools', 'os4', 11),
+	os4_gcc11_afxgroup: buildManifest('afxgroup', 'os4', 11)
 }
