@@ -37,11 +37,6 @@
 					'pull_request',
 					'tag'
 				]
-			},
-			"ref": {
-				"include": [
-					'refs/heads/base-*'
-				]
 			}
 		}
 	}
