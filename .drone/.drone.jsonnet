@@ -23,18 +23,19 @@
 			]
 		}
 	],
-	// "trigger": {
-	// 	"branch": {
-	// 		"include": [
-	// 			"master",
-	// 			"main"
-	// 		]
-	// 	},
-	// 	"event": {
-	// 		"include": [
-	// 			"master",
-	// 			"main"
-	// 		]
-	// 	}
-	// }
+	"trigger": {
+		"branch": {
+			"include": [
+				"master",
+				"main"
+			]
+		},
+		"event": {
+			"include": [
+				"push",
+				"pull_request",
+				"tag"
+			]
+		}
+	}
 }]
