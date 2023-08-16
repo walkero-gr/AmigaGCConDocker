@@ -34,6 +34,11 @@ local buildManifest(_clib2_repo='adtools', _os='os4', _gcc=11) = {
 			"include": [
 				'push'
 			]
+		},
+		"ref": {
+			"include": [
+				'base-*'
+			]
 		}
 	},
 	"depends_on": [

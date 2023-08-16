@@ -50,6 +50,11 @@ local buildBase(_arch='amd64', _clib2_repo='adtools', _clib2_src='git', _os='os4
 			"include": [
 				'push'
 			]
+		},
+		"ref": {
+			"include": [
+				'base-*'
+			]
 		}
 	},
 	"depends_on": [
