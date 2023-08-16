@@ -40,7 +40,7 @@
 			},
 			"ref": {
 				"include": [
-					'base-*'
+					'refs/heads/base-*'
 				]
 			}
 		}
