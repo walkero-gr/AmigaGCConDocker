@@ -80,8 +80,12 @@ local buildMain(_arch='amd64', _clib2_repo='adtools', _os='os4', _gcc=11) =
 	};
 
 {
-	amd64_os4_gcc11_adtools: buildMain('amd64', 'adtools', 'os4', 11),
-	arm64_os4_gcc11_adtools: buildMain('arm64', 'adtools', 'os4', 11),
-	amd64_os4_gcc11_afxgroup: buildMain('amd64', 'afxgroup', 'os4', 11),
-	arm64_os4_gcc11_afxgroup: buildMain('arm64', 'afxgroup', 'os4', 11)
+	os4_gcc11_adtools: {
+		amd64: buildMain('amd64', 'adtools', 'os4', 11),
+		arm64: buildMain('arm64', 'adtools', 'os4', 11)
+	},
+	os4_gcc11_afxgroup: {
+		amd64: buildMain('amd64', 'afxgroup', 'os4', 11),
+		arm64: buildMain('arm64', 'afxgroup', 'os4', 11)
+	}
 }

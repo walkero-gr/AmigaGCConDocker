@@ -11,46 +11,75 @@ OS4_SDK_PATH="/opt/sdk/ppc-amigaos"
 mkdir -p $OS4_SDK_PATH
 
 CLIB2_PACKAGES="\
-	agg-clib2			\
-	amigaos4-clib2		\
-	freetype2-clib2		\
-	gdbm-clib2			\
-	gmp-clib2			\
-	jansson-clib2		\
-	jpeg9d-clib2		\
-	libbz2-clib2		\
-	libcairo-clib2		\
-	libcares-clib2		\
-	libexpat-clib2		\
-	libflac-clib2		\
-	libfontconfig-clib2	\
-	libharfbuzz-clib2	\
-	libicu-clib2		\
-	libidn2-clib2		\
-	libmad-clib2		\
-	libmodplug-clib2	\
-	libogg-clib2		\
-	libopenjp2-clib2	\
-	libpng16-clib2		\
-	libpsl-clib2		\
-	libsdl2-clib2		\
-	libsdl2-image-clib2	\
-	libsdl2-mixer-clib2	\
-	libsdl2-net-clib2	\
-	libsdl2-ttf-clib2	\
-	libtiff-clib2		\
-	libunistring-clib2	\
-	libvorbis-clib2		\
-	libxml2-clib2		\
-	libxslt-clib2		\
-	little-cms-clib2	\
-	mpeg123-clib2		\
-	openal-clib2		\
-	pcre-clib2			\
-	pcre2-clib2			\
-	pixman1-clib2		\
-	theora-clib2		\
+	agg-clib2             \
+	amigaos4-clib2        \
+	curl-clib2            \
+	freetype2-clib2       \
+	fribidi-clib2         \
+	gdbm-clib2            \
+	gettext-clib2         \
+	giflib-clib2          \
+	glew-gl4es-clib2      \
+	gmp-clib2             \
+	jansson-clib2         \
+	jpeg9d-clib2          \
+	libbrotli-clib2       \
+	libbz2-clib2          \
+	libcairo-clib2        \
+	libcares-clib2        \
+	libexif-clib2         \
+	libexpat-clib2        \
+	libffi-clib2          \
+	libflac-clib2         \
+	libfmt-clib2          \
+	libfontconfig-clib2   \
+	libgl4es-clib2        \
+	libglm-clib2          \
+	libharfbuzz-clib2     \
+	libicu-clib2          \
+	libidn2-clib2         \
+	libmad-clib2          \
+	libmodplug-clib2      \
+	libmp3lame-clib2      \
+	libnghttp3-clib2      \
+	libngtcp2-clib2       \
+	libogg-clib2          \
+	libopenjp2-clib2      \
+	libpng16-clib2        \
+	libpsl-clib2          \
+	librtmp-clib2         \
+	libsdl2-clib2         \
+	libsdl2-image-clib2   \
+	libsdl2-mixer-clib2   \
+	libsdl2-net-clib2     \
+	libsdl2-ttf-clib2     \
+	libstb-clib2          \
+	libtiff-clib2         \
+	libunistring-clib2    \
+	libvorbis-clib2       \
+	libvpx-clib2          \
+	libwebp-clib2         \
+	libxml2-clib2         \
+	libxslt-clib2         \
+	little-cms-clib2      \
+	lz4-clib2             \
+	mpc-clib2             \
+	mpeg123-clib2         \
+	mpfr-clib2            \
+	openal-clib2          \
+	opencore-amr-clib2    \
+	opengles-clib2        \
+	openssl-clib2         \
+	pcre-clib2            \
+	pcre2-clib2           \
+	pixman1-clib2         \
+	theora-clib2          \
 	zlib-clib2"
+
+# Removed because of conflicts
+# minigl-clib2          \
+# libungif-clib2        \
+# openssl3-clib2        \
 
 cd /tmp
 
@@ -220,7 +249,7 @@ echo "-> Install liblua";
 
 # Install AmiSSL SDK
 echo "-> Install AmiSSL SDK";
-	curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.9/AmiSSL-5.9-SDK.lha" -o /tmp/AmiSSL.lha && \
+	curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.10/AmiSSL-5.10-SDK.lha" -o /tmp/AmiSSL.lha && \
 		lha -xfq2 AmiSSL.lha && \
 		cp -r ./AmiSSL/Developer/include/* ${OS4_SDK_PATH}/include/include_h/ && \
 		cp -r ./AmiSSL/Developer/xml/* ${OS4_SDK_PATH}/include/interfaces/ && \

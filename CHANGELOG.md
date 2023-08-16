@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ## 2023-08-15
 ### Added
 - Added Arm based images for GCC 11
+- Added afxgroup clib2 based images with a lot of third party libraries
+
+### Changed
+- Updated AmiSSL SDK to v5.10
 
 ## 2022-11-08
 ### Added
