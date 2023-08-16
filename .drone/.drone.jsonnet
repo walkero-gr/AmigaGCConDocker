@@ -1,4 +1,4 @@
-local awsbuilder = import '.drone/awsbuilders.jsonnet';
+local awsbuilder = import './awsbuilders.jsonnet';
 
 [
 	awsbuilder['poweron']
