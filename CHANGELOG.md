@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2023-08-21
+### Changed
+- Changed the way the clib2 by afxgroup libraries are installed, fixing some conflicts and making them exist in the Arm64 images
+
 ## 2023-08-15
 ### Added
 - Added Arm based images for GCC 11

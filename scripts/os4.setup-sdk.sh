@@ -4,7 +4,6 @@ apt-get update && apt-get -y --no-install-recommends install \
 	ca-certificates \
 	curl \
 	gpg;
-
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 OS4_SDK_PATH="/opt/sdk/ppc-amigaos"
@@ -18,7 +17,6 @@ CLIB2_PACKAGES="\
 	fribidi-clib2         \
 	gdbm-clib2            \
 	gettext-clib2         \
-	giflib-clib2          \
 	glew-gl4es-clib2      \
 	gmp-clib2             \
 	jansson-clib2         \
@@ -55,6 +53,7 @@ CLIB2_PACKAGES="\
 	libsdl2-ttf-clib2     \
 	libstb-clib2          \
 	libtiff-clib2         \
+	libungif-clib2        \
 	libunistring-clib2    \
 	libvorbis-clib2       \
 	libvpx-clib2          \
@@ -69,7 +68,7 @@ CLIB2_PACKAGES="\
 	openal-clib2          \
 	opencore-amr-clib2    \
 	opengles-clib2        \
-	openssl-clib2         \
+	openssl-quic-clib2    \
 	pcre-clib2            \
 	pcre2-clib2           \
 	pixman1-clib2         \
@@ -77,14 +76,16 @@ CLIB2_PACKAGES="\
 	zlib-clib2"
 
 # Removed because of conflicts
+# giflib-clib2          \
 # minigl-clib2          \
 # libungif-clib2        \
+# openssl-clib2         \
 # openssl3-clib2        \
 
 cd /tmp
 
 # Install MUI 5.0 SDK
-echo "-> Install MUI 5.0 SDK";
+echo "---> Install MUI 5.0 SDK";
 	curl -fsSL "https://github.com/amiga-mui/muidev/releases/download/MUI-5.0-20210831/MUI-5.0-20210831-os4.lha" -o /tmp/MUI-5.0.lha && \
 	lha -xfq2 MUI-5.0.lha; \
 	curl -fsSL "https://github.com/amiga-mui/muidev/releases/download/MUI-5.0-20210831/MUI-5.0-20210831-os4-contrib.lha" -o /tmp/MUI-5.0-contrib.lha && \
@@ -93,7 +94,7 @@ echo "-> Install MUI 5.0 SDK";
 	rm -rf /tmp/*;
 
 # Install AmigaOS 4 SDK
-echo "-> Install AmigaOS 4 SDK";
+echo "---> Install AmigaOS 4 SDK";
 	curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=127&amp;Itemid=127" -o /tmp/AmigaOS4-SDK.lha && \
 		lha -xfq2 AmigaOS4-SDK.lha && \
 		lha -xfq2w=$OS4_SDK_PATH SDK_Install/exec*.lha && \
@@ -114,9 +115,11 @@ echo "-> Install AmigaOS 4 SDK";
 		
 		# Install clib2 and libraries from afxgroup's Ubuntu repo. 
 		# They are saved under /user/ppc-amigaos
+		dpkg --add-architecture amd64;
 		curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib2.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib2.gpg && \
-			echo "deb https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib2.list && \
-			apt-get update && apt-get -y --no-install-recommends install $CLIB2_PACKAGES
+			echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib2.list && \
+			apt-get update;
+		apt-get -y --no-install-recommends install $CLIB2_PACKAGES
 
 		\cp -r /usr/ppc-amigaos/SDK/clib2 $OS4_SDK_PATH
 		\cp -r /usr/ppc-amigaos/SDK/local/* /opt/sdk/ppc-amigaos/local/
@@ -155,8 +158,9 @@ echo "-> Install AmigaOS 4 SDK";
 
 
 
+echo "-> Install libraries for newlib";
 # Install SDL SDK
-echo "-> Install SDL SDK";
+echo "---> Install SDL SDK";
 	curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v1.2.16-rc2-amigaos4/SDL.lha" -o /tmp/SDL.lha && \
 		lha -xfq2 SDL.lha && \
 		cp -r ./SDL/SDK/local/* ${OS4_SDK_PATH}/local/ && \
@@ -164,7 +168,7 @@ echo "-> Install SDL SDK";
 		rm -rf /tmp/*;
 
 # Install SDL2 SDK
-echo "-> Install SDL2 SDK";
+echo "---> Install SDL2 SDK";
 	curl -fsSL "https://github.com/AmigaPorts/SDL-2.0/releases/download/v2.26.5-release-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
 		lha -xfq2 SDL2.lha && \
 		cp -r ./SDL2/SDK/local/* ${OS4_SDK_PATH}/local/ && \
@@ -176,7 +180,7 @@ echo "-> Install SDL2 SDK";
 		rm -rf /tmp/*;
 
 # Install GL4ES SDK
-echo "-> Install GL4ES SDK";
+echo "---> Install GL4ES SDK";
 	curl -fsSL "https://github.com/kas1e/GL4ES-SDK/releases/download/1.2/gl4es_sdk-1.2.lha" -o /tmp/gl4es_sdk.lha && \
 		lha -xfq2 gl4es_sdk.lha && \
 		cp -r ./SDK/local/newlib/* ${OS4_SDK_PATH}/local/newlib/ && \
@@ -186,7 +190,7 @@ echo "-> Install GL4ES SDK";
 		rm -rf /tmp/*;
 
 # Install libCurl
-echo "-> Install libCurl";
+echo "---> Install libCurl";
 	curl -fsSL "http://os4depot.net/share/development/library/misc/libcurl.lha" -o /tmp/libcurl.lha && \
 		lha -xfq2 libcurl.lha && \
 		cp -r ./SDK/local/* ${OS4_SDK_PATH}/local/ && \
@@ -194,21 +198,21 @@ echo "-> Install libCurl";
 		rm -rf /tmp/*;
 
 # Install jansson library
-echo "-> Install jansson library";
+echo "---> Install jansson library";
 	curl -fsSL "http://amiga-projects.net/jansson_library_2.12.1_sdk.lha" -o /tmp/jansson.lha && \
 		lha -xfq2 jansson.lha && \
 		cp -r ./local/* ${OS4_SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
 
 # Install libopenssl
-echo "-> Install libopenssl";
+echo "---> Install libopenssl";
 	curl -fsSL "http://os4depot.net/share/development/library/misc/libopenssl.lha" -o /tmp/libopenssl.lha && \
 		lha -xfq2 libopenssl.lha && \
 		cp -r ./libOpenSSL/SDK/local/* ${OS4_SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
 
 # Install sqlite3
-echo "-> Install sqlite3";
+echo "---> Install sqlite3";
 	curl -fsSL "http://aminet.net/biz/dbase/sqlite-3.34.0-amiga.lha" -o /tmp/sqlite.lha && \
 		lha -xfq2 sqlite.lha && \
 		cp -r ./sqlite-3.34.0-amiga/build-ppc-amigaos/include/* ${OS4_SDK_PATH}/local/common/include/ && \
@@ -221,7 +225,7 @@ echo "-> Install sqlite3";
 		rm -rf /tmp/*;
 
 # Install latest MiniGL
-echo "-> Install latest MiniGL";
+echo "---> Install latest MiniGL";
 	curl -fsSL "http://os4depot.net/share/driver/graphics/minigl.lha" -o /tmp/minigl.lha && \
 		lha -xfq2 minigl.lha && \
 		cp -r ./MiniGL/SDK/local/* ${OS4_SDK_PATH}/local/ && \
@@ -232,7 +236,7 @@ echo "-> Install latest MiniGL";
 		rm -rf /tmp/*;
 
 # Install libz
-echo "-> Install libz";
+echo "---> Install libz";
 	curl -fsSL "http://os4depot.net/share/development/library/misc/libz.lha" -o /tmp/libz.lha && \
 		lha -xfq2 libz.lha && \
 		cp -r ./Zlib/SDK/Local/* ${OS4_SDK_PATH}/local/ && \
@@ -241,14 +245,14 @@ echo "-> Install libz";
 		rm -rf /tmp/*;
 
 # Install liblua
-echo "-> Install liblua";
+echo "---> Install liblua";
 	curl -fsSL "http://os4depot.net/share/development/language/liblua.lha" -o /tmp/liblua.lha && \
 		lha -xfq2 liblua.lha && \
 		cp -r ./SDK/local/* ${OS4_SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
 
 # Install AmiSSL SDK
-echo "-> Install AmiSSL SDK";
+echo "---> Install AmiSSL SDK";
 	curl -fsSL "https://github.com/jens-maus/amissl/releases/download/5.10/AmiSSL-5.10-SDK.lha" -o /tmp/AmiSSL.lha && \
 		lha -xfq2 AmiSSL.lha && \
 		cp -r ./AmiSSL/Developer/include/* ${OS4_SDK_PATH}/include/include_h/ && \
@@ -258,7 +262,7 @@ echo "-> Install AmiSSL SDK";
 		rm -rf /tmp/*;
 
 # Install codesets library
-echo "-> Install codesets library";
+echo "---> Install codesets library";
 	curl -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \
 		lha -xfq2 codesets.lha && \
 		cp -r ./codesets/Developer/include/* ${OS4_SDK_PATH}/local/common/include/ && \
