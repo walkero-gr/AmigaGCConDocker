@@ -5,31 +5,40 @@ local buildMain = import '.drone/buildMain.jsonnet';
 
 [
 	awsbuilder['poweron'],
-	buildBase.os4_gcc11_adtools.amd64,
-	buildBase.os4_gcc11_adtools.arm64,
-	buildManifest.os4_base_gcc11_adtools,
-	buildBase.os4_gcc11_afxgroup.amd64,
-	buildBase.os4_gcc11_afxgroup.arm64,
-	buildManifest.os4_gcc11_afxgroup,
 
-	buildMain.os4_gcc11_adtools.amd64,
-	// buildMain.os4_gcc11_adtools.arm64,
-	// buildManifest.os4_gcc11_adtools,
-	// buildMain.os4_gcc11_afxgroup.amd64,
-	// buildMain.os4_gcc11_afxgroup.arm64,
-	// buildManifest.os4_gcc11_afxgroup,
+	// GCC 11 for OS4 with adtools clib2
+	buildBase.os4.gcc11.adtools.amd64,
+	buildBase.os4.gcc11.adtools.arm64,
+	buildManifest.os4.gcc11.adtools.base,
 
-	buildBase.os4_gcc8_adtools.amd64,
-	// buildBase.os4_gcc8_adtools.arm64,
-	// buildManifest.os4_base_gcc8_adtools,
-	// buildBase.os4_gcc8_afxgroup.amd64,
-	// buildBase.os4_gcc8_afxgroup.arm64,
-	// buildManifest.os4_gcc8_afxgroup,
+	buildMain.os4.gcc11.adtools.amd64,
+	buildMain.os4.gcc11.adtools.arm64,
+	buildManifest.os4.gcc11.adtools.full,
+	
+	// GCC 11 for OS4 with afxgroup clib2
+	buildBase.os4.gcc11.afxgroup.amd64,
+	buildBase.os4.gcc11.afxgroup.arm64,
+	buildManifest.os4.gcc11.afxgroup.base,
 
-	buildMain.os4_gcc8_adtools.amd64,
-	// buildMain.os4_gcc8_adtools.arm64,
-	// buildManifest.os4_gcc8_adtools,
-	// buildMain.os4_gcc8_afxgroup.amd64,
-	// buildMain.os4_gcc8_afxgroup.arm64,
-	// buildManifest.os4_gcc8_afxgroup,
+	buildMain.os4.gcc11.afxgroup.amd64,
+	buildMain.os4.gcc11.afxgroup.arm64,
+	buildManifest.os4.gcc11.afxgroup.full,
+
+	// GCC 8 for OS4 with adtools clib2
+	buildBase.os4.gcc8.adtools.amd64,
+	buildBase.os4.gcc8.adtools.arm64,
+	buildManifest.os4.gcc8.adtools.base,
+
+	buildMain.os4.gcc8.adtools.amd64,
+	buildMain.os4.gcc8.adtools.arm64,
+	buildManifest.os4.gcc8.adtools.full,
+	
+	// GCC 8 for OS4 with afxgroup clib2
+	buildBase.os4.gcc8.afxgroup.amd64,
+	buildBase.os4.gcc8.afxgroup.arm64,
+	buildManifest.os4.gcc8.afxgroup.base,
+
+	buildMain.os4.gcc8.afxgroup.amd64,
+	buildMain.os4.gcc8.afxgroup.arm64,
+	buildManifest.os4.gcc8.afxgroup.full,
 ]

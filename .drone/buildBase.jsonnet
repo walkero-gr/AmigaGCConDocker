@@ -61,20 +61,26 @@ local buildBase(_arch='amd64', _clib2_repo='adtools', _clib2_src='git', _os='os4
 	};
 
 {
-	os4_gcc11_adtools: {
-		amd64: buildBase('amd64', 'adtools', 'git', 'os4', 11),
-		arm64: buildBase('arm64', 'adtools', 'git', 'os4', 11)
-	},
-	os4_gcc11_afxgroup: {
-		amd64: buildBase('amd64', 'afxgroup', 'git', 'os4', 11),
-		arm64: buildBase('arm64', 'afxgroup', 'git', 'os4', 11)
-	},
-	os4_gcc8_adtools: {
-		amd64: buildBase('amd64', 'adtools', 'git', 'os4', 8),
-		arm64: buildBase('arm64', 'adtools', 'git', 'os4', 8)
-	},
-	os4_gcc8_afxgroup: {
-		amd64: buildBase('amd64', 'afxgroup', 'git', 'os4', 8),
-		arm64: buildBase('arm64', 'afxgroup', 'git', 'os4', 8)
-	},
+	os4: {
+		gcc11: {
+			adtools: {
+				amd64: buildBase('amd64', 'adtools', 'git', 'os4', 11),
+				arm64: buildBase('arm64', 'adtools', 'git', 'os4', 11)
+			},
+			afxgroup: {
+				amd64: buildBase('amd64', 'afxgroup', 'git', 'os4', 11),
+				arm64: buildBase('arm64', 'afxgroup', 'git', 'os4', 11)
+			}
+		},
+		gcc8: {
+			adtools: {
+				amd64: buildBase('amd64', 'adtools', 'git', 'os4', 8),
+				arm64: buildBase('arm64', 'adtools', 'git', 'os4', 8)
+			},
+			afxgroup: {
+				amd64: buildBase('amd64', 'afxgroup', 'git', 'os4', 8),
+				arm64: buildBase('arm64', 'afxgroup', 'git', 'os4', 8)
+			}
+		}
+	}
 }
