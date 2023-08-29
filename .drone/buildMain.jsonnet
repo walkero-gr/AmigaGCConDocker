@@ -22,7 +22,7 @@ local buildMain(_arch='amd64', _clib2_repo='adtools', _os='os4', _gcc=11) =
 						'walkero/amigagccondocker:' + _name
 					],
 					"dockerfile": 'os4.Dockerfile',
-					// "purge": true,
+					"purge": true,
 					// "dry_run": true,
 					"compress": true,
 					"build_args": [
@@ -38,25 +38,25 @@ local buildMain(_arch='amd64', _clib2_repo='adtools', _os='os4', _gcc=11) =
 					},
 				}
 			},
-			{
-				"name": 'test-main',
-				"image": 'walkero/amigagccondocker:' + _name,
-				"commands": [
-					'cd tests/os4',
-					'su amidev',
-					'ppc-amigaos-gcc -o test test.c',
-					'ppc-amigaos-g++ -athread=native test2.c -o test2',
-					'ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread',
-					'ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget',
-					'cd /opt/sdk/ppc-amigaos/Examples/GUI/Window/',
-					'ppc-amigaos-gcc -o Window Window.c -lauto',
-					'ppc-amigaos-gcc -o WindowPopup WindowPopup.c -lauto',
-					'ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto',
-				],
-				"depends_on": [
-					'build-main'
-				]
-			}
+			// {
+			// 	"name": 'test-main',
+			// 	"image": 'walkero/amigagccondocker:' + _name,
+			// 	"commands": [
+			// 		'cd tests/os4',
+			// 		'su amidev',
+			// 		'ppc-amigaos-gcc -o test test.c',
+			// 		'ppc-amigaos-g++ -athread=native test2.c -o test2',
+			// 		'ppc-amigaos-gcc -gstabs -athread=native sdl_example.c -o sdl_example -I${SDL2_INC} -L${SDL2_LIB} -lSDL2 -lpthread',
+			// 		'ppc-amigaos-gcc -D__USE_INLINE__ httpget.c -o httpget',
+			// 		'cd /opt/sdk/ppc-amigaos/Examples/GUI/Window/',
+			// 		'ppc-amigaos-gcc -o Window Window.c -lauto',
+			// 		'ppc-amigaos-gcc -o WindowPopup WindowPopup.c -lauto',
+			// 		'ppc-amigaos-gcc -o AppWindow AppWindow.c -lauto',
+			// 	],
+			// 	"depends_on": [
+			// 		'build-main'
+			// 	]
+			// }
 		],
 		"trigger": {
 			"branch": {
@@ -80,20 +80,26 @@ local buildMain(_arch='amd64', _clib2_repo='adtools', _os='os4', _gcc=11) =
 	};
 
 {
-	os4_gcc11_adtools: {
-		amd64: buildMain('amd64', 'adtools', 'os4', 11),
-		arm64: buildMain('arm64', 'adtools', 'os4', 11)
-	},
-	os4_gcc11_afxgroup: {
-		amd64: buildMain('amd64', 'afxgroup', 'os4', 11),
-		arm64: buildMain('arm64', 'afxgroup', 'os4', 11)
-	},
-	os4_gcc8_adtools: {
-		amd64: buildMain('amd64', 'adtools', 'os4', 8),
-		arm64: buildMain('arm64', 'adtools', 'os4', 8)
-	},
-	os4_gcc8_afxgroup: {
-		amd64: buildMain('amd64', 'afxgroup', 'os4', 8),
-		arm64: buildMain('arm64', 'afxgroup', 'os4', 8)
+	os4: {
+		gcc11: {
+			adtools: {
+				amd64: buildMain('amd64', 'adtools', 'os4', 11),
+				arm64: buildMain('arm64', 'adtools', 'os4', 11)
+			},
+			afxgroup: {
+				amd64: buildMain('amd64', 'afxgroup', 'os4', 11),
+				arm64: buildMain('arm64', 'afxgroup', 'os4', 11)
+			}
+		},
+		gcc8: {
+			adtools: {
+				amd64: buildMain('amd64', 'adtools', 'os4', 8),
+				arm64: buildMain('arm64', 'adtools', 'os4', 8)
+			},
+			afxgroup: {
+				amd64: buildMain('amd64', 'afxgroup', 'os4', 8),
+				arm64: buildMain('arm64', 'afxgroup', 'os4', 8)
+			}
+		}
 	}
 }
