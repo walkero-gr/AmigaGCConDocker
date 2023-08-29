@@ -19,7 +19,7 @@ local buildMain = import '.drone/buildMain.jsonnet';
 	// buildMain.os4_gcc11_afxgroup.arm64,
 	// buildManifest.os4_gcc11_afxgroup,
 
-	// buildBase.os4_gcc8_adtools.amd64,
+	buildBase.os4_gcc8_adtools.amd64,
 	// buildBase.os4_gcc8_adtools.arm64,
 	// buildManifest.os4_base_gcc8_adtools,
 	// buildBase.os4_gcc8_afxgroup.amd64,
