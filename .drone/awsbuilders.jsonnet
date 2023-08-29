@@ -28,7 +28,8 @@
 			"branch": {
 				"include": [
 					'master',
-					'main'
+					'main',
+					'baseos4'
 				]
 			},
 			"event": {

@@ -29,8 +29,7 @@ local buildBase(_arch='amd64', _clib2_repo='adtools', _clib2_src='git', _os='os4
 						'OS=' + _os,
 						'CLIB2_REPO=' + _clib2_repo,
 						'CLIB2_SRC=' + _clib2_src,
-						'GCC_VER=' + _gcc,
-						'FILES_PATH=./files'
+						'GCC_VER=' + _gcc
 					],
 					"username": {
 						"from_secret": 'DOCKERHUB_USERNAME'
@@ -44,8 +43,7 @@ local buildBase(_arch='amd64', _clib2_repo='adtools', _clib2_src='git', _os='os4
 		"trigger": {
 			"branch": {
 				"include": [
-					'master',
-					'main'
+					'baseos4'
 				]
 			},
 			"event": {
