@@ -30,7 +30,7 @@ local buildManifest(_clib2_repo='adtools', _os='os4', _base='', _gcc=11) =
 				"include": [
 					'master',
 					'main',
-					'baseos4'
+					if _base == 'base-' then 'baseos4' else 'fullos4'
 				]
 			},
 			"event": {
