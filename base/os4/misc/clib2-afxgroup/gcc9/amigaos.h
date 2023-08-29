@@ -118,11 +118,9 @@
         {					\
           error ("no CRT specified");		\
         }					\
-      else if (IS_MCRT("clib2") || IS_MCRT("clib2-ts")) \
+      else if (IS_MCRT("clib2")) \
         {					\
           builtin_define_std ("CLIB2");		\
-          if (IS_MCRT("clib2-ts"))		\
-            builtin_define ("__THREAD_SAFE");	\
         }					\
       else if (IS_MCRT("ixemul"))		\
         {					\
@@ -197,22 +195,18 @@
 #define CPP_CLIB2_SPEC "\
 -idirafter %(base_sdk)clib2/include -idirafter %(base_sdk)local/clib2/include"
 
-#define LIB_SUBDIR_CLIB2_SPEC "%{mcrt=clib2-ts:lib.threadsafe; :lib}%(lib_subdir_type)"
+#define LIB_SUBDIR_CLIB2_SPEC "lib%(lib_subdir_type)"
 
 #define LINK_CLIB2_SPEC "\
 -L%(base_sdk)clib2/%(lib_subdir_clib2) \
--L%(base_gcc)lib/gcc/ppc-amigaos/%(version)/%{mcrt=clib2-ts:clib2-ts; :clib2}/lib%(lib_subdir_type) \
+-L%(base_gcc)lib/gcc/ppc-amigaos/%(version)/clib2/%(lib_subdir_clib2) \
 -L%(base_sdk)local/clib2/%(lib_subdir_clib2)"
 
 #define STARTFILE_CLIB2_SPEC "\
-%(base_sdk)clib2/%{mcrt=clib2-ts:lib.threadsafe; :lib}" \
-                 "%{!msoft-float:%(lib_subdir_type)}/crtbegin.o \
-%(base_sdk)clib2/%{mcrt=clib2-ts:lib.threadsafe; :lib}" \
-                 "%{!msoft-float:%(lib_subdir_type)}/crt0.o"
+%{shared: %(base_sdk)clib2/%(lib_subdir_clib2)/shcrtbegin.o} %{!shared: %(base_sdk)clib2/%(lib_subdir_clib2)/crtbegin.o} %{!shared: %(base_sdk)clib2/%(lib_subdir_clib2)/crt0.o}"
 
 #define ENDFILE_CLIB2_SPEC "\
-%(base_sdk)clib2/%{mcrt=clib2-ts:lib.threadsafe; :lib}" \
-                 "%{!msoft-float:%(lib_subdir_type)}/crtend.o"
+%{shared: %(base_sdk)clib2/%(lib_subdir_clib2)/shcrtend.o} %{!shared: %(base_sdk)clib2/%(lib_subdir_clib2)/crtend.o}"
 
 /* ixemul */
 
@@ -268,7 +262,7 @@
 
 #undef CPP_OS_DEFAULT_SPEC
 #define CPP_OS_DEFAULT_SPEC "\
-%{mcrt=clib2|mcrt=clib2-ts: %(cpp_clib2); \
+%{mcrt=clib2: %(cpp_clib2); \
 mcrt=ixemul: %(cpp_ixemul); \
 mcrt=libnix: %(cpp_libnix); \
 mcrt=newlib: %(cpp_newlib); \
@@ -287,7 +281,7 @@ mcrt=default|!mcrt=*: %{mcrt=default|!nostdinc: %(cpp_amiga_default)}; \
 %{Qy:} %{!Qn:-Qy} \
 %(link_thread) %(link_shlib) %(link_text) \
 %{mbaserel: %{msdata|msdata=default|msdata=sysv: %e-mbaserel and -msdata options are incompatible}} \
-%{mcrt=clib2|mcrt=clib2-ts: %(link_clib2); \
+%{mcrt=clib2: %(link_clib2); \
 mcrt=ixemul: %(link_ixemul); \
 mcrt=libnix: %(link_libnix); \
 mcrt=newlib: %(link_newlib); \
@@ -312,7 +306,7 @@ mcrt=default|!mcrt=*: %(link_amiga_default); \
 
 #undef STARTFILE_SPEC
 #define STARTFILE_SPEC "\
-%{mcrt=clib2|mcrt=clib2-ts: %(startfile_clib2); \
+%{mcrt=clib2: %(startfile_clib2); \
 mcrt=ixemul: %(startfile_ixemul); \
 mcrt=libnix: %(startfile_libnix); \
 mcrt=newlib: %(startfile_newlib); \
@@ -321,7 +315,7 @@ mcrt=default|!mcrt=*: %(startfile_amiga_default); \
 
 #undef ENDFILE_SPEC
 #define ENDFILE_SPEC "\
-%{mcrt=clib2|mcrt=clib2-ts: %(endfile_clib2); \
+%{mcrt=clib2: %(endfile_clib2); \
 mcrt=ixemul: %(endfile_ixemul); \
 mcrt=libnix: %(endfile_libnix); \
 mcrt=newlib: %(endfile_newlib); \

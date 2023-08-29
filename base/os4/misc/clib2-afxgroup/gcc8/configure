@@ -29217,6 +29217,117 @@ case "${host}" in
     # This is a freestanding configuration; there is nothing to do here.
     ;;
 
+  *amigaos*)
+      # RJD:
+      #
+      # When we build the cross compiler we define variables such as
+      # MULTILIB_OPTIONS (see 0001-Changes-for-AmigaOS-version-of-gcc.patch)
+      # which instructs the build to build for both NEWLIB and CLIB2. In the
+      # case that we are building experimental clib2 (AFXGROUP) we want to force
+      # the libstdc++ library to NOT define the following math functions since
+      # they are already in the C-library.
+      #
+      # To do this, we check that the EXP_CLIB2 option is set and that PWD
+      # contains "clib2". That way, we do not change anything for NEWLIB or
+      # "classic" CLIB2.
+      #
+      # TODO: Is there a better way to check this?
+      # if [[ "${EXP_CLIB2}" == "1" && "${PWD}" =~ /clib2/ ]]
+      # then
+	  $as_echo "#define HAVE_ACOSF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ASINF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ATAN2F 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ATANF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_CEILF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_COSF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_COSHF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_EXPF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FABSF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FLOORF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FMODF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FREXPF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_SQRTF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_HYPOTF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_LDEXPF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_LOG10F 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_LOGF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_MODFF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_POWF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_SINF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_SINHF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_TANF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_TANHF 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FABSL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ACOSL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ASINL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ATANL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_ATAN2L 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_CEILL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_COSL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_COSHL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_EXPL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FLOORL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FMODL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_FREXPL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_SQRTL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_HYPOTL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_LDEXPL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_LOGL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_LOG10L 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_MODFL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_POWL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_SINL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_SINHL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_TANL 1" >>confdefs.h
+
+	  $as_echo "#define HAVE_TANHL 1" >>confdefs.h
+      # fi
+    ;;
+
   avr*-*-*)
     $as_echo "#define HAVE_ACOSF 1" >>confdefs.h
 
