@@ -13,7 +13,6 @@ FROM ubuntu:latest AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG GCC_VER
-ARG FILES_PATH
 ARG CLIB2_REPO
 ARG CLIB2_SRC
 
@@ -63,9 +62,6 @@ COPY --from=git-clone /repos/binutils-gdb /opt/adtools/binutils/repo
 COPY --from=git-clone /repos/coreutils /opt/adtools/coreutils/repo
 COPY --from=git-clone /repos/gnulib /opt/adtools/gnulib/repo
 COPY misc /opt/misc
-
-# Get custom makefiles before we compile GCC
-COPY ${FILES_PATH}/native-build/makefile /opt/adtools/native-build/makefile
 
 WORKDIR /opt/adtools
 

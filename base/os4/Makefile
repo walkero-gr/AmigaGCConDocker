@@ -12,9 +12,8 @@ SDK?=54.16
 REPO=walkero/amigagccondocker
 TAG?=$(OS)-base-gcc$(GCC)-$(CLIB2_REPO)
 NAME=$(TAG)
-# VOLUMES?=-v "${PWD}/misc":/opt/misc
+VOLUMES?=-v "${PWD}/out":/opt/out
 WORKSPACE=-w /opt/adtools
-FILESPATH=./files
 REPOSPATH=./repos
 
 .PHONY: build buildnc shell push logs clonerepos pullrepos clean test release
@@ -51,7 +50,6 @@ build:
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg GCC_VER=$(GCC) \
-		--build-arg FILES_PATH=$(FILESPATH) \
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
 		--build-arg SDK_VER=$(SDK) .
@@ -61,7 +59,6 @@ buildnc:
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg GCC_VER=$(GCC) \
-		--build-arg FILES_PATH=$(FILESPATH) \
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
 		--build-arg SDK_VER=$(SDK) .

@@ -10,6 +10,9 @@
 # present, in which case the cross compiler build is skipped, e.g.:
 #
 #  make CROSS_IS_PRESENT=1
+# 
+# This makefile is heavily changed for the AmigaGCConDocker project
+# https://github.com/walkero-gr/AmigaGCConDocker
 #
 
 ROOT_DIR=$(realpath .)
