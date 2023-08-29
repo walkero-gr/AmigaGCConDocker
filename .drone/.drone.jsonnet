@@ -1,7 +1,7 @@
-local awsbuilder = import 'awsbuilders.jsonnet';
-local buildBase = import 'buildBase.jsonnet';
-local buildManifest = import 'buildManifest.jsonnet';
-local buildMain = import 'buildMain.jsonnet';
+local awsbuilder = import '.drone/awsbuilders.jsonnet';
+local buildBase = import '.drone/buildBase.jsonnet';
+local buildManifest = import '.drone/buildManifest.jsonnet';
+local buildMain = import '.drone/buildMain.jsonnet';
 
 [
 	awsbuilder['poweron'],
