@@ -29,7 +29,8 @@ local buildManifest(_clib2_repo='adtools', _os='os4', _base='', _gcc=11) =
 			"branch": {
 				"include": [
 					'master',
-					'main'
+					'main',
+					'baseos4'
 				]
 			},
 			"event": {
