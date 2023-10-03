@@ -23,8 +23,8 @@ if [ X"$CLIB2_REPO" = X"afxgroup" ]; then
 	echo "-------- amigaos4-clib2 INSTALLED"
 	# These files are necessary so that shared libraries work with afxgroup's clib2
 	# and math duplication issues to be solved
-	\cp /opt/misc/clib2-afxgroup/gcc$GCC_VER/amigaos.h /opt/adtools/gcc/repo/gcc/config/rs6000/ && \
-		\cp /opt/misc/clib2-afxgroup/gcc$GCC_VER/configure /opt/adtools/gcc/repo/libstdc++-v3/
+	\cp /opt/misc/clib2-afxgroup/gcc/$GCC_VER/amigaos.h /opt/adtools/gcc/repo/gcc/config/rs6000/ && \
+		\cp /opt/misc/clib2-afxgroup/gcc/$GCC_VER/configure /opt/adtools/gcc/repo/libstdc++-v3/
 
 	echo "-------- PATCHES COPIED"
 fi;
