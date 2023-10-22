@@ -89,6 +89,10 @@ local buildMain(_arch='amd64', _clib2_repo='adtools', _os='os4', _gcc=11) =
 			afxgroup: {
 				amd64: buildMain('amd64', 'afxgroup', 'os4', 11),
 				arm64: buildMain('arm64', 'afxgroup', 'os4', 11)
+			},
+			exp: {
+				amd64: buildMain('amd64', 'exp', 'os4', 11),
+				arm64: buildMain('arm64', 'exp', 'os4', 11)
 			}
 		},
 		gcc8: {

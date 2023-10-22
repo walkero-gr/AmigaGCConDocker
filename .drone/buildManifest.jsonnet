@@ -53,6 +53,10 @@ local buildManifest(_clib2_repo='adtools', _os='os4', _base='', _gcc=11) =
 			afxgroup: {
 				base: buildManifest('afxgroup', 'os4', 'base-', 11),
 				full: buildManifest('afxgroup', 'os4', '', 11)
+			},
+			exp: {
+				base: buildManifest('exp', 'os4', 'base-', 11),
+				full: buildManifest('exp', 'os4', '', 11)
 			}
 		},
 		gcc8: {
