@@ -17,30 +17,34 @@ There are **amd64** and **arm64** images, ready to be used on any system having 
 
 The `os4-gccX-adtools` images are the complete images that should be used for development. These include the gcc compiler as well as the available SDKs. Different ENV variables are set for easier usage and access to the libraries. 
 
-There is also the `os4-gccX-afxgroup` that includes the new [clib2 by afxgroup](https://github.com/afxgroup/clib2) which is a WIP and more experimental right now.
+  Available tags:
+  - GCC 8: `os4-gcc8-adtools`
+  - GCC 9: `os4-gcc9-adtools`
+  - GCC 10: `os4-gcc10-adtools`
+  - GCC 11: `os4-gcc11-adtools`
+
+The `os4-base-adtools` are images that were used to compile gcc. There binaries and extra files are all included in the `os4-gccX-adtools` and `os4-gccX-exp`, therefore they are not useful for development.
 
   Available tags:
-  - GCC 8: `os4-gcc8-adtools`, `os4-gcc8-afxgroup`
-  - GCC 9: `os4-gcc9-adtools`, `os4-gcc9-afxgroup`
-  - GCC 10: `os4-gcc10-adtools`, `os4-gcc10-afxgroup`
-  - GCC 11: `os4-gcc11-adtools`, `os4-gcc11-afxgroup`
+  - GCC 8: `os4-base-gcc8-adtools`
+  - GCC 9: `os4-base-gcc9-adtools`
+  - GCC 10: `os4-base-gcc10-adtools`
+  - GCC 11: `os4-base-gcc11-adtools`
 
-The `os4-base-adtools` and the `os4-base-afxgroup` are images that were used to compile gcc. There binaries and extra files are all included in the `os4-gccX-adtools` and `os4-gccX-afxgroup`, therefore they are not useful for development.
+## Experimental docker images
 
-  Available tags:
-  - GCC 8: `os4-base-gcc8-adtools`, `os4-base-gcc8-afxgroup`
-  - GCC 9: `os4-base-gcc9-adtools`, `os4-base-gcc9-afxgroup`
-  - GCC 10: `os4-base-gcc10-adtools`, `os4-base-gcc10-afxgroup`
-  - GCC 11: `os4-base-gcc11-adtools`, `os4-base-gcc11-afxgroup`
+There is also the `os4-gcc11-exp` that includes the new [clib4 by afxgroup](https://github.com/afxgroup/clib2) which is a WIP. In future releases it will include updated versions of gcc, binutils and other components.
+
+This image has the clib4 and a plethora of compatible third party libraries installed. This can be used on application/games ports, but have in mind, as it is experimental, it might get broken at any time. If that happens please open an [issue](https://github.com/walkero-gr/AmigaGCConDocker/issues).
 
 ## GCC versions
 
 | docker image      | version |
 | ----------------- | ------- |
-| os4-gcc8, os4-gcc8-afxgroup  | 8.4.0  |
-| os4-gcc9, os4-gcc9-afxgroup  | 9.1.0  |
-| os4-gcc10, os4-gcc10-afxgroup | 10.3.0 |
-| os4-gcc11, os4-gcc11-afxgroup | 11.3.0 |
+| gcc8  | 8.4.0  |
+| gcc9  | 9.1.0  |
+| gcc10 | 10.3.0 |
+| gcc11 | 11.3.0 |
 
 ## Included SDKs
 
@@ -50,7 +54,7 @@ The `os4-base-adtools` and the `os4-base-afxgroup` are images that were used to 
 | MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                                                        |
 | SDL           | v1.2.16-rc2  | https://github.com/AmigaPorts/SDL/releases               |
 | SDL 2         | v2.26.5      | https://github.com/AmigaPorts/SDL-2.0/releases |
-| AmiSSL SDK    | 5.10         | https://github.com/jens-maus/amissl/releases    |
+| AmiSSL SDK    | 5.11         | https://github.com/jens-maus/amissl/releases    |
 | FlexCat       | 2.18         | https://github.com/adtools/flexcat/releases                              |
 | lha           | v2 PMA       | https://github.com/jca02266/lha.git                                               |
 | gl4es         | 1.2       | https://github.com/kas1e/GL4ES-SDK/releases                                               |
@@ -67,7 +71,7 @@ The list above is not complete and a lot more are included. They can be found un
 
 ## How to create a docker container
 
-To create a container based on one of these images, run in the terminal any of the following lines, based on which version of GCC is preferred:
+To create a docker container based on one of these images, run in the terminal any of the following lines, based on which version of GCC is preferred:
 
 ```bash
 docker run -it --rm --name gcc8-ppc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc8-adtools /bin/bash
@@ -118,7 +122,11 @@ To compile your project you have to get into the container, inside the `/opt/cod
 ## Available SDK paths in ENV variables
 The `os4-gccX-adtools` images have the following paths in ENV variables, which can be used in the compilation of an application. It is preferred the separated libraries be installed in their folders, to keep the files isolated and easier to update them, or even find problems. It is also possible for more libraries to be added externally, outside the Docker containers.
 
-The current ENV paths are:
+The newer docker images have the following ENV paths:
+* **SDK_PATH**: /opt/ppc-amigaos/ppc-amigaos/SDK
+* **MUI50_INC**: /opt/ppc-amigaos/ppc-amigaos/SDK/MUI_5.0/C/include
+
+The older docker images (created before Oct'23) have the following ENV paths:
 * **AOS4_SDK_INC**: /opt/sdk/ppc-amigaos/Include/include_h
 * **AOS4_NET_INC**: /opt/sdk/ppc-amigaos/Include/netinclude
 * **AOS4_NLIB_INC**: /opt/sdk/ppc-amigaos/newlib/include
@@ -196,9 +204,8 @@ I recommend using VSCode with [Remote - Containers](https://marketplace.visualst
 		"eamodio.gitlens",
 		"EditorConfig.EditorConfig",
 		"Gruntfuggly.todo-tree",
-		"ms-vscode.cpptools",
+		"jbenden.c-cpp-flylint",
 		"patricklee.vsnotes",
-		"prb28.amiga-assembly",
 		"SanaAjani.taskrunnercode",
 		"twxs.cmake"
 	],

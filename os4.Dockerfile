@@ -13,14 +13,16 @@ FROM walkero/amigagccondocker:${OS}-base-gcc${GCC_VER}-${CLIB2_REPO} as adtools-
 # SDK Setup image
 FROM ubuntu:latest AS sdk-builder
 
-# ARG DEBIAN_FRONTEND=noninteractive
 ARG CLIB2_REPO
 ENV CLIB2_REPO=${CLIB2_REPO}
+ENV OS4_SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
+COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
 
-COPY scripts/os4.setup-sdk.sh /setup-sdk.sh
-RUN chmod +x /setup-sdk.sh && bash /setup-sdk.sh
+COPY scripts/os4.setup-sdk.sh /scripts/setup-sdk.sh
+COPY scripts/libs /scripts/libs
+RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
 
 
 ##############################################################################
@@ -35,8 +37,8 @@ ENV AMIDEV_USER_ID=1000 \
     AMIDEV_GROUP_ID=1000 \
     APPC="/opt/ppc-amigaos" \
     PATH="/opt/ppc-amigaos/bin:$PATH" \
-    SDK_PATH="/opt/sdk/ppc-amigaos" \
-    MUI50_INC="/opt/sdk/MUI_5.0/C/include"
+    SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK" \
+    MUI50_INC="/opt/ppc-amigaos/ppc-amigaos/SDK/MUI_5.0/C/include"
 
 ENV AS=${APPC}/bin/ppc-amigaos-as \
     LD=${APPC}/bin/ppc-amigaos-ld \
@@ -46,8 +48,7 @@ ENV AS=${APPC}/bin/ppc-amigaos-as \
     RANLIB=${APPC}/bin/ppc-amigaos-ranlib
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
-COPY --from=sdk-builder /opt/sdk /opt/sdk
-COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
+COPY --from=sdk-builder /opt/ppc-amigaos /opt/ppc-amigaos
 
 RUN ln -sf ${APPC}/bin/ppc-amigaos-as /usr/bin/as && \
     ln -sf ${APPC}/bin/ppc-amigaos-ar /usr/bin/ar && \

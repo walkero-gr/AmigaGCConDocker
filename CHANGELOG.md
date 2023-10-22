@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2023-10-22
+### Changed
+- The afxgroup images will stop being updated and the **Exp**erimental docker images, are introduced, that will include clib4 and latest binutils
+- The SDK files are now under `/opt/ppc-amigaos/ppc-amigaos/SDK`
+
 ## 2023-08-21
 ### Changed
 - Changed the way the clib2 by afxgroup libraries are installed, fixing some conflicts and making them exist in the Arm64 images

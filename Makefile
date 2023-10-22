@@ -1,7 +1,7 @@
 # os4, os3, mos
 OS?=os4
 # 8,9,10,11 can be used here
-GCC?=8
+GCC?=11
 # adtools, afxgroup
 CLIB2_REPO?=adtools
 
@@ -52,11 +52,25 @@ buildnc:
 		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg GCC_VER=$(GCC) .
 
+build-exp:
+	docker build -f ./$(OS).Dockerfile \
+		-t $(REPO):$(OS)-gcc$(GCC)-exp \
+		--progress plain \
+		--build-arg OS=$(OS) \
+		--build-arg CLIB2_REPO=exp \
+		--build-arg GCC_VER=$(GCC) .
+
 shell:
-	docker run -it --rm --name $(NAME)$(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+
+shell-exp:
+	docker run -it --rm --name $(OS)-gcc$(GCC)-exp $(VOLUMES) $(WORKSPACE) $(REPO):$(OS)-gcc$(GCC)-exp /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)
+
+push-exp:
+	docker push $(REPO):$(OS)-gcc$(GCC)-exp
 
 logs:
 	docker logs $(NAME)

@@ -20,6 +20,7 @@ PACKAGES="bison \
 	mc \
 	mercurial \
 	meson \
+	nano \
 	pkg-config \
 	python2.7 \
 	python3 \
@@ -35,8 +36,8 @@ apt-get update && apt-get -y dist-upgrade && \
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 mkdir -p /opt/code
-rm -rf ${APPC}/ppc-amigaos/SDK && \
-	ln -s /opt/sdk/ppc-amigaos/ ${APPC}/ppc-amigaos/SDK
+# rm -rf ${APPC}/ppc-amigaos/SDK && \
+# 	ln -s /opt/sdk/ppc-amigaos/ ${APPC}/ppc-amigaos/SDK
 
 cd /tmp
 
