@@ -2,7 +2,7 @@
 FROM alpine/git:2.40.1 AS git-clone
 
 RUN mkdir /repos; \
-    git clone https://github.com/sba1/adtools           /repos/adtools --depth 1; \
+    git clone https://github.com/3246251196/adtools.git /repos/adtools-rjd324 --depth 1; \
     git clone https://github.com/bminor/binutils-gdb    /repos/binutils-gdb; \
     git clone https://github.com/coreutils/coreutils    /repos/coreutils; \
     git clone https://github.com/coreutils/gnulib       /repos/gnulib
@@ -12,12 +12,8 @@ FROM ubuntu:latest AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG GCC_VER
-ARG CLIB2_REPO
-ARG CLIB2_SRC
 
 ENV GCC_VER=${GCC_VER}
-ENV CLIB2_REPO=${CLIB2_REPO}
-ENV CLIB2_SRC=${CLIB2_SRC}
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 
@@ -56,7 +52,7 @@ RUN apt-get update && \
     ln -s /usr/bin/gcc-10 /usr/bin/gcc;
 
 # Copy necessary repos from git-clone
-COPY --from=git-clone /repos/adtools /opt/adtools
+COPY --from=git-clone /repos/adtools-rjd324 /opt/adtools
 COPY --from=git-clone /repos/binutils-gdb /opt/adtools/binutils/repo
 COPY --from=git-clone /repos/coreutils /opt/adtools/coreutils/repo
 COPY --from=git-clone /repos/gnulib /opt/adtools/gnulib/repo
@@ -64,7 +60,7 @@ COPY misc /opt/misc
 
 WORKDIR /opt/adtools
 
-COPY scripts/compile-adtools.sh /compile-adtools.sh
+COPY scripts/compile-adtools-exp.sh /compile-adtools.sh
 RUN chmod +x /compile-adtools.sh && bash /compile-adtools.sh
 
 
@@ -72,4 +68,5 @@ RUN chmod +x /compile-adtools.sh && bash /compile-adtools.sh
 # Final Base environment image
 FROM ubuntu:latest
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
+
 COPY --from=builder /opt/ppc-amigaos /opt/ppc-amigaos

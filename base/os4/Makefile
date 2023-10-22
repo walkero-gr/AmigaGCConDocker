@@ -1,7 +1,7 @@
 # os4, os3, mos
 OS?=os4
 # 8,9,10,11 can be used here
-GCC?=8
+GCC?=11
 # adtools, afxgroup
 CLIB2_REPO?=adtools
 # apt,git,release
@@ -16,7 +16,7 @@ VOLUMES?=-v "${PWD}/out":/opt/out
 WORKSPACE=-w /opt/adtools
 REPOSPATH=./repos
 
-.PHONY: build buildnc shell push logs clonerepos pullrepos clean test release
+.PHONY: build buildnc build-exp shell push logs clean test release
 
 default: help
 
@@ -27,10 +27,9 @@ help:
 	@echo "build            - Build the Docker image"
 	@echo "buildnc          - Pull the latest repos' code and build the Docker image"
 	@echo "                   without using caching"
+	@echo "build-exp        - Build the experiment Docker image, with gcc11 and clib4"
 	@echo "shell            - Create a container with the latest Docker image and get"
 	@echo "                   into it"
-	@echo "clonerepos       - Clone the necessary repositories under repos folder."
-	@echo "pullrepos        - Pull the latest code for the projects under repos folder."
 	@echo "clean            - Remove the docker container, if this still exists."
 	@echo ""
 	@echo "Parameters that can be used with build rules:"
@@ -63,28 +62,23 @@ buildnc:
 		--build-arg CLIB2_SRC=$(CLIB2_SRC) \
 		--build-arg SDK_VER=$(SDK) .
 
+build-exp:
+	docker build -f ./exp.Dockerfile \
+		-t $(REPO):$(OS)-base-gcc$(GCC)-exp \
+		--progress plain \
+		--build-arg GCC_VER=11 .
+
 shell:
 	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+
+shell-exp:
+	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(OS)-base-gcc$(GCC)-exp /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)
 
 logs:
 	docker logs $(NAME)
-
-clonerepos:
-	git clone https://github.com/sba1/adtools              $(REPOSPATH)/adtools
-	git clone https://github.com/3246251196/adtools.git    $(REPOSPATH)/adtools-rjd324
-	git clone https://github.com/bminor/binutils-gdb       $(REPOSPATH)/binutils-gdb
-	git clone https://github.com/coreutils/coreutils       $(REPOSPATH)/coreutils
-	git clone https://github.com/coreutils/gnulib          $(REPOSPATH)/gnulib
-
-pullrepos:
-	git -C $(REPOSPATH)/adtools pull
-	git -C $(REPOSPATH)/adtools-rjd324 pull
-	git -C $(REPOSPATH)/binutils-gdb pull
-	git -C $(REPOSPATH)/coreutils pull
-	git -C $(REPOSPATH)/gnulib pull
 
 clean:
 	-docker rm -f $(NAME)
