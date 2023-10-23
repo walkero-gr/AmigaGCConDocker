@@ -47,11 +47,10 @@ WORKDIR /opt/adtools
 RUN git config --global user.email "walkero@gmail.com"; \
     git config --global user.name "Georgios Sokianos"; \
     git clone https://github.com/3246251196/adtools_testing.git . && \
-        \cp /opt/misc/adtools_mod ./ 
-#         && \
-#         ./adt -b -e beta10 -o /opt/ppc-amigaos/ -m adtools_mod && \
-#         ./adt -x -t;
+        \cp /opt/misc/adtools_mod ./ && \
+        ./adt -b -e beta10 -o /opt/ppc-amigaos/ -m adtools_mod && \
+        ./adt -x -t;
 
-# FROM ubuntu:latest
-# LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
-# COPY --from=builder /opt/ppc-amigaos /opt/ppc-amigaos
+FROM ubuntu:latest
+LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
+COPY --from=builder /opt/ppc-amigaos /opt/ppc-amigaos

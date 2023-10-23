@@ -1,10 +1,25 @@
 #!/bin/bash --
-# Insert any modifications to ADTOOLS before building it here:
-set -e
-set -u
 
-# overwrite the configure file for clib2 (BTW, doesn't this also affect newlib which is probably not desired? @afxgroup)
-cp /opt/misc/configure gcc/repo/libstdc++-v3/
+# WHEN THIS SCRIPT IS INVOKED YOU ARE ALREADY INSIDE THE CHECKED OUT LOCATION OF ADTOOLS
 
-# overwrite the rs6k file with the one from CLIB2.
-sed -i '115i\	cp /opt/misc/amigaos.h ../gcc/repo/gcc/config/rs6000/' native-build/makefile
+# In the case we are not building with "experimental CLIB2" change
+# nothing!
+if (( EXP_CLIB2 )) # otherwise:
+then
+    # 1 - we add to the configure file that the library: libstdc++
+    #     shall not generate functions for FLOAT/LONG math function
+    #     since they are already provided in BETA10 CLIB2. Remove this
+    #     if not using BETA10 or lower. June 2023.
+    #
+    #     This is does not affect the NEWLIB library! There is a
+    #     conditional check for CLIB2 in this configure file (md5sum:
+    #     dba03acc83bdc8ab1190ffb1dd1bb62b)
+    cp /home/rjd/Downloads/configure_use gcc/repo/libstdc++-v3/configure
+    
+    # 2 - The linker script from EXPCLIB2 needs to be used otherwise
+    #     linking with shared objects is broken etc
+    sed -i '115i\	cp downloads/clib2/misc/amigaos.h ../gcc/repo/gcc/config/rs6000/' native-build/makefile
+    
+    # 3 - We also want to build SHARED LIBRARIES for CLIB2
+    sed -i 's|SHARED=no|SHARED=yes|' native-build/makefile
+fi
