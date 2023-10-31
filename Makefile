@@ -6,10 +6,13 @@ GCC?=11
 CLIB2_REPO?=adtools
 
 REPO?=walkero/amigagccondocker
-TAG?=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
+TAG?=$(OS)-gcc$(GCC)
+ifneq ($(strip $(CLIB2_REPO)),)
+TAG=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
+endif
 VOLUMES?=-v "${PWD}/code":/opt/code
 WORKSPACE?=-w /opt/code
-NAME?=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
+NAME?=$(TAG)
 
 .PHONY: build buildnc shell push logs clean test release
 
