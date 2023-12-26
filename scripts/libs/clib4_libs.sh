@@ -74,8 +74,8 @@ CLIB2_PACKAGES="\
 # openssl-clib2         \
 # openssl3-clib2        \
 
-
 CLIB4_PACKAGES="\
+	freetype2-clib4		\
 	gdbm-clib4			\
 	giflib-clib4		\
 	gmp-clib4			\
@@ -84,11 +84,20 @@ CLIB4_PACKAGES="\
 	libagg2-clib4		\
 	libbrotli-clib4		\
 	libbz2-clib4		\
+	libcairo-clib4		\
+	libcares-clib4		\
+	libdeflate-clib4	\
 	libev-clib4			\
 	libexif-clib4		\
 	libexpat-clib4		\
+	libfast-lzma2-clib4	\
 	libffi-clib4		\
+	libflac-clib4		\
+	libfmt-clib4		\
+	libgl4es-clib4		\
 	libglm-clib4		\
+	libharfbuzz-clib4	\
+	libicu-clib4		\
 	libidn2-clib4		\
 	libiodbc-clib4		\
 	libmad-clib4		\
@@ -98,24 +107,34 @@ CLIB4_PACKAGES="\
 	libnghttp3-clib4	\
 	libngtcp2-clib4		\
 	libogg-clib4		\
+	libopenjp2-clib4	\
 	libpng16-clib4		\
 	libpsl-clib4		\
 	librtmp-clib4		\
 	libstb-clib4		\
+	libtiff-clib4		\
 	libunistring-clib4	\
+	libvorbis-clib4		\
+	libwebp-clib4		\
 	libxml2-clib4		\
 	libxslt-clib4		\
+	libxxhash-clib4		\
+	little-cms-clib4	\
+	lz4-clib4			\
 	mpc-clib4			\
 	mpfr-clib4			\
 	opencore-amr-clib4	\
+	opengles-clib4		\
 	openssl-quic-clib4	\
 	pcre-clib4			\
 	pcre2-clib4			\
+	pixman1-clib4		\
 	sqlite-clib4		\
-	theora-clib4"
+	theora-clib4		\
+	zlib-clib4"
 
 # Removed because of conflicts
-# zlib-clib4
+# minigl-clib4, , libungif-clib4, libsdl2-minigl-clib4
 
 if [ -d "$OS4_SDK_PATH/clib4" ]; then
 echo "---> Install clib4 libraries";
@@ -128,8 +147,8 @@ echo "---> Install clib4 libraries";
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
 	# They are saved under /user/ppc-amigaos
 	dpkg --add-architecture amd64;
-	curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib2.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib2.gpg && \
-		echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib2.list && \
+	curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
+		echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
 		apt-get update;
 	apt-get -y --no-install-recommends install $CLIB4_PACKAGES
 	\cp -r /usr/ppc-amigaos/SDK/local/* ${OS4_SDK_PATH}/local/

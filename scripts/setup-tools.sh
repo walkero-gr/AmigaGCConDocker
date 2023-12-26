@@ -1,6 +1,12 @@
 #!/usr/bin/bash
 
-PACKAGES="bison \
+PACKAGES="\
+	autoconf \
+	automake \
+	autopoint \
+	bison \
+	build-essential \
+	ccache \
 	cmake \
 	cppcheck \
 	curl \
@@ -16,6 +22,7 @@ PACKAGES="bison \
 	libmpc-dev \
 	libmpfr6 \
 	libmpfr-dev \
+	libtool \
 	make \
 	mc \
 	mercurial \
