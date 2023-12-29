@@ -15,7 +15,7 @@ FROM ubuntu:latest AS sdk-builder
 
 ARG CLIB2_REPO
 ENV CLIB2_REPO=${CLIB2_REPO}
-ENV OS4_SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
+ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos

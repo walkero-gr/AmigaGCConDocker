@@ -136,12 +136,12 @@ CLIB4_PACKAGES="\
 # Removed because of conflicts
 # minigl-clib4, , libungif-clib4, libsdl2-minigl-clib4
 
-if [ -d "$OS4_SDK_PATH/clib4" ]; then
+if [ -d "$SDK_PATH/clib4" ]; then
 echo "---> Install clib4 libraries";
 	# curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v1.2.16-rc2-amigaos4/SDL.lha" -o /tmp/SDL.lha && \
 	# 	lha -xfq2 SDL.lha && \
-	# 	cp -r ./SDL/SDK/local/* ${OS4_SDK_PATH}/local/ && \
-	# 	mv ./SDL/docs ${OS4_SDK_PATH}/local/Documentation/SDL && \
+	# 	cp -r ./SDL/SDK/local/* ${SDK_PATH}/local/ && \
+	# 	mv ./SDL/docs ${SDK_PATH}/local/Documentation/SDL && \
 	# 	rm -rf /tmp/*;
 
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
@@ -150,11 +150,15 @@ echo "---> Install clib4 libraries";
 	curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
 		echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
 		apt-get update;
-	apt-get -y --no-install-recommends install $CLIB4_PACKAGES
-	\cp -r /usr/ppc-amigaos/SDK/local/* ${OS4_SDK_PATH}/local/
+	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES
+	\cp -r /usr/ppc-amigaos/SDK/local/* ${SDK_PATH}/local/
+
+	# Necessary for paths in some pkgconfig files
+	mkdir -p /usr/ppc-amigaos/SDK/local && \
+	ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
 else
 echo "---> clib4 FOLDER NOT FOUND";
-echo "$OS4_SDK_PATH/clib4"
+echo "$SDK_PATH/clib4"
 fi
 
 
@@ -162,7 +166,7 @@ fi
 	# if [ X"$CLIB2_REPO" = X"afxgroup" ]; then
 	# 	echo "---> Install afxgroup clib2"
 	# 	# curl -fskSL "https://github.com/afxgroup/clib2/releases/download/v1.0.0-beta-9/clib2.lha" -o /tmp/clib2-afxgroup.lha; \
-	# 	# lha -xfq2w=$OS4_SDK_PATH clib2-afxgroup.lha;
+	# 	# lha -xfq2w=$SDK_PATH clib2-afxgroup.lha;
 		
 		# Install clib2 and libraries from afxgroup's Ubuntu repo. 
 		# They are saved under /user/ppc-amigaos
@@ -172,7 +176,7 @@ fi
 		# 	apt-get update;
 		# apt-get -y --no-install-recommends install $CLIB2_PACKAGES
 
-	# 	\cp -r /usr/ppc-amigaos/SDK/clib2 $OS4_SDK_PATH
+	# 	\cp -r /usr/ppc-amigaos/SDK/clib2 $SDK_PATH
 	# 	\cp -r /usr/ppc-amigaos/SDK/local/* /opt/sdk/ppc-amigaos/local/
-	# 	rm $OS4_SDK_PATH/local/clib2/lib/libpthread.a
+	# 	rm $SDK_PATH/local/clib2/lib/libpthread.a
 	# else

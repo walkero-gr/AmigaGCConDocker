@@ -13,6 +13,7 @@ PACKAGES="\
 	cvs \
 	flawfinder \
 	flex \
+	gettext \
 	git \
 	gperf \
 	libfl2 \
