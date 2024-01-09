@@ -75,6 +75,7 @@ CLIB2_PACKAGES="\
 # openssl3-clib2        \
 
 CLIB4_PACKAGES="\
+	amigaos4-clib4		\
 	freetype2-clib4		\
 	gdbm-clib4			\
 	giflib-clib4		\
@@ -151,7 +152,7 @@ echo "---> Install clib4 libraries";
 		echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
 		apt-get update;
 	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES
-	\cp -r /usr/ppc-amigaos/SDK/local/* ${SDK_PATH}/local/
+	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
 
 	# Necessary for paths in some pkgconfig files
 	mkdir -p /usr/ppc-amigaos/SDK/local && \
