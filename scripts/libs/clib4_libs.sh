@@ -155,6 +155,7 @@ echo "---> Install clib4 libraries";
 	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
 
 	# Necessary for paths in some pkgconfig files
+	rm -rf /usr/ppc-amigaos && \
 	mkdir -p /usr/ppc-amigaos/SDK/local && \
 	ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
 else

@@ -36,6 +36,7 @@ PACKAGES="\
 	ruby \
 	subversion \
 	sudo \
+	texinfo \
 	wget"
 	
 apt-get update && apt-get -y dist-upgrade && \
