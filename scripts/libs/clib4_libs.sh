@@ -79,7 +79,6 @@ CLIB4_PACKAGES="\
 	freetype2-clib4		\
 	gdbm-clib4			\
 	giflib-clib4		\
-	gmp-clib4			\
 	jansson-clib4		\
 	jpeg9d-clib4		\
 	libagg2-clib4		\
@@ -123,7 +122,6 @@ CLIB4_PACKAGES="\
 	little-cms-clib4	\
 	lz4-clib4			\
 	mpc-clib4			\
-	mpfr-clib4			\
 	opencore-amr-clib4	\
 	opengles-clib4		\
 	openssl-quic-clib4	\
@@ -136,6 +134,10 @@ CLIB4_PACKAGES="\
 
 # Removed because of conflicts
 # minigl-clib4, , libungif-clib4, libsdl2-minigl-clib4
+# 
+# Replaced by AmigLabs libs-ports
+# mpfr-clib4
+# gmp-clib4
 
 if [ -d "$SDK_PATH/clib4" ]; then
 echo "---> Install clib4 libraries";
