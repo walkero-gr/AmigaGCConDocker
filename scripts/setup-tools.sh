@@ -51,7 +51,7 @@ mkdir -p /opt/code
 cd /tmp
 
 # Install FlexCat
-echo "-> Install FlexCat";
+echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}";
 	curl -fsSL "https://github.com/adtools/flexcat/releases/download/2.18/FlexCat-2.18.lha" -o /tmp/FlexCat.lha && \
 		lha -xfq2 FlexCat.lha && \
 		cp ./FlexCat/Linux-i386/flexcat /usr/bin/ && \

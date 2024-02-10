@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # 
 
-echo "---> Install codesets library";
+echo -e "${CCPINK}${CCBOLD}\n---> Install codesets library${CCEND}";
 	curl -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \
 		lha -xfq2 codesets.lha && \
 		cp -r ./codesets/Developer/include/* ${SDK_PATH}/local/common/include/ && \

@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # 
 
-echo "---> Install sqlite3";
+echo -e "${CCPINK}${CCBOLD}\n---> Install sqlite3${CCEND}";
 	curl -fsSL "http://aminet.net/biz/dbase/sqlite-3.34.0-amiga.lha" -o /tmp/sqlite.lha && \
 		lha -xfq2 sqlite.lha && \
 		cp -r ./sqlite-3.34.0-amiga/build-ppc-amigaos/include/* ${SDK_PATH}/local/common/include/ && \

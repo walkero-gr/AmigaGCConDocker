@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2024-02-10
+### Added
+- Added a lot of libraries for newlib and clib2
+
+### Updated
+- Updated the clib4 libraries to the latest ones
+- Updated AmiSSL SDK to v5.14
+
 ## 2023-10-22
 ### Changed
 - The afxgroup images will stop being updated and the **Exp**erimental docker images, are introduced, that will include clib4 and latest binutils

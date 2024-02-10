@@ -11,7 +11,7 @@ mkdir -p $SDK_PATH
 cd /tmp
 
 # Install AmigaOS 4 SDK
-echo "---> Install AmigaOS 4 SDK";
+echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 	curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=127&amp;Itemid=127" -o /tmp/AmigaOS4-SDK.lha && \
 		lha -xfq2 AmigaOS4-SDK.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/exec*.lha && \
@@ -52,7 +52,7 @@ echo "---> Install AmigaOS 4 SDK";
 	ln -s $SDK_PATH/newlib/lib/libunix.a 	$SDK_PATH/newlib/lib/small-data/
 
 
-echo "-> Install libraries for newlib, clib2 and clib4";
+echo -e "${CCPINK}${CCBOLD}\n---> Install libraries for newlib, clib2 and clib4${CCEND}";
 find /scripts/libs -type f -name '*.sh' | while read i; do
 	bash "$i"
 done

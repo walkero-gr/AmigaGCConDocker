@@ -140,7 +140,7 @@ CLIB4_PACKAGES="\
 # gmp-clib4
 
 if [ -d "$SDK_PATH/clib4" ]; then
-echo "---> Install clib4 libraries";
+echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
 	# curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v1.2.16-rc2-amigaos4/SDL.lha" -o /tmp/SDL.lha && \
 	# 	lha -xfq2 SDL.lha && \
 	# 	cp -r ./SDL/SDK/local/* ${SDK_PATH}/local/ && \
@@ -161,7 +161,7 @@ echo "---> Install clib4 libraries";
 	mkdir -p /usr/ppc-amigaos/SDK/local && \
 	ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
 else
-echo "---> clib4 FOLDER NOT FOUND";
+echo -e "${CCRED}${CCBOLD}\n---> clib4 FOLDER NOT FOUND${CCEND}";
 echo "$SDK_PATH/clib4"
 fi
 

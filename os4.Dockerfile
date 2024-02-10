@@ -17,6 +17,17 @@ ARG CLIB2_REPO
 ENV CLIB2_REPO=${CLIB2_REPO}
 ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 
+ENV CCRED="\033[31m" \
+    CCGREEN="\033[32m" \
+    CCYELLOW="\033[33m" \
+    CCBLUE="\033[34m" \
+    CCPINK="\033[35m" \
+    CCLBLUE="\033[36m" \
+    CCEND="\033[0m" \
+    CCBOLD="\033[1m" \
+    CCITAL="\033[3m" \
+    CCUNDR="\033[4m"
+
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
 

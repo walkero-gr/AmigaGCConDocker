@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # 
 
-echo "---> Install OpenURL library";
+echo -e "${CCPINK}${CCBOLD}\n---> Install OpenURL library${CCEND}";
 	curl -fsSL "http://aminet.net/comm/www/OpenURL-7.18.lha" -o /tmp/openurl.lha && \
 		lha -xfq2 openurl.lha && \
 		cp -r ./OpenURL/Developer/C/include/* ${SDK_PATH}/local/common/include/ && \

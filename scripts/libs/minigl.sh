@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # 
 
-echo "---> Install latest MiniGL";
+echo -e "${CCPINK}${CCBOLD}\n---> Install latest MiniGL${CCEND}";
 	curl -fsSL "http://os4depot.net/share/driver/graphics/minigl.lha" -o /tmp/minigl.lha && \
 		lha -xfq2 minigl.lha && \
 		cp -r ./MiniGL/SDK/local/* ${SDK_PATH}/local/ && \
