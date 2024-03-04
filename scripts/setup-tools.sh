@@ -29,6 +29,7 @@ PACKAGES="\
 	mercurial \
 	meson \
 	nano \
+	pip \
 	pkg-config \
 	python3 \
 	splint \
@@ -50,6 +51,10 @@ mkdir -p /opt/code
 ln -s /usr/bin/python3 /usr/bin/python
 
 cd /tmp
+
+# Install Lizard linter
+echo -e "${CCPINK}${CCBOLD}\n---> Install Lizard linter${CCEND}";
+	pip install lizard
 
 # Install FlexCat
 echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}";
