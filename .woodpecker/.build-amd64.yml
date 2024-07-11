@@ -16,6 +16,7 @@ steps:
       cache_from:
         - walkero/amigagccondocker:os4-gcc11-amd64
       build_args:
+        - OS=os4
         - GCC_VER=11
       tags:
         - os4-gcc11-amd64
