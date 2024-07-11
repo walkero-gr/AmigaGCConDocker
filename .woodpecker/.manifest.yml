@@ -1,0 +1,40 @@
+labels:
+  role: generic
+
+steps:
+  - name: build-ppc-amigaos-latest-manifest
+    image: plugins/manifest
+    environment:
+      PULLREQUEST_DRONE_PULL_REQUEST: 0
+    settings:
+      target: "walkero/amigagccondocker:os4-gcc11"
+      template: "walkero/amigagccondocker:os4-gcc11-ARCH"
+      platforms:
+        - linux/amd64
+        - linux/arm64
+      username:
+        from_secret: DOCKERHUB_USERNAME
+      password:
+        from_secret: DOCKERHUB_PASSWORD
+  - name: build-ppc-amigaos-versioned-manifest
+    image: plugins/manifest
+    environment:
+      PULLREQUEST_DRONE_PULL_REQUEST: 0
+    settings:
+      target: "walkero/amigagccondocker:os4-gcc11-${CI_COMMIT_TAG}"
+      template: "walkero/amigagccondocker:os4-gcc11-${CI_COMMIT_TAG}-ARCH"
+      platforms:
+        - linux/amd64
+        - linux/arm64
+      username:
+        from_secret: DOCKERHUB_USERNAME
+      password:
+        from_secret: DOCKERHUB_PASSWORD
+
+when:
+  - branch: main
+    event: [tag]
+
+depends_on:
+  - build-amd64
+  - build-arm64
