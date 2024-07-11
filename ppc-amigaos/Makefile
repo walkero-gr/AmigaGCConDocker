@@ -4,9 +4,10 @@ OS?=os4
 GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
+REL?=2.0.0
 
 REPO?=walkero/amigagccondocker
-TAG?=$(OS)-gcc$(GCC)-1.0.0
+TAG?=$(OS)-gcc$(GCC)-$(REL)
 VOLUMES?=-v "${PWD}/code":/opt/code
 WORKSPACE?=-w /opt/code
 NAME?=$(OS)-gcc$(GCC)
@@ -32,38 +33,26 @@ help:
 	@echo ""
 
 build:
-	docker build -f ./$(OS).Dockerfile \
+	docker build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg OS=$(OS) \
-		--build-arg GCC_VER=$(GCC) .
+		--build-arg GCC_VER=$(GCC) \
+		--build-arg REL=$(REL) .
 
 buildnc:
-	docker build --no-cache -f ./$(OS).Dockerfile \
+	docker build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg OS=$(OS) \
-		--build-arg GCC_VER=$(GCC) .
-
-# build-exp:
-# 	docker build -f ./$(OS).Dockerfile \
-# 		-t $(REPO):$(OS)-gcc$(GCC)-exp \
-# 		--progress plain \
-# 		--build-arg OS=$(OS) \
-# 		--build-arg CLIB2_REPO=exp \
-# 		--build-arg GCC_VER=$(GCC) .
+		--build-arg GCC_VER=$(GCC) \
+		--build-arg REL=$(REL) .
 
 shell:
 	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
 
-# shell-exp:
-# 	docker run -it --rm --name $(OS)-gcc$(GCC)-exp $(VOLUMES) $(WORKSPACE) $(REPO):$(OS)-gcc$(GCC)-exp /bin/bash
-
 push:
 	docker push $(REPO):$(TAG)
-
-# push-exp:
-# 	docker push $(REPO):$(OS)-gcc$(GCC)-exp
 
 logs:
 	docker logs $(NAME)

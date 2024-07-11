@@ -1,4 +1,4 @@
-[![Build Status](https://drone-gh.intercube.gr/api/badges/walkero-gr/AmigaGCConDocker/status.svg)](https://drone-gh.intercube.gr/walkero-gr/AmigaGCConDocker)
+[![status-badge](https://cigh.walkero.gr/api/badges/2/status.svg)](https://cigh.walkero.gr/repos/2)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a2a863e7754e46c7bafaed8e47e8e41a)](https://www.codacy.com/gh/walkero-gr/AmigaGCConDocker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=walkero-gr/AmigaGCConDocker&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker/badge)](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker)
 [![Docker Pulls](https://img.shields.io/docker/pulls/walkero/amigagccondocker?color=brightgreen)](https://hub.docker.com/r/walkero/amigagccondocker)

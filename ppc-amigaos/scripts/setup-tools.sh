@@ -45,8 +45,6 @@ apt-get update && apt-get -y dist-upgrade && \
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 mkdir -p /opt/code
-# rm -rf ${APPC}/ppc-amigaos/SDK && \
-# 	ln -s /opt/sdk/ppc-amigaos/ ${APPC}/ppc-amigaos/SDK
 
 ln -s /usr/bin/python3 /usr/bin/python
 

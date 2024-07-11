@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.0.0 - [2024-07-11]
+### Added
+- Added pcre and pcre2 libraries
+
+### Changed
+- Changed the CI/CD to use woodpecker instead drone
+- Changed the repository structure to support image versioning in releases
+- Updated SDL 2.30.4
+
+# v1 Changelog
+
 ## 2024-02-10
 ### Added
 - Added a lot of libraries for newlib and clib2
