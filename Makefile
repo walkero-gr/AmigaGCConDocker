@@ -3,13 +3,13 @@ OS?=os4
 # 8,9,10,11 can be used here
 GCC?=11
 # adtools, afxgroup
-CLIB2_REPO?=adtools
+# CLIB2_REPO?=adtools
 
 REPO?=walkero/amigagccondocker
-TAG?=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
+TAG?=$(OS)-gcc$(GCC)-1.0.0
 VOLUMES?=-v "${PWD}/code":/opt/code
 WORKSPACE?=-w /opt/code
-NAME?=$(OS)-gcc$(GCC)-$(CLIB2_REPO)
+NAME?=$(OS)-gcc$(GCC)
 
 .PHONY: build buildnc shell push logs clean test release
 
@@ -21,17 +21,12 @@ help:
 	@echo ""
 	@echo "build            - Build the Docker image"
 	@echo "buildnc          - Build the Docker image without using cache"
-	@echo "shell            - Create a container with the latest Docker image and get"
-	@echo "                   into it"
-# @echo "clonerepos       - Clone the necessary repositories under repos folder."
-# @echo "pullrepos        - Pull the latest code for the projects under repos folder."
-# @echo "clean            - Remove the docker container, if this still exists."
+	@echo "shell            - Create a container with the latest Docker"
+	@echo "                   image and get into it"
 	@echo ""
 	@echo "Parameters that can be used with build rules:"
 	@echo "GCC              - defines the gcc version."
 	@echo "                   Possible values: 8 (default)/9/10/11"
-	@echo "CLIB2_REPO       - defines the clib2 repo to be cloned and used."
-	@echo "                   Possible values: adtools (default)/afxgroup"
 	@echo "OS               - defines the cross-compiler target OS"
 	@echo "                   Possible values: os4 (default)/os3/mos"
 	@echo ""
@@ -41,7 +36,6 @@ build:
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg OS=$(OS) \
-		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg GCC_VER=$(GCC) .
 
 buildnc:
@@ -49,28 +43,27 @@ buildnc:
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg OS=$(OS) \
-		--build-arg CLIB2_REPO=$(CLIB2_REPO) \
 		--build-arg GCC_VER=$(GCC) .
 
-build-exp:
-	docker build -f ./$(OS).Dockerfile \
-		-t $(REPO):$(OS)-gcc$(GCC)-exp \
-		--progress plain \
-		--build-arg OS=$(OS) \
-		--build-arg CLIB2_REPO=exp \
-		--build-arg GCC_VER=$(GCC) .
+# build-exp:
+# 	docker build -f ./$(OS).Dockerfile \
+# 		-t $(REPO):$(OS)-gcc$(GCC)-exp \
+# 		--progress plain \
+# 		--build-arg OS=$(OS) \
+# 		--build-arg CLIB2_REPO=exp \
+# 		--build-arg GCC_VER=$(GCC) .
 
 shell:
 	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
 
-shell-exp:
-	docker run -it --rm --name $(OS)-gcc$(GCC)-exp $(VOLUMES) $(WORKSPACE) $(REPO):$(OS)-gcc$(GCC)-exp /bin/bash
+# shell-exp:
+# 	docker run -it --rm --name $(OS)-gcc$(GCC)-exp $(VOLUMES) $(WORKSPACE) $(REPO):$(OS)-gcc$(GCC)-exp /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)
 
-push-exp:
-	docker push $(REPO):$(OS)-gcc$(GCC)-exp
+# push-exp:
+# 	docker push $(REPO):$(OS)-gcc$(GCC)-exp
 
 logs:
 	docker logs $(NAME)

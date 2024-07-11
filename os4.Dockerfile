@@ -4,17 +4,16 @@
 # adtools image
 ARG OS
 ARG GCC_VER
-ARG CLIB2_REPO
 
-FROM walkero/amigagccondocker:${OS}-base-gcc${GCC_VER}-${CLIB2_REPO} as adtools-image
+FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-1.1.0 as adtools-image
 
 
 ##############################################################################
 # SDK Setup image
-FROM ubuntu:latest AS sdk-builder
+FROM ubuntu:22.04 AS sdk-builder
 
-ARG CLIB2_REPO
-ENV CLIB2_REPO=${CLIB2_REPO}
+ARG OS
+ARG GCC_VER
 ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 
 ENV CCRED="\033[31m" \
@@ -38,11 +37,22 @@ RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
 
 ##############################################################################
 # Dev environment image
-FROM phusion/baseimage:jammy-1.0.1
+FROM phusion/baseimage:jammy-1.0.4
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
+
+ENV CCRED="\033[31m" \
+    CCGREEN="\033[32m" \
+    CCYELLOW="\033[33m" \
+    CCBLUE="\033[34m" \
+    CCPINK="\033[35m" \
+    CCLBLUE="\033[36m" \
+    CCEND="\033[0m" \
+    CCBOLD="\033[1m" \
+    CCITAL="\033[3m" \
+    CCUNDR="\033[4m"
 
 ENV AMIDEV_USER_ID=1000 \
     AMIDEV_GROUP_ID=1000 \

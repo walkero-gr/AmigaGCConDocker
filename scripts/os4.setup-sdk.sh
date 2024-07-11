@@ -23,10 +23,11 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 		lha -xfq2w=$SDK_PATH SDK_Install/cairo-*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/expat-*.lha && \
 		cp -r $SDK_PATH/Examples/Locale/include/internal/* $SDK_PATH/include/include_h/ && \
-		cp -r $SDK_PATH/Local/* $SDK_PATH/local/;
+		cp -r $SDK_PATH/Local/* $SDK_PATH/local/ && \
+		cp -r $SDK_PATH/Include/* $SDK_PATH/include/;
 	
 	rm -rf $SDK_PATH/Local $SDK_PATH/C $SDK_PATH/Data $SDK_PATH/S \
-			$SDK_PATH/*.info;
+		$SDK_PATH/*.info $SDK_PATH/Include;
 	rm -rf /tmp/*;
 
 	# Necessary links

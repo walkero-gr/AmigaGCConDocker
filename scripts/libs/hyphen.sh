@@ -2,7 +2,7 @@
 # 
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install hyphen library${CCEND}";
-	curl -fsSL "https://git.walkero.gr/attachments/34d7bbc2-b8a2-46ad-b30c-8e5bb8e2fb45" -o /tmp/libhyphen.lha && \
+	curl -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/hyphen/hyphen-2.8.8.lha" -o /tmp/libhyphen.lha && \
 		lha -xfq2 libhyphen.lha && \
-		\cp ./release/* ${SDK_PATH}/ -R && \
+		\cp -R ./SDK/* ${SDK_PATH}/ && \
 		rm -rf /tmp/*;

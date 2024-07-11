@@ -105,12 +105,10 @@ CLIB4_PACKAGES="\
 	libmp3lame-clib4	\
 	libnghttp2-clib4	\
 	libnghttp3-clib4	\
-	libngtcp2-clib4		\
 	libogg-clib4		\
 	libopenjp2-clib4	\
 	libpng16-clib4		\
 	libpsl-clib4		\
-	librtmp-clib4		\
 	libstb-clib4		\
 	libtiff-clib4		\
 	libunistring-clib4	\
@@ -124,7 +122,7 @@ CLIB4_PACKAGES="\
 	mpc-clib4			\
 	opencore-amr-clib4	\
 	opengles-clib4		\
-	openssl-quic-clib4	\
+	openssl3-clib4		\
 	pcre-clib4			\
 	pcre2-clib4			\
 	pixman1-clib4		\
@@ -133,6 +131,9 @@ CLIB4_PACKAGES="\
 	zlib-clib4"
 
 # Removed because of conflicts
+# librtmp-clib4		\
+# libngtcp2-clib4		\
+# openssl-quic-clib4	\
 # minigl-clib4, , libungif-clib4, libsdl2-minigl-clib4
 # 
 # Replaced by AmigLabs libs-ports
@@ -165,7 +166,11 @@ echo -e "${CCRED}${CCBOLD}\n---> clib4 FOLDER NOT FOUND${CCEND}";
 echo "$SDK_PATH/clib4"
 fi
 
-
+echo -e "${CCPINK}${CCBOLD}\n---> Install fontconfig library${CCEND}";
+	curl -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/fontconfig/fontconfig-2.14.2.lha" -o /tmp/fontconfig.lha && \
+		lha -xfq2 fontconfig.lha && \
+		\cp -R ./SDK/* ${SDK_PATH}/ && \
+		rm -rf /tmp/*;
 
 	# if [ X"$CLIB2_REPO" = X"afxgroup" ]; then
 	# 	echo "---> Install afxgroup clib2"

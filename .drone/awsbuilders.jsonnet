@@ -20,7 +20,7 @@
 					},
 				},
 				"commands": [
-					'aws ec2 start-instances --region eu-north-1 --instance-ids i-01e3d598710a23947 i-02bb3cbe63a2b3fef',
+					'aws ec2 start-instances --region eu-north-1 --instance-ids i-07474e4fe80f14754 i-02bb3cbe63a2b3fef',
 				]
 			}
 		],
