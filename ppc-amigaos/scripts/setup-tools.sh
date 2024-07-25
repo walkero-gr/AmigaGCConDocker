@@ -40,7 +40,7 @@ PACKAGES="\
 	wget"
 	
 apt-get update && apt-get -y dist-upgrade && \
-	apt-get -y --no-install-recommends install $PACKAGES;
+	apt-get -y --no-install-recommends install $PACKAGES
 
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
@@ -51,11 +51,11 @@ ln -s /usr/bin/python3 /usr/bin/python
 cd /tmp
 
 # Install Lizard linter
-echo -e "${CCPINK}${CCBOLD}\n---> Install Lizard linter${CCEND}";
-	pip install lizard
+echo -e "${CCPINK}${CCBOLD}\n---> Install Lizard linter${CCEND}"
+	pip install lizard --break-system-packages
 
 # Install FlexCat
-echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}";
+echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}"
 	curl -fsSL "https://github.com/adtools/flexcat/releases/download/2.18/FlexCat-2.18.lha" -o /tmp/FlexCat.lha && \
 		lha -xfq2 FlexCat.lha && \
 		cp ./FlexCat/Linux-i386/flexcat /usr/bin/ && \
