@@ -4,7 +4,7 @@ OS?=os4
 GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
-REL?=2.0.0
+REL?=2.1.0
 
 REPO?=walkero/amigagccondocker
 TAG?=$(OS)-gcc$(GCC)-$(REL)

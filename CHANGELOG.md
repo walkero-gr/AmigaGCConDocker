@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.1.0 - [2024-07-25]
+### Added
+- Added the libsdl_ttf library
+- Added the libft2 library
+
+### Changed
+- Updated the lua library to v5.4.6
+- Changed the container to use the latest Ubuntu Noble 24.04
+
 ## 2.0.0 - [2024-07-11]
 ### Added
 - Added pcre and pcre2 libraries

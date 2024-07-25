@@ -5,7 +5,7 @@
 ARG OS
 ARG GCC_VER
 
-FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-1.1.0 as adtools-image
+FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-1.1.0 AS adtools-image
 
 
 ##############################################################################
@@ -37,7 +37,7 @@ RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
 
 ##############################################################################
 # Dev environment image
-FROM phusion/baseimage:jammy-1.0.4
+FROM phusion/baseimage:noble-1.0.0
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 
 # Use baseimage-docker's init system.
