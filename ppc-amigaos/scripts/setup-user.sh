@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+echo -e "${CCPINK}${CCBOLD}\n---> Create amidev user${CCEND}"
 existing_group=$(getent group "$AMIDEV_GROUP_ID" | cut -d: -f1);
 if [[ -n "$existing_group" ]]; then 
 	delgroup "$existing_group"
@@ -11,10 +12,13 @@ if [[ -n "$existing_user" ]]; then
 fi
 
 addgroup --gid $AMIDEV_GROUP_ID amidev
-adduser --system --uid $AMIDEV_USER_ID --disabled-password --shell /bin/bash --gid $AMIDEV_GROUP_ID amidev
+adduser --system --uid $AMIDEV_USER_ID \
+	--disabled-password \
+	--shell /bin/bash \
+	--gid $AMIDEV_GROUP_ID amidev \
+	--home /home/amidev
 
 sed -i '/^amidev/s/!/*/' /etc/shadow; 
-
 
 BASHFILE=/home/amidev/.bashrc
 
