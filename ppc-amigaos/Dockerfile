@@ -4,8 +4,9 @@
 # adtools image
 ARG OS
 ARG GCC_VER
+ARG BASE_VER
 
-FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-1.1.0 AS adtools-image
+FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
 
 
 ##############################################################################

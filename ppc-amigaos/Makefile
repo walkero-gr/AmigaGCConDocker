@@ -4,7 +4,10 @@ OS?=os4
 GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
+# release version
 REL?=2.1.0
+# gcc base image version
+BASE_VER?=1.2.0
 
 REPO?=walkero/amigagccondocker
 TAG?=$(OS)-gcc$(GCC)-$(REL)
@@ -30,6 +33,7 @@ help:
 	@echo "                   Possible values: 8 (default)/9/10/11"
 	@echo "OS               - defines the cross-compiler target OS"
 	@echo "                   Possible values: os4 (default)/os3/mos"
+	@echo "BASE_VER         - defines the base image to be used"
 	@echo ""
 
 build:
@@ -38,6 +42,7 @@ build:
 		--progress plain \
 		--build-arg OS=$(OS) \
 		--build-arg GCC_VER=$(GCC) \
+		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL=$(REL) .
 
 buildnc:
@@ -46,6 +51,7 @@ buildnc:
 		--progress plain \
 		--build-arg OS=$(OS) \
 		--build-arg GCC_VER=$(GCC) \
+		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL=$(REL) .
 
 shell:
