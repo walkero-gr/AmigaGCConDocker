@@ -19,8 +19,8 @@ steps:
       compress: true
       purge: true
       # dry-run: true
-      cache_from:
-        - walkero/amigagccondocker:os4-gcc${GCC}-amd64
+      # cache_from:
+      #   - walkero/amigagccondocker:os4-gcc${GCC}-amd64
       build_args:
         - OS=os4
         - GCC_VER=${GCC}
