@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.1.2 - [2024-07-27]
+### Added
+- Added curl7-clib4
+- Added openssl-quic-clib4
+  
+### Fixed
+- Fixed a caching issue with the installation of clib4 libraries
+
 ## 2.1.1 - [2024-07-27]
 ### Added
 - Added docker images for gcc 6 and 8
