@@ -19,12 +19,15 @@ The `os4-gccX-adtools` images are the complete images that should be used for de
 
 ### Available tags:
 
-- GCC 8: `os4-gcc8-adtools`
+- GCC 6: `os4-gcc6`
+- GCC 8: `os4-gcc8`
 - GCC 9: `ppc-amigaos-gcc9`
 - GCC 10: `ppc-amigaos-gcc10`
 - GCC 11: `os4-gcc11`
 
-The gcc11 image supports newlib, clib2 and clib4 and it is the most updated release. The rest will be updated as well.
+The docker images with gcc versions 6,8,11 support newlib, clib2 and clib4 and they are the most updated releases.
+
+The gcc v6 supports SPE CPU's and can be used to optimize code for systems like the A1222.
 
 All the docker images' tags can be seen at [Docker hub](https://hub.docker.com/repository/docker/walkero/amigagccondocker/tags)
 
@@ -32,6 +35,7 @@ All the docker images' tags can be seen at [Docker hub](https://hub.docker.com/r
 
 | docker image | version |
 | ------------ | ------- |
+| gcc6         | 6.4.0   |
 | gcc8         | 8.4.0   |
 | gcc9         | 9.1.0   |
 | gcc10        | 10.3.0  |
@@ -68,7 +72,8 @@ The list above is not complete and a lot more are included. A full list can be s
 To create a docker container based on one of these images, run in the terminal any of the following lines, based on which version of GCC is preferred:
 
 ```bash
-docker run -it --rm --name gcc8 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc8-adtools /bin/bash
+docker run -it --rm --name gcc6 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc6 /bin/bash
+docker run -it --rm --name gcc8 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc8 /bin/bash
 docker run -it --rm --name gcc9 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc9 /bin/bash
 docker run -it --rm --name gcc10 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc10 /bin/bash
 docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc11 /bin/bash
@@ -77,11 +82,14 @@ docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/a
 If you want to use it with **docker-compose**, you can create a *docker-compose.yml* file, with the following content. You can keep the lines of the preferred GCC version:
 
 ```yaml
-version: '3'
-
 services:
+  gcc6:
+    image: 'amigagccondocker:os4-gcc6'
+    volumes:
+      - './code:/opt/code'
+
   gcc8:
-    image: 'amigagccondocker:os4-gcc8-adtools'
+    image: 'amigagccondocker:os4-gcc8'
     volumes:
       - './code:/opt/code'
 
@@ -105,6 +113,7 @@ And then you can create and get into each container by doing the following:
 
 ```bash
 docker-compose up -d
+docker-compose exec gcc6 bash
 docker-compose exec gcc8 bash
 docker-compose exec gcc9 bash
 docker-compose exec gcc10 bash
@@ -124,8 +133,6 @@ docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code -e MY_INC
 
 docker-compose.yml
 ```yaml
-version: '3'
-
 services:
   gcc11-ppc:
     image: 'amigagccondocker:os4-gcc11'

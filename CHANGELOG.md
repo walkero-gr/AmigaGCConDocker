@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.1.1 - [2024-07-27]
+### Added
+- Added docker images for gcc 6 and 8
+
 ## 2.1.0 - [2024-07-25]
 ### Added
 - Added the libsdl_ttf library
