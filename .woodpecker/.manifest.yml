@@ -1,14 +1,20 @@
 labels:
   role: generic
 
+matrix:
+  GCC:
+    - 11
+    - 8
+    - 6
+
 steps:
   - name: build-ppc-amigaos-latest-manifest
     image: plugins/manifest
     environment:
       PULLREQUEST_DRONE_PULL_REQUEST: 0
     settings:
-      target: "walkero/amigagccondocker:os4-gcc11"
-      template: "walkero/amigagccondocker:os4-gcc11-ARCH"
+      target: "walkero/amigagccondocker:os4-gcc${GCC}"
+      template: "walkero/amigagccondocker:os4-gcc${GCC}-ARCH"
       platforms:
         - linux/amd64
         - linux/arm64
@@ -21,8 +27,8 @@ steps:
     environment:
       PULLREQUEST_DRONE_PULL_REQUEST: 0
     settings:
-      target: "walkero/amigagccondocker:os4-gcc11-${CI_COMMIT_TAG}"
-      template: "walkero/amigagccondocker:os4-gcc11-${CI_COMMIT_TAG}-ARCH"
+      target: "walkero/amigagccondocker:os4-gcc${GCC}-${CI_COMMIT_TAG}"
+      template: "walkero/amigagccondocker:os4-gcc${GCC}-${CI_COMMIT_TAG}-ARCH"
       platforms:
         - linux/amd64
         - linux/arm64
