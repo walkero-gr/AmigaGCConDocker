@@ -76,7 +76,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
 	dpkg --add-architecture amd64;
 	curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
 		echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
-		apt-get update --fix-missing;
+		apt-get clean && apt-get update;
 	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES
 	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
 
