@@ -21,6 +21,7 @@ steps:
       # dry-run: true
       # cache_from:
       #   - walkero/amigagccondocker:os4-gcc${GCC}-arm64
+      no-cache: true
       build_args:
         - OS=os4
         - GCC_VER=${GCC}
