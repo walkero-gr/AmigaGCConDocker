@@ -1,81 +1,9 @@
 #!/usr/bin/bash
 # 
 
-CLIB2_PACKAGES="\
-	agg-clib2             \
-	amigaos4-clib2        \
-	curl-clib2            \
-	freetype2-clib2       \
-	fribidi-clib2         \
-	gdbm-clib2            \
-	gettext-clib2         \
-	glew-gl4es-clib2      \
-	gmp-clib2             \
-	jansson-clib2         \
-	jpeg9d-clib2          \
-	libbrotli-clib2       \
-	libbz2-clib2          \
-	libcairo-clib2        \
-	libcares-clib2        \
-	libexif-clib2         \
-	libexpat-clib2        \
-	libffi-clib2          \
-	libflac-clib2         \
-	libfmt-clib2          \
-	libfontconfig-clib2   \
-	libgl4es-clib2        \
-	libglm-clib2          \
-	libharfbuzz-clib2     \
-	libicu-clib2          \
-	libidn2-clib2         \
-	libmad-clib2          \
-	libmodplug-clib2      \
-	libmp3lame-clib2      \
-	libnghttp3-clib2      \
-	libngtcp2-clib2       \
-	libogg-clib2          \
-	libopenjp2-clib2      \
-	libpng16-clib2        \
-	libpsl-clib2          \
-	librtmp-clib2         \
-	libsdl2-clib2         \
-	libsdl2-image-clib2   \
-	libsdl2-mixer-clib2   \
-	libsdl2-net-clib2     \
-	libsdl2-ttf-clib2     \
-	libstb-clib2          \
-	libtiff-clib2         \
-	libungif-clib2        \
-	libunistring-clib2    \
-	libvorbis-clib2       \
-	libvpx-clib2          \
-	libwebp-clib2         \
-	libxml2-clib2         \
-	libxslt-clib2         \
-	little-cms-clib2      \
-	lz4-clib2             \
-	mpc-clib2             \
-	mpeg123-clib2         \
-	mpfr-clib2            \
-	openal-clib2          \
-	opencore-amr-clib2    \
-	opengles-clib2        \
-	openssl-quic-clib2    \
-	pcre-clib2            \
-	pcre2-clib2           \
-	pixman1-clib2         \
-	theora-clib2          \
-	zlib-clib2"
-
-# Removed because of conflicts
-# giflib-clib2          \
-# minigl-clib2          \
-# libungif-clib2        \
-# openssl-clib2         \
-# openssl3-clib2        \
-
 CLIB4_PACKAGES="\
 	amigaos4-clib4		\
+	curl7-clib4			\
 	freetype2-clib4		\
 	gdbm-clib4			\
 	giflib-clib4		\
@@ -122,6 +50,7 @@ CLIB4_PACKAGES="\
 	mpc-clib4			\
 	opencore-amr-clib4	\
 	opengles-clib4		\
+	openssl-quic-clib4	\
 	openssl3-clib4		\
 	pcre-clib4			\
 	pcre2-clib4			\
@@ -133,7 +62,7 @@ CLIB4_PACKAGES="\
 # Removed because of conflicts
 # librtmp-clib4		\
 # libngtcp2-clib4		\
-# openssl-quic-clib4	\
+# 
 # minigl-clib4, , libungif-clib4, libsdl2-minigl-clib4
 # 
 # Replaced by AmigLabs libs-ports
@@ -142,12 +71,6 @@ CLIB4_PACKAGES="\
 
 if [ -d "$SDK_PATH/clib4" ]; then
 echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
-	# curl -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v1.2.16-rc2-amigaos4/SDL.lha" -o /tmp/SDL.lha && \
-	# 	lha -xfq2 SDL.lha && \
-	# 	cp -r ./SDL/SDK/local/* ${SDK_PATH}/local/ && \
-	# 	mv ./SDL/docs ${SDK_PATH}/local/Documentation/SDL && \
-	# 	rm -rf /tmp/*;
-
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
 	# They are saved under /user/ppc-amigaos
 	dpkg --add-architecture amd64;
@@ -171,21 +94,3 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install fontconfig library${CCEND}";
 		lha -xfq2 fontconfig.lha && \
 		\cp -R ./SDK/* ${SDK_PATH}/ && \
 		rm -rf /tmp/*;
-
-	# if [ X"$CLIB2_REPO" = X"afxgroup" ]; then
-	# 	echo "---> Install afxgroup clib2"
-	# 	# curl -fskSL "https://github.com/afxgroup/clib2/releases/download/v1.0.0-beta-9/clib2.lha" -o /tmp/clib2-afxgroup.lha; \
-	# 	# lha -xfq2w=$SDK_PATH clib2-afxgroup.lha;
-		
-		# Install clib2 and libraries from afxgroup's Ubuntu repo. 
-		# They are saved under /user/ppc-amigaos
-		# dpkg --add-architecture amd64;
-		# curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib2.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib2.gpg && \
-		# 	echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib2.list && \
-		# 	apt-get update;
-		# apt-get -y --no-install-recommends install $CLIB2_PACKAGES
-
-	# 	\cp -r /usr/ppc-amigaos/SDK/clib2 $SDK_PATH
-	# 	\cp -r /usr/ppc-amigaos/SDK/local/* /opt/sdk/ppc-amigaos/local/
-	# 	rm $SDK_PATH/local/clib2/lib/libpthread.a
-	# else
