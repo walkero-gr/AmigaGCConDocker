@@ -74,12 +74,9 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
 	# They are saved under /user/ppc-amigaos
 	dpkg --add-architecture amd64;
-	curl -fsSL https://clib2pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
-		echo "deb [arch=amd64] https://clib2pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
-		rm -rf /var/lib/apt/lists/* && \
-		apt-get clean && \
-		apt-get update -o Acquire::CompressionTypes::Order::=gz;
-	# This is a workaround to fix the issue with the "Hash Sum mismatch" error
+	curl -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
+		echo "deb [arch=amd64] https://clib4pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
+		apt-get update
 
 	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES
 	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
