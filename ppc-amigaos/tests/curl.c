@@ -1,4 +1,5 @@
-// ppc-amigaos-gcc curl.c -o curl -I$AOS4_CLIB_INC -I$LIB_CURL_INC -L$LIB_CURL_CLIB -lcurl
+// ppc-amigaos-gcc -mcrt=newlib curl.c -o curl -lcurl -lrtmp -lssl -lcrypto -lz -lpthread -athread=native
+// ppc-amigaos-gcc -mcrt=clib4 curl.c -o curl-clib4 -lcurl -lrtmp -lssl -lcrypto -lz -lbrotlidec -lbrotlicommon -lnghttp2 -lpsl -lidn2 -lunistring -lpthread -athread=native
 
 #include <sys/types.h>
 #include <sys/socket.h>
