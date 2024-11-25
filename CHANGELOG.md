@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 2.2.0 - [future]
+## 2.2.0 - [2024-11-25]
 ### Added
 - Added libregex 4.4.3
 - Added librtmp 2.4 for newlib and clib2
