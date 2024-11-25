@@ -2,19 +2,19 @@
 
 ##############################################################################
 # adtools image
-ARG OS
-ARG GCC_VER
-ARG BASE_VER
+ARG OS=os4
+ARG GCC_VER=11
+ARG BASE_VER=1.2.0
 
 FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
 
 
 ##############################################################################
 # SDK Setup image
-FROM ubuntu:22.04 AS sdk-builder
+FROM ubuntu:latest AS sdk-builder
 
-ARG OS
-ARG GCC_VER
+ARG OS=os4
+ARG GCC_VER=11
 ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 
 ENV CCRED="\033[31m" \
@@ -40,6 +40,10 @@ RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
 # Dev environment image
 FROM phusion/baseimage:noble-1.0.0
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
+LABEL description="AmigaOS 4.1 cross-compiling development environment"
+
+ARG REL_VER=2.1.2
+LABEL version=$REL_VER
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
@@ -60,7 +64,7 @@ ENV AMIDEV_USER_ID=1000 \
     APPC="/opt/ppc-amigaos" \
     PATH="/opt/ppc-amigaos/bin:$PATH" \
     SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK" \
-    MUI50_INC="/opt/ppc-amigaos/ppc-amigaos/SDK/MUI_5.0/C/include"
+    MUI50_INC="/opt/ppc-amigaos/ppc-amigaos/SDK/local/common/include"
 
 ENV AS=${APPC}/bin/ppc-amigaos-as \
     LD=${APPC}/bin/ppc-amigaos-ld \

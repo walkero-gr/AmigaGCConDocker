@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.2.0 - [future]
+### Added
+- Added libregex 4.4.3
+- Added librtmp 2.4 for newlib and clib2
+
+### Changed
+- Using v1.2.0 of the base images
+- MUI SDK is now integrated with the SDK, using the default paths where
+  the compiler expects to find the include files. Now, the MUI code should
+  compile out of the box, without the need to set any path with a
+  `-I` argument
+
 ## 2.1.2 - [2024-07-27]
 ### Added
 - Added curl7-clib4

@@ -5,7 +5,7 @@ GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
 # release version
-REL?=2.1.0
+REL?=2.2.0
 # gcc base image version
 BASE_VER?=1.2.0
 
@@ -43,7 +43,7 @@ build:
 		--build-arg OS=$(OS) \
 		--build-arg GCC_VER=$(GCC) \
 		--build-arg BASE_VER=$(BASE_VER) \
-		--build-arg REL=$(REL) .
+		--build-arg REL_VER=$(REL) .
 
 buildnc:
 	docker build --no-cache -f ./Dockerfile \
@@ -52,7 +52,7 @@ buildnc:
 		--build-arg OS=$(OS) \
 		--build-arg GCC_VER=$(GCC) \
 		--build-arg BASE_VER=$(BASE_VER) \
-		--build-arg REL=$(REL) .
+		--build-arg REL_VER=$(REL) .
 
 shell:
 	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
