@@ -7,11 +7,11 @@ GCC?=11
 # release version
 REL?=2.2.0
 # gcc base image version
-BASE_VER?=1.2.0
+BASE_VER?=1.3.0
 
 REPO?=walkero/amigagccondocker
 TAG?=$(OS)-gcc$(GCC)-$(REL)
-VOLUMES?=-v "${PWD}/code":/opt/code
+VOLUMES?=-v "${PWD}/tests":/opt/code
 WORKSPACE?=-w /opt/code
 NAME?=$(OS)-gcc$(GCC)
 

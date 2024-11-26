@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.3.0 - [2024-11-26]
+### Changed
+- Updated clib4 to v1.4.0
+
 ## 2.2.0 - [2024-11-25]
 ### Added
 - Added libregex 4.4.3
