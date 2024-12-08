@@ -19,8 +19,7 @@ NAME?=$(OS)-gcc$(GCC)
 
 default: help
 help:
-	@echo "This makefile helps on building cross-compiling docker image with gcc for"
-	@echo "AmigaOS 4, AmigaOS 3 (WIP) and MorphOS (WIP)"
+	@echo "This makefile helps on building cross-compiling docker image with gcc for AmigaOS 4"
 	@echo "The available parameters can be seen below:"
 	@echo ""
 	@echo "build            - Build the Docker image"
