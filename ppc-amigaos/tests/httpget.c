@@ -27,6 +27,7 @@ int main ( void ) {
     printf ( "Sending %d bytes\n", send ( socket_handle , httpget, strlen(httpget), 0 ) ) ;
     printf ( "Received %d bytes\n", recv ( socket_handle , input_buffer , 20000, 0 ) ) ;
     printf ( "%s\n", input_buffer ) ;
-    
+
+    free(input_buffer);
     return 0 ;
 }
