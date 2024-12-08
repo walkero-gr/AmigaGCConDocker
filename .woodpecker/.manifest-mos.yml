@@ -1,20 +1,14 @@
 labels:
   role: generic
 
-matrix:
-  GCC:
-    - 11
-    - 8
-    - 6
-
 steps:
-  - name: build-ppc-amigaos-latest-manifest
+  - name: build-ppc-morphos-latest-manifest
     image: plugins/manifest
     environment:
       PULLREQUEST_DRONE_PULL_REQUEST: 0
     settings:
-      target: "walkero/amigagccondocker:os4-gcc${GCC}"
-      template: "walkero/amigagccondocker:os4-gcc${GCC}-ARCH"
+      target: "walkero/amigagccondocker:mos-gcc"
+      template: "walkero/amigagccondocker:mos-gcc-ARCH"
       platforms:
         - linux/amd64
         - linux/arm64
@@ -22,13 +16,13 @@ steps:
         from_secret: DOCKERHUB_USERNAME
       password:
         from_secret: DOCKERHUB_PASSWORD
-  - name: build-ppc-amigaos-versioned-manifest
+  - name: build-ppc-morphos-versioned-manifest
     image: plugins/manifest
     environment:
       PULLREQUEST_DRONE_PULL_REQUEST: 0
     settings:
-      target: "walkero/amigagccondocker:os4-gcc${GCC}-${CI_COMMIT_TAG##os4-}"
-      template: "walkero/amigagccondocker:os4-gcc${GCC}-${CI_COMMIT_TAG##os4-}-ARCH"
+      target: "walkero/amigagccondocker:mos-gcc-${CI_COMMIT_TAG##mos-}"
+      template: "walkero/amigagccondocker:mos-gcc-${CI_COMMIT_TAG##mos-}-ARCH"
       platforms:
         - linux/amd64
         - linux/arm64
@@ -40,8 +34,8 @@ steps:
 when:
   - branch: main
     event: [tag]
-    ref: refs/tags/os4-*
+    ref: refs/tags/mos-*
 
 depends_on:
-  - build-amd64
-  - build-arm64
+  - build-mos-amd64
+  - build-mos-arm64

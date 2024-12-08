@@ -28,7 +28,7 @@ steps:
         - BASE_VER=1.3.0
       tags:
         - os4-gcc${GCC}-arm64
-        - os4-gcc${GCC}-${CI_COMMIT_TAG}-arm64
+        - os4-gcc${GCC}-${CI_COMMIT_TAG##os4-}-arm64
       username:
         from_secret: DOCKERHUB_USERNAME
       password:
@@ -37,6 +37,7 @@ steps:
 when:
   - branch: main
     event: [tag]
+    ref: refs/tags/os4-*
 
 depends_on:
   - aws-poweron
