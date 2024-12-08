@@ -5,9 +5,9 @@
 
 # AmigaGCConDocker
 
-AmigaGCConDocker is a project with different Docker images that can be used as the base for a cross-compiling development environment for AmigaOS 4 (ppc-amigaos). They are based on GCC versions 8, 9, 10 and 11 and they are using Ubuntu OS. They have installed everything needed (gcc compiler, SDKs, libraries) for compiling your applications out of the box.
+AmigaGCConDocker is a project with different Docker images that can be used as the base for a cross-compiling development environment for AmigaOS 4 (ppc-amigaos) and MorphOS (ppc-morphos). They are based on GCC versions 8, 9, 10 and 11 and they are using Ubuntu OS. They have installed everything needed (gcc compiler, SDKs, libraries) for compiling your applications out of the box.
 
-The purpose of the project is to be an up-to-date, flexible and out-of-the-box solution for cross-compiling applications for Amiga OS4, using the GCC C/C++ compiler. Those Docker images can be used on CI/CD solutions for automatic testing, compiling, packaging and deployment.
+The purpose of the project is to be an up-to-date, flexible and out-of-the-box solution for cross-compiling applications for Amiga OS4 or MorphOS, using the GCC C/C++ compiler. Those Docker images can be used on CI/CD solutions for automatic testing, compiling, packaging and deployment.
 
 ## Docker images
 
@@ -15,9 +15,13 @@ AmigaGCConDocker is split into different Docker images for better manipulation a
 
 There are **amd64** and **arm64** images, ready to be used on any system based on these cpu architectures.
 
-The `os4-gccX-adtools` images are the complete images that should be used for development. These include the gcc compiler as well as the available SDKs. Different ENV variables are set for easier usage and access to the libraries. 
+The following images are the complete images that should be used for development. These include the gcc compiler as well as the available SDKs. Different ENV variables are set for easier usage and access to the libraries. 
 
 ### Available tags:
+
+All the available docker images' tags can be seen at [Docker hub](https://hub.docker.com/repository/docker/walkero/amigagccondocker/tags)
+
+#### AmigaOS 4
 
 - GCC 6: `os4-gcc6`
 - GCC 8: `os4-gcc8`
@@ -29,9 +33,15 @@ The docker images with gcc versions 6,8,11 support newlib, clib2 and clib4 and t
 
 The gcc v6 supports SPE CPU's and can be used to optimize code for systems like the A1222.
 
-All the docker images' tags can be seen at [Docker hub](https://hub.docker.com/repository/docker/walkero/amigagccondocker/tags)
+#### MorphOS
+
+- mos-gcc
+
+The MorphOS docker image containes multiple versions of gcc ready to be used.
 
 ## GCC versions supported
+
+#### AmigaOS 4
 
 | docker image | version |
 | ------------ | ------- |
@@ -43,6 +53,8 @@ All the docker images' tags can be seen at [Docker hub](https://hub.docker.com/r
 
 ## Included SDKs
 
+#### AmigaOS 4
+
 | SDK           | version      | source                                       |
 | ------------- | ------------ | -------------------------------------------- |
 | AmigaOS 4 SDK | 54.16        | http://www.hyperion-entertainment.com/       |
@@ -50,6 +62,13 @@ All the docker images' tags can be seen at [Docker hub](https://hub.docker.com/r
 | AmiSSL SDK    | 5.11         | https://github.com/jens-maus/amissl/releases |
 
 The list above is not complete and a lot more are included. A full list can be seen at `ppc-amigaos/scripts/libs/` folder in this repo. There are different bash scripts for each library that describe where they are downloaded from and how they are installed. All of them are installed under SDK path `/opt/ppc-amigaos/ppc-amigaos/SDK/local`. 
+
+#### MorphOS
+
+| SDK              | version      | source                                       |
+| ---------------- | ------------ | -------------------------------------------- |
+| MorphOS 3.18 SDK | 20230510     | http://www.hyperion-entertainment.com/       |
+
 
 ## Tools included
 
@@ -77,6 +96,8 @@ docker run -it --rm --name gcc8 -v ${PWD}/code:/opt/code -w /opt/code walkero/am
 docker run -it --rm --name gcc9 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc9 /bin/bash
 docker run -it --rm --name gcc10 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc10 /bin/bash
 docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc11 /bin/bash
+
+docker run -it --rm --name mos-gcc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:mos-gcc /bin/bash
 ```
 
 If you want to use it with **docker-compose**, you can create a *docker-compose.yml* file, with the following content. You can keep the lines of the preferred GCC version:
@@ -107,6 +128,11 @@ services:
     image: 'amigagccondocker:os4-gcc11'
     volumes:
       - './code:/opt/code'
+
+  mos-gcc:
+    image: 'amigagccondocker:mos-gcc'
+    volumes:
+      - './code:/opt/code'
 ```
 
 And then you can create and get into each container by doing the following:
@@ -118,6 +144,8 @@ docker-compose exec gcc8 bash
 docker-compose exec gcc9 bash
 docker-compose exec gcc10 bash
 docker-compose exec gcc11 bash
+
+docker-compose exec mos-gcc bash
 ```
 
 To compile your projects, you have to get inside the container, change directory to the `/opt/code/projectname` folder, which is shared with the host machine, and compile it.
