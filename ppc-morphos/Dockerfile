@@ -27,6 +27,7 @@ RUN chmod +x /scripts/* -R; \
     bash /scripts/setup-user.sh ;\
     bash /scripts/setup-tools.sh ; \
     \
+    dpkg --add-architecture amd64; \
     curl -fsSLk "https://bigfoot.morphos-team.net/test/morphos-sdk_20230510-1_amd64.deb" -o morphos-sdk_amd64.deb && \
     apt-get -y install ./morphos-sdk_amd64.deb && \
     rm morphos-sdk_amd64.deb; \
