@@ -1,6 +1,8 @@
 labels:
   role: generic
 
+skip_clone: true
+
 steps:
   - name: build-ppc-morphos-latest-manifest
     image: plugins/manifest
