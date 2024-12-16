@@ -1,6 +1,6 @@
 labels:
   role: awsbuilder
-  platform: linux/aarch64
+  platform: linux/arm64
 
 matrix:
   GCC:
