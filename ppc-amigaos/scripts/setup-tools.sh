@@ -37,7 +37,8 @@ PACKAGES="\
 	subversion \
 	sudo \
 	texinfo \
-	wget"
+	wget \
+	zip"
 	
 apt-get update && apt-get -y dist-upgrade && \
 	apt-get -y --no-install-recommends install $PACKAGES
