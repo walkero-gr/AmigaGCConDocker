@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 2.3.0 - [future]
+### Added
+- Added zip
+
+### Changed
+- Updated liblua to v5.4.7
+- Updated pcre2 to version 10.44
+- Using v1.4.0 of the base gcc images
+
+### Removed
+- removed the /local/clib4/include/GL because of inconsistencies
+
 ## 2.3.0 - [2024-11-26]
 ### Changed
 - Updated clib4 to v1.4.0

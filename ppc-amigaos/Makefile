@@ -5,9 +5,9 @@ GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
 # release version
-REL?=2.2.0
+REL?=2.4.0
 # gcc base image version
-BASE_VER?=1.3.0
+BASE_VER?=1.4.0
 
 REPO?=walkero/amigagccondocker
 TAG?=$(OS)-gcc$(GCC)-$(REL)
