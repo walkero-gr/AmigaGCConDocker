@@ -85,6 +85,9 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
 	rm -rf /usr/ppc-amigaos && \
 	mkdir -p /usr/ppc-amigaos/SDK/local && \
 	ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
+
+	# Delete the local/clib4/include/GL directory because of inconsistencies
+	rm -rf $SDK_PATH/local/clib4/include/GL
 else
 echo -e "${CCRED}${CCBOLD}\n---> clib4 FOLDER NOT FOUND${CCEND}";
 echo "$SDK_PATH/clib4"
