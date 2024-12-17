@@ -45,5 +45,5 @@ when:
     ref: refs/tags/os4-*
 
 depends_on:
-  - build-amd64
-  - build-arm64
+  - build-os4-amd64
+  - build-os4-arm64
