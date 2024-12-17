@@ -2,7 +2,7 @@
 # 
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libregex ${CCEND}";
-	curl -fsSL "http://aminet.net/dev/lib/libregex-4.4.3.lha" -o libregex.lha && \
+	curl -fsSL "https://aminet.net/dev/lib/libregex-4.4.3.lha" -o libregex.lha && \
 		lha -xfq2 libregex.lha && \
 		cp -r ./libregex/clib2/libregex.a ${SDK_PATH}/local/clib2/lib/ && \
 		cp -r ./libregex/newlib/libregex.a ${SDK_PATH}/local/newlib/lib/ && \
