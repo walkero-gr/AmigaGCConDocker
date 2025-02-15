@@ -25,6 +25,7 @@ PACKAGES="\
 	libmpfr-dev \
 	libtool \
 	make \
+	mandoc \
 	mc \
 	mercurial \
 	meson \
