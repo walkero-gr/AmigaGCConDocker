@@ -1,7 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## 2.3.0 - [2024-12-17]
+## os4-2.5.0 - [2025-02-15]
+### Added
+- Added a lot of clib4 third party libraries
+- Added libharfbuzz 8.4.0 for newlib
+- Added libsdl2_ttf 2.22.0 for newlib
+- Added libyaml 0.2.5 for newlib, clib2 and clib4
+- Added libzip 1.11.2 for newlib, clib2 and clib4
+- Added liblz4 1.10.0 for newlib and clib4
+- Added mandoc tool
+- Added SDL3 v3.2 for newlib
+
+### Updated
+- Updated AmiSSL to 3.19
+- Updated SDL2 to 2.30.9
+
+### Fixed
+- Fixed issue #10
+
+## os4-2.4.0 - [2024-12-17]
 ### Added
 - Added zip
 
