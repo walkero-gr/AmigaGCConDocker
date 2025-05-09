@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## os4-2.6.0 - [2025-05-09]
+### Updated
+- Updated clib4 to 1.6.0
+- Updated AmiSSL to 3.20
+- Updated SDL2 to 2.32.0
+- Updated SDL3 to v3.2.8
+- Updated libsdl2_image to 2.8.8 for newlib
+- Updated libsdl2_ttf to 2.24.0 for newlib
+- Updated librtmp to 2.6 for newlib
+- Updated libsdl_ttf to 2.0.11.1 for newlib
+- Updated many other libraries for newlib, clib2 and clib4
+
 ## os4-2.5.0 - [2025-02-15]
 ### Added
 - Added a lot of clib4 third party libraries

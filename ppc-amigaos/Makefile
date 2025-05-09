@@ -5,9 +5,9 @@ GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
 # release version
-REL?=2.5.0
+REL?=2.6.0
 # gcc base image version
-BASE_VER?=1.4.0
+BASE_VER?=1.5.0
 
 REPO?=walkero/amigagccondocker
 TAG?=$(OS)-gcc$(GCC)-$(REL)
@@ -36,7 +36,7 @@ help:
 	@echo ""
 
 build:
-	docker build -f ./Dockerfile \
+	docker buildx build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg OS=$(OS) \
@@ -45,7 +45,7 @@ build:
 		--build-arg REL_VER=$(REL) .
 
 buildnc:
-	docker build --no-cache -f ./Dockerfile \
+	docker buildx build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
 		--build-arg OS=$(OS) \

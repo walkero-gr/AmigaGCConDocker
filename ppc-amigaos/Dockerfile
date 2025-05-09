@@ -4,7 +4,7 @@
 # adtools image
 ARG OS=os4
 ARG GCC_VER=11
-ARG BASE_VER=1.2.0
+ARG BASE_VER=1.5.0
 
 FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
 
