@@ -15,6 +15,24 @@ pipeline {
 				"""
 			}
 		}
+		stage('update-build-badge') {
+			when { 
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			steps {
+				sh """
+					sed -i -E "s|(view/tags/job/)os4-[^/]+/|\1\${TAG_NAME}/|g" README.md
+					git config user.name "George Sokianos"
+					git config user.email "walkero@gmail.com"
+					git add README.md
+					git commit -m "Replace placeholder with \${TAG_VERSION}"
+				"""
+				gitPush(gitScm: scm, targetBranch: 'main', targetRepo: 'origin')
+			}
+		}
 		stage('build-ppc-amigaos-images') {
 			when { 
 				allOf {
@@ -39,18 +57,6 @@ pipeline {
 				}
 				agent { label "aws-${ARCH}" }
 				stages {
-					stage('update-build-badge') {
-						steps {
-							sh """
-								sed -i -E "s|(view/tags/job/)os4-[^/]+/|\1\${TAG_NAME}/|g" README.md
-								git config user.name "walkero-gr"
-								git config user.email "walkero@gmail.com"
-								git add README.md
-								git commit -m "Replace placeholder with ${TAG_VERSION}"
-								git push origin HEAD:main
-							"""
-						}
-					}
 					stage('build') {
 						options {
 							timeout(time: 60, unit: 'MINUTES')
