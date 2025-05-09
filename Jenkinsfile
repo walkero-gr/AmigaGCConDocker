@@ -26,18 +26,6 @@ pipeline {
 				TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
 				OS4_GCC_BASE_VER="1.5.0"
 			}
-			stage('update-readme') {
-				steps {
-					sh """
-						sed -i -E "s|(view/tags/job/)os4-[^/]+/|\1\${TAG_NAME}/|g" README.md
-						git config user.name "walkero-gr"
-						git config user.email "walkero@gmail.com"
-						git add README.md
-						git commit -m "Replace placeholder with ${TAG_VERSION}"
-						git push origin HEAD:main
-					"""
-				}
-			}
 			matrix {
 				axes {
 					axis {
@@ -51,6 +39,18 @@ pipeline {
 				}
 				agent { label "aws-${ARCH}" }
 				stages {
+					stage('update-build-badge') {
+						steps {
+							sh """
+								sed -i -E "s|(view/tags/job/)os4-[^/]+/|\1\${TAG_NAME}/|g" README.md
+								git config user.name "walkero-gr"
+								git config user.email "walkero@gmail.com"
+								git add README.md
+								git commit -m "Replace placeholder with ${TAG_VERSION}"
+								git push origin HEAD:main
+							"""
+						}
+					}
 					stage('build') {
 						options {
 							timeout(time: 60, unit: 'MINUTES')
