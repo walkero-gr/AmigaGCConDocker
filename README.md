@@ -1,4 +1,4 @@
-[![status-badge](https://cigh.walkero.gr/api/badges/2/status.svg)](https://cigh.walkero.gr/repos/2)
+[![Build Status](https://cicd.walkero.gr/job/AmigaGCCOnDocker/view/tags/job/os4-2.6.0/badge/icon)](https://cicd.walkero.gr/job/AmigaGCCOnDocker/view/tags/job/os4-2.6.0/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a2a863e7754e46c7bafaed8e47e8e41a)](https://www.codacy.com/gh/walkero-gr/AmigaGCConDocker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=walkero-gr/AmigaGCConDocker&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker/badge)](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker)
 [![Docker Pulls](https://img.shields.io/docker/pulls/walkero/amigagccondocker?color=brightgreen)](https://hub.docker.com/r/walkero/amigagccondocker)
@@ -59,7 +59,7 @@ The MorphOS docker image containes multiple versions of gcc ready to be used.
 | ------------- | ------------ | -------------------------------------------- |
 | AmigaOS 4 SDK | 54.16        | http://www.hyperion-entertainment.com/       |
 | MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                   |
-| AmiSSL SDK    | 5.11         | https://github.com/jens-maus/amissl/releases |
+| AmiSSL SDK    | 5.20         | https://github.com/jens-maus/amissl/releases |
 
 The list above is not complete and a lot more are included. A full list can be seen at `ppc-amigaos/scripts/libs/` folder in this repo. There are different bash scripts for each library that describe where they are downloaded from and how they are installed. All of them are installed under SDK path `/opt/ppc-amigaos/ppc-amigaos/SDK/local`. 
 
