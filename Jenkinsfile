@@ -5,7 +5,6 @@ pipeline {
 		AWS_CREDS=credentials('aws-ec2-credentials')
 		AWS_DEFAULT_REGION="eu-north-1"
 		DOCKERHUB_REPO="walkero/amigagccondocker"
-		OS4_GCC_BASE_VER="1.5.0"
 	}
 	stages {
 		stage('aws-poweron') {
@@ -25,6 +24,7 @@ pipeline {
 			}
 			environment {
 				TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+				OS4_GCC_BASE_VER="1.5.0"
 			}
 			matrix {
 				axes {
@@ -34,7 +34,7 @@ pipeline {
 					}
 					axis {
 						name 'GCC'
-						values '11'
+						values '11', '8', '6'
 					}
 				}
 				agent { label "aws-${ARCH}" }
@@ -47,12 +47,12 @@ pipeline {
 							sh """
 								cd ppc-amigaos
 								docker build \
-									--cache-from ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} \\
-									--build-arg OS=os4 \\
-									--build-arg BASE_VER=${OS4_GCC_BASE_VER} \\
-									--build-arg GCC_VER=${GCC} \\
-									-t ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}-${ARCH} \\
-									-t ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} \\
+									--cache-from ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} \
+									--build-arg OS=os4 \
+									--build-arg BASE_VER=${OS4_GCC_BASE_VER} \
+									--build-arg GCC_VER=${GCC} \
+									-t ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}-${ARCH} \
+									-t ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} \
 									-f Dockerfile .
 							"""
 						}
@@ -76,10 +76,8 @@ pipeline {
 					stage('remove-images') {
 						steps {
 							sh """
-								docker image ls
 								docker rmi -f \$(docker images --filter=reference="${DOCKERHUB_REPO}:*" -q)
 								docker image prune -a --force
-								docker image ls
 							"""
 						}
 					}
@@ -107,7 +105,7 @@ pipeline {
 				axes {
 					axis {
 						name 'GCC'
-						values '11'
+						values '11', '8', '6'
 					}
 				}
 				stages {
