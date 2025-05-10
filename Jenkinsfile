@@ -5,6 +5,7 @@ pipeline {
 		AWS_CREDS=credentials('aws-ec2-credentials')
 		AWS_DEFAULT_REGION="eu-north-1"
 		DOCKERHUB_REPO="walkero/amigagccondocker"
+		GIT_CREDS = credentials('github-access-token')
 	}
 	stages {
 		// stage('aws-poweron') {
@@ -29,13 +30,8 @@ pipeline {
 					git config user.email \"walkero@gmail.com\"
 					git add README.md
 					git commit -m \"Replace placeholder with \${TAG_NAME}\"
+					git push https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@github.com/walkero-gr/AmigaGCConDocker.git orgin HEAD:main
 				"""
-				withCredentials([string(credentialsId: 'jenkins-walkero-github-app')]) {
-					sh """
-						git push orgin HEAD:main
-					"""
-				}
-				// gitPush(gitScm: scm, targetBranch: 'main', targetRepo: 'origin')
 			}
 		}
 		stage('build-ppc-amigaos-images') {
