@@ -24,13 +24,18 @@ pipeline {
 			}
 			steps {
 				sh """
-					sed -i -E "s|(view/tags/job/)os4-[^/]+/|\1\${TAG_NAME}/|g" README.md
-					git config user.name "George Sokianos"
-					git config user.email "walkero@gmail.com"
+					sed -i -E \"s|(view/tags/job/)os4-[^/]+/|\\1\${TAG_NAME}/|g\" README.md
+					git config user.name \"George Sokianos\"
+					git config user.email \"walkero@gmail.com\"
 					git add README.md
-					git commit -m "Replace placeholder with \${TAG_VERSION}"
+					git commit -m \"Replace placeholder with \${TAG_NAME}\"
 				"""
-				gitPush(gitScm: scm, targetBranch: 'main', targetRepo: 'origin')
+				withCredentials([string(credentialsId: 'jenkins-walkero-github-app')]) {
+					sh """
+						git push orgin HEAD:main
+					"""
+				}
+				// gitPush(gitScm: scm, targetBranch: 'main', targetRepo: 'origin')
 			}
 		}
 		stage('build-ppc-amigaos-images') {
