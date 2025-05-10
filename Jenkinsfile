@@ -8,14 +8,6 @@ pipeline {
 		GIT_CREDS = credentials('github-access-token')
 	}
 	stages {
-		// stage('aws-poweron') {
-		// 	when { buildingTag() }
-		// 	steps {
-		// 		sh """
-		// 			aws ec2 start-instances --instance-ids i-07474e4fe80f14754 i-02bb3cbe63a2b3fef || { echo "Failed to start AWS instances"; exit 1; }
-		// 		"""
-		// 	}
-		// }
 		stage('update-build-badge') {
 			when { 
 				allOf {
@@ -29,8 +21,16 @@ pipeline {
 					git config user.name \"George Sokianos\"
 					git config user.email \"walkero@gmail.com\"
 					git add README.md
-					git commit -m \"Replace placeholder with \${TAG_NAME}\"
-					git push https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@github.com/walkero-gr/AmigaGCConDocker.git orgin HEAD:main
+					git commit -m \"Updating the release badge with ${TAG_NAME}\"
+				"""
+				sh 'git push https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/walkero-gr/AmigaGCConDocker.git main'
+			}
+		}
+		stage('aws-poweron') {
+			when { buildingTag() }
+			steps {
+				sh """
+					aws ec2 start-instances --instance-ids i-07474e4fe80f14754 i-02bb3cbe63a2b3fef || { echo "Failed to start AWS instances"; exit 1; }
 				"""
 			}
 		}
