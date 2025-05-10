@@ -7,14 +7,14 @@ pipeline {
 		DOCKERHUB_REPO="walkero/amigagccondocker"
 	}
 	stages {
-		stage('aws-poweron') {
-			when { buildingTag() }
-			steps {
-				sh """
-					aws ec2 start-instances --instance-ids i-07474e4fe80f14754 i-02bb3cbe63a2b3fef || { echo "Failed to start AWS instances"; exit 1; }
-				"""
-			}
-		}
+		// stage('aws-poweron') {
+		// 	when { buildingTag() }
+		// 	steps {
+		// 		sh """
+		// 			aws ec2 start-instances --instance-ids i-07474e4fe80f14754 i-02bb3cbe63a2b3fef || { echo "Failed to start AWS instances"; exit 1; }
+		// 		"""
+		// 	}
+		// }
 		stage('update-build-badge') {
 			when { 
 				allOf {
