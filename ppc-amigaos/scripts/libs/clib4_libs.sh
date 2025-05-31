@@ -39,15 +39,12 @@ CLIB4_PACKAGES="\
 	libiodbc-clib4		\
 	libmad-clib4		\
 	libmd4c-clib4		\
-	libmodplug-clib4	\
 	libmp3lame-clib4	\
 	libncurses-clib4	\
 	libnghttp2-clib4	\
 	libnghttp3-clib4	\
 	libogg-clib4		\
 	libopenjp2-clib4	\
-	libopus-clib4		\
-	libopusfile-clib4	\
 	libpbl-clib4		\
 	libpng16-clib4		\
 	libpsl-clib4		\
@@ -82,6 +79,11 @@ CLIB4_PACKAGES="\
 	sqlite-clib4		\
 	theora-clib4		\
 	zlib-clib4"
+
+# Replaced by OS4 depot packages
+	# libmodplug-clib4	\
+	# libopus-clib4		\
+	# libopusfile-clib4	\
 
 # Removed because of conflicts
 # librtmp-clib4		\
