@@ -3,7 +3,8 @@
 apt-get update && apt-get -y --no-install-recommends install \
 	ca-certificates \
 	curl \
-	gpg;
+	gpg \
+	unzip;
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
 

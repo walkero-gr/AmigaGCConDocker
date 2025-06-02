@@ -1,6 +1,27 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## os4-2.7.0 - [2025-06-02]
+### Added
+- Added libopus 1.5.2
+- Added libopusfile 0.12
+- Added libopusenc 0.2.1
+- Added libsdl2_gfx 1.0.4
+- Added libsdl3_gfx 1.0.1
+- Added libsdl3_image 3.2.4
+- Added libsdl3_ttf 3.2.2
+- Added the source-highlight library
+- Added the unzip command
+
+### Updated
+- Updated libflac to 1.5.0
+- Updated libmikmod to 3.3.13
+- Updated libmodplug to 0.8.9.1
+- Updated libsdl2_mixer to 2.8.1
+- Updated SDL2 to 2.32.6
+- Updated SDL3 to 3.2.14
+- Updated libpng to 1.6.47
+
 ## os4-2.6.0 - [2025-05-09]
 ### Updated
 - Updated clib4 to 1.6.0

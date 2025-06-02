@@ -38,11 +38,11 @@ RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
 
 ##############################################################################
 # Dev environment image
-FROM phusion/baseimage:noble-1.0.0
+FROM phusion/baseimage:noble-1.0.2
 LABEL maintainer="Georgios Sokianos <walkero@gmail.com>"
 LABEL description="AmigaOS 4.1 cross-compiling development environment"
 
-ARG REL_VER=2.1.2
+ARG REL_VER=2.0.0
 LABEL version=$REL_VER
 
 # Use baseimage-docker's init system.

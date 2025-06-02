@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+echo -e "${CCPINK}${CCBOLD}\n---> Install required tools ${CCEND}"
 PACKAGES="\
 	autoconf \
 	automake \
@@ -38,6 +39,7 @@ PACKAGES="\
 	subversion \
 	sudo \
 	texinfo \
+	unzip \
 	wget \
 	zip"
 	

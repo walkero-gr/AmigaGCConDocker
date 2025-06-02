@@ -46,7 +46,6 @@ CLIB4_PACKAGES="\
 	libogg-clib4		\
 	libopenjp2-clib4	\
 	libpbl-clib4		\
-	libpng16-clib4		\
 	libpsl-clib4		\
 	librapidjson-clib4	\
 	libraylib5-clib4	\
@@ -84,6 +83,7 @@ CLIB4_PACKAGES="\
 	# libmodplug-clib4	\
 	# libopus-clib4		\
 	# libopusfile-clib4	\
+	# libpng16-clib4		\
 
 # Removed because of conflicts
 # librtmp-clib4		\
