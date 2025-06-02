@@ -17,6 +17,7 @@ pipeline {
 			}
 			steps {
 				sh """
+					git checkout -b main
 					sed -i -E \"s|(view/tags/job/)os4-[^/]+/|\\1\${TAG_NAME}/|g\" README.md
 					git config user.name \"George Sokianos\"
 					git config user.email \"walkero@gmail.com\"
@@ -24,6 +25,9 @@ pipeline {
 					git commit -m \"Updating the release badge with ${TAG_NAME}\"
 				"""
 				sh 'git push https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/walkero-gr/AmigaGCConDocker.git main'
+				sh """
+					git checkout ${TAG_NAME}
+				"""
 			}
 		}
 		stage('aws-poweron') {
