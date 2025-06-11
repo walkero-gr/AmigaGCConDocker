@@ -22,12 +22,12 @@ help:
 	@echo "shell            - Create a container with the latest Docker image and get"
 
 build:
-	docker build -f ./Dockerfile \
+	docker buildx build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain .
 
 buildnc:
-	docker build --no-cache -f ./Dockerfile \
+	docker buildx build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain .
 

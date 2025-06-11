@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+
+## mos- [future]
+### Added
+- Added libwebp 1.4.0
+- Added SDL3 3.2.8
+
+### Updated
+- Updated libfreetype to 2.13.3
+- Updated SDL2 to 2.30.10
+- Updated tinygl to 2024-09-29
+
 ## os4-2.7.0 - [2025-06-02]
 ### Added
 - Added libopus 1.5.2

@@ -42,4 +42,4 @@ WORKDIR /opt/code
 USER amidev
 
 USER root
-RUN chown ${AMIDEV_USER_ID}:${AMIDEV_GROUP_ID} /opt -R
+RUN chown ${AMIDEV_USER_ID}:${AMIDEV_GROUP_ID} /opt /gg -R 
