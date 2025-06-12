@@ -19,7 +19,7 @@ The following images are the complete images that should be used for development
 
 ### Available tags:
 
-All the available docker images' tags can be seen at [Docker hub](https://hub.docker.com/repository/docker/walkero/amigagccondocker/tags)
+All the available docker images' tags can be seen at [Docker hub](https://hub.docker.com/r/walkero/amigagccondocker/tags)
 
 #### AmigaOS 4
 
