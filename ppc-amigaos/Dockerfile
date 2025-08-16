@@ -4,7 +4,7 @@
 # adtools image
 ARG OS=os4
 ARG GCC_VER=11
-ARG BASE_VER=1.5.0
+ARG BASE_VER=1.6.0
 
 FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
 
@@ -62,7 +62,7 @@ ENV CCRED="\033[31m" \
 ENV AMIDEV_USER_ID=1000 \
     AMIDEV_GROUP_ID=1000 \
     APPC="/opt/ppc-amigaos" \
-    PATH="/opt/ppc-amigaos/bin:$PATH" \
+    PATH="/opt/ppc-amigaos/bin:/qt6-amiga/bin:$PATH" \
     SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK" \
     MUI50_INC="/opt/ppc-amigaos/ppc-amigaos/SDK/local/common/include"
 
@@ -81,19 +81,14 @@ RUN ln -sf ${APPC}/bin/ppc-amigaos-as /usr/bin/as && \
     ln -sf ${APPC}/bin/ppc-amigaos-ld /usr/bin/ld && \
     ln -sf ${APPC}/bin/ppc-amigaos-gcc /usr/bin/gcc && \
     ln -sf ${APPC}/bin/ppc-amigaos-g++ /usr/bin/g++ && \
-    ln -sf ${APPC}/bin/ppc-amigaos-ranlib /usr/bin/ranlib;
+    ln -sf ${APPC}/bin/ppc-amigaos-ranlib /usr/bin/ranlib
 
 COPY scripts/setup-user.sh /setup-user.sh
 COPY scripts/setup-tools.sh /setup-tools.sh
 
 RUN chmod +x /setup-user.sh /setup-tools.sh; \
     bash /setup-user.sh && rm /setup-user.sh; \
-    bash /setup-tools.sh && rm /setup-tools.sh
+    bash /setup-tools.sh && rm /setup-tools.sh; \
+    chown ${AMIDEV_USER_ID}:${AMIDEV_GROUP_ID} /opt /qt6-amiga -R
 
 WORKDIR /opt/code
-
-# Set PATH on amidev user
-USER amidev
-
-USER root
-RUN chown ${AMIDEV_USER_ID}:${AMIDEV_GROUP_ID} /opt -R

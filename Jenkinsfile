@@ -57,7 +57,7 @@ pipeline {
 					}
 					axis {
 						name 'GCC'
-						values '11', '8', '6'
+						values '11', '8'
 					}
 				}
 				agent { label "aws-${ARCH}" }
@@ -128,7 +128,7 @@ pipeline {
 				axes {
 					axis {
 						name 'GCC'
-						values '11', '8', '6'
+						values '11', '8'
 					}
 				}
 				stages {

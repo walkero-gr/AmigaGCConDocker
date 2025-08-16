@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## os4-3.0.0 - [2025-07-28]
+### Added
+- Added libsdl2_net 2.2.0
+- Added Qt6 SDK release "For hosted builds (static only) - r2" (2025-08-08)
+
+### Changed
+- Using AmigaGCConDocker-base image v1.6.0 which brings gcc v11.5.0 and binutils v2.40
+
+### Updated
+- Updated the sqlite library to the 3.34.0.a release (2025-07-03)
+- Updated SDL2 to 2.32.8
+- Updated SDL3 to 3.2.20
+- Updated pcre2 to v10.45
+- Updated clib4 to v2.0.0
 
 ## mos- [future]
 ### Added
