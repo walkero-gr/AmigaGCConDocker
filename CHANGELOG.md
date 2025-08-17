@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## os4-3.0.0 - [2025-07-28]
+## os4-3.0.0 - [2025-08-17]
 ### Added
 - Added libsdl2_net 2.2.0
 - Added Qt6 SDK release "For hosted builds (static only) - r2" (2025-08-08)
