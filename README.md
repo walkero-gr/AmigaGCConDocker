@@ -49,7 +49,7 @@ The MorphOS docker image containes multiple versions of gcc ready to be used.
 | gcc8         | 8.4.0   |
 | gcc9         | 9.1.0   |
 | gcc10        | 10.3.0  |
-| gcc11        | 11.3.0  |
+| gcc11        | 11.5.0  |
 
 ## Included SDKs
 
