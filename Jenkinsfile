@@ -47,7 +47,7 @@ pipeline {
 			}
 			environment {
 				TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
-				OS4_GCC_BASE_VER="1.5.0"
+				OS4_GCC_BASE_VER="1.6.0"
 			}
 			matrix {
 				axes {
