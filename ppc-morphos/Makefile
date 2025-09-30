@@ -1,6 +1,6 @@
 
 OS?=ppc-morphos
-REL?=1.0.0
+REL?=1.1.0
 
 REPO=walkero/amigagccondocker
 TAG?=$(OS)-$(REL)
