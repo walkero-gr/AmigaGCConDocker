@@ -2,7 +2,7 @@
 
 ##############################################################################
 # The ubuntu:latest tag points to the "latest LTS", since that's the version recommended for general use.
-FROM phusion/baseimage:noble-1.0.0
+FROM phusion/baseimage:noble-1.0.2
 
 ARG DEBIAN_FRONTEND=noninteractive
 

@@ -108,31 +108,43 @@ services:
     image: 'amigagccondocker:os4-gcc6'
     volumes:
       - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   gcc8:
     image: 'amigagccondocker:os4-gcc8'
     volumes:
       - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   gcc9:
     image: 'amigagccondocker:ppc-amigaos-gcc9'
     volumes:
       - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   gcc10:
     image: 'amigagccondocker:ppc-amigaos-gcc10'
     volumes:
       - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   gcc11:
     image: 'amigagccondocker:os4-gcc11'
     volumes:
       - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   mos-gcc:
     image: 'amigagccondocker:mos-gcc'
     volumes:
       - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 ```
 
 And then you can create and get into each container by doing the following:
@@ -186,19 +198,20 @@ I recommend using VSCode with [Remote - Containers](https://marketplace.visualst
 ```json
 {
 	"extensions": [
+		"batyan-soft.fast-tasks",
 		"donjayamanne.githistory",
 		"eamodio.gitlens",
 		"editorconfig.editorconfig",
 		"github.copilot",
 		"github.copilot-chat",
 		"gruntfuggly.todo-tree",
+		"humao.rest-client",
 		"jbenden.c-cpp-flylint",
-		"patricklee.vsnotes",
-		"sanaajani.taskrunnercode",
-		"twxs.cmake",
+		"johnstoncode.svn-scm",
 		"ms-vscode.cpptools",
 		"paragdiwan.gitpatch",
-		"johnstoncode.svn-scm"
+		"patricklee.vsnotes",
+		"twxs.cmake"
 	],
 	"workspaceFolder": "/opt/code/grafx2",
 	"remoteUser": "amidev"
