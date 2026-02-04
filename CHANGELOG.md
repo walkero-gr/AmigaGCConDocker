@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## os4-3.1.0 - [future]
+### Added
+- Added RADRunner by Colin (hitman-codehq) Ward
+- Added luarocks, the busted and luacov packages
+
+### Updated
+- Updated SDL3 to 3.4.0
+- Updated AmiSSL to 5.26
+
 ## os4-3.0.0 - [2025-08-17]
 ### Added
 - Added libsdl2_net 2.2.0
@@ -50,7 +59,7 @@ All notable changes to this project will be documented in this file.
 ## os4-2.6.0 - [2025-05-09]
 ### Updated
 - Updated clib4 to 1.6.0
-- Updated AmiSSL to 3.20
+- Updated AmiSSL to 5.20
 - Updated SDL2 to 2.32.0
 - Updated SDL3 to v3.2.8
 - Updated libsdl2_image to 2.8.8 for newlib
@@ -71,7 +80,7 @@ All notable changes to this project will be documented in this file.
 - Added SDL3 v3.2 for newlib
 
 ### Updated
-- Updated AmiSSL to 3.19
+- Updated AmiSSL to 5.19
 - Updated SDL2 to 2.30.9
 
 ### Fixed

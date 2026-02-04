@@ -5,7 +5,7 @@ GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
 # release version
-REL?=3.0.0
+REL?=3.1.0
 # gcc base image version
 BASE_VER?=1.6.0
 

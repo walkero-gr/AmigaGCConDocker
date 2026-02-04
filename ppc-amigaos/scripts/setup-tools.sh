@@ -26,6 +26,7 @@ PACKAGES="\
 	libmpfr-dev \
 	libpcre2-dev \
 	libtool \
+	luarocks \
 	make \
 	mandoc \
 	mc \
@@ -57,6 +58,13 @@ ln -s /usr/bin/python3 /usr/bin/python
 
 cd /tmp
 
+# Install RADRunner by Colin (hitman-codehq) Ward
+# https://github.com/hitman-codehq/RADRunner
+echo -e "${CCPINK}${CCBOLD}\n---> Install RADRunner ${CCEND}"
+	curl -fsSL https://github.com/hitman-codehq/RADRunner/releases/download/latest_linux/RADRunner  -o /usr/bin/RADRunner
+	curl -fsSL https://github.com/hitman-codehq/RADRunner/releases/download/latest_linux/RADRunner.debug  -o /usr/bin/RADRunner.debug
+	chmod +x /usr/bin/RADRunner*
+
 # Install Lizard linter
 echo -e "${CCPINK}${CCBOLD}\n---> Install Lizard linter${CCEND}"
 	pip install lizard --break-system-packages
@@ -67,6 +75,11 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}"
 		lha -xfq2 FlexCat.lha && \
 		cp ./FlexCat/Linux-i386/flexcat /usr/bin/ && \
 		rm -rf /tmp/*;
+
+# Install busted and luacov
+echo -e "${CCPINK}${CCBOLD}\n---> Install LUA busted and luacov ${CCEND}"
+	luarocks install busted
+	luarocks install luacov
 
 # Install qt6 SDK
 echo -e "${CCPINK}${CCBOLD}\n---> Install qt6 SDK ${CCEND}";
