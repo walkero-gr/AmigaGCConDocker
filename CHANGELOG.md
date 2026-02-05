@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Added RADRunner by Colin (hitman-codehq) Ward
 - Added luarocks, the busted and luacov packages
+- Added uchardet 0.0.8
 
 ### Updated
 - Updated SDL3 to 3.4.0
