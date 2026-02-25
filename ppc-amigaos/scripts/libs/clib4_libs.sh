@@ -51,9 +51,6 @@ CLIB4_PACKAGES="\
 	libraylib5-clib4	\
 	libreadline8-clib4	\
 	librevenge-clib4	\
-	libsdl2-image-clib4	\
-	libsdl2-net-clib4	\
-	libsdl2-ttf-clib4	\
 	libsidplay-clib4	\
 	libsndfile-clib4	\
 	libstb-clib4		\
@@ -80,6 +77,9 @@ CLIB4_PACKAGES="\
 	zlib-clib4"
 
 # Replaced by OS4 depot packages
+	# libsdl2-image-clib4	\
+	# libsdl2-net-clib4	\
+	# libsdl2-ttf-clib4	\
 	# libmodplug-clib4	\
 	# libopus-clib4		\
 	# libopusfile-clib4	\

@@ -6,10 +6,24 @@ All notable changes to this project will be documented in this file.
 - Added RADRunner by Colin (hitman-codehq) Ward
 - Added luarocks, the busted and luacov packages
 - Added uchardet 0.0.8
+- Added nodejs v24 and npm v11
+- Added cairo 1.14.0 for newlib
 
 ### Updated
 - Updated SDL3 to 3.4.0
 - Updated AmiSSL to 5.26
+- Updated many third party libraries
+
+## mos-1.1.0 [future]
+### Added
+- Added libwebp 1.4.0
+- Added SDL3 3.2.8
+- Added uchardet 0.0.8
+
+### Updated
+- Updated libfreetype to 2.13.3
+- Updated SDL2 to 2.30.10
+- Updated tinygl to 2024-09-29
 
 ## os4-3.0.0 - [2025-08-17]
 ### Added
@@ -25,16 +39,6 @@ All notable changes to this project will be documented in this file.
 - Updated SDL3 to 3.2.20
 - Updated pcre2 to v10.45
 - Updated clib4 to v2.0.0
-
-## mos- [future]
-### Added
-- Added libwebp 1.4.0
-- Added SDL3 3.2.8
-
-### Updated
-- Updated libfreetype to 2.13.3
-- Updated SDL2 to 2.30.10
-- Updated tinygl to 2024-09-29
 
 ## os4-2.7.0 - [2025-06-02]
 ### Added

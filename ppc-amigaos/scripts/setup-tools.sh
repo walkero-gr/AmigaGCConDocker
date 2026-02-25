@@ -1,5 +1,13 @@
 #!/usr/bin/bash
 
+# Update nodejs repository
+echo -e "${CCPINK}${CCBOLD}\n---> Add nodejs v24 repository ${CCEND}"
+	cd /tmp && \
+		curl -sL https://deb.nodesource.com/setup_24.x -o nodesource_setup.sh && \
+		chmod +x nodesource_setup.sh && \
+		./nodesource_setup.sh && \
+		rm -f nodesource_setup.sh
+
 echo -e "${CCPINK}${CCBOLD}\n---> Install required tools ${CCEND}"
 PACKAGES="\
 	autoconf \
@@ -33,6 +41,7 @@ PACKAGES="\
 	mercurial \
 	meson \
 	nano \
+	nodejs \
 	pip \
 	pkg-config \
 	python3 \
