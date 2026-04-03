@@ -67,7 +67,7 @@ The list above is not complete and a lot more are included. A full list can be s
 
 | SDK              | version      | source                                       |
 | ---------------- | ------------ | -------------------------------------------- |
-| MorphOS 3.18 SDK | 20230510     | http://www.hyperion-entertainment.com/       |
+| MorphOS 3.18 SDK | 20230510     | https://www.morphos-team.net                 |
 
 
 ## Tools included
