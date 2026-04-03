@@ -105,42 +105,42 @@ If you want to use it with **docker-compose**, you can create a *docker-compose.
 ```yaml
 services:
   gcc6:
-    image: 'amigagccondocker:os4-gcc6'
+    image: 'walkero/amigagccondocker:os4-gcc6'
     volumes:
       - './code:/opt/code'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   gcc8:
-    image: 'amigagccondocker:os4-gcc8'
+    image: 'walkero/amigagccondocker:os4-gcc8'
     volumes:
       - './code:/opt/code'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   gcc9:
-    image: 'amigagccondocker:ppc-amigaos-gcc9'
+    image: 'walkero/amigagccondocker:ppc-amigaos-gcc9'
     volumes:
       - './code:/opt/code'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   gcc10:
-    image: 'amigagccondocker:ppc-amigaos-gcc10'
+    image: 'walkero/amigagccondocker:ppc-amigaos-gcc10'
     volumes:
       - './code:/opt/code'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   gcc11:
-    image: 'amigagccondocker:os4-gcc11'
+    image: 'walkero/amigagccondocker:os4-gcc11'
     volumes:
       - './code:/opt/code'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   mos-gcc:
-    image: 'amigagccondocker:mos-gcc'
+    image: 'walkero/amigagccondocker:mos-gcc'
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -175,7 +175,7 @@ docker-compose.yml
 ```yaml
 services:
   gcc11-ppc:
-    image: 'amigagccondocker:os4-gcc11'
+    image: 'walkero/amigagccondocker:os4-gcc11'
     environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:
