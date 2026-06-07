@@ -92,7 +92,7 @@ CLIB4_PACKAGES="\
 # 
 # minigl-clib4, libungif-clib4, libsdl2-minigl-clib4
 # 
-# Replaced by AmigLabs libs-ports
+# Replaced by AmigaLabs libs-ports
 # mpfr-clib4
 # gmp-clib4
 # pcre-clib4
@@ -103,7 +103,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
 	# They are saved under /user/ppc-amigaos
 	dpkg --add-architecture amd64;
-	curl -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
 		echo "deb [arch=amd64] https://clib4pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
 		apt-get update
 

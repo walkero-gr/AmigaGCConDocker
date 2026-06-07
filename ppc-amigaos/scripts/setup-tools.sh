@@ -70,8 +70,8 @@ cd /tmp
 # Install RADRunner by Colin (hitman-codehq) Ward
 # https://github.com/hitman-codehq/RADRunner
 echo -e "${CCPINK}${CCBOLD}\n---> Install RADRunner ${CCEND}"
-	curl -fsSL https://github.com/hitman-codehq/RADRunner/releases/download/latest_linux/RADRunner  -o /usr/bin/RADRunner
-	curl -fsSL https://github.com/hitman-codehq/RADRunner/releases/download/latest_linux/RADRunner.debug  -o /usr/bin/RADRunner.debug
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL https://github.com/hitman-codehq/RADRunner/releases/download/latest_linux/RADRunner  -o /usr/bin/RADRunner
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL https://github.com/hitman-codehq/RADRunner/releases/download/latest_linux/RADRunner.debug  -o /usr/bin/RADRunner.debug
 	chmod +x /usr/bin/RADRunner*
 
 # Install Lizard linter
@@ -80,7 +80,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install Lizard linter${CCEND}"
 
 # Install FlexCat
 echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}"
-	curl -fsSL "https://github.com/adtools/flexcat/releases/download/2.18/FlexCat-2.18.lha" -o /tmp/FlexCat.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/adtools/flexcat/releases/download/2.18/FlexCat-2.18.lha" -o /tmp/FlexCat.lha && \
 		lha -xfq2 FlexCat.lha && \
 		cp ./FlexCat/Linux-i386/flexcat /usr/bin/ && \
 		rm -rf /tmp/*;
@@ -92,7 +92,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install LUA busted and luacov ${CCEND}"
 
 # Install qt6 SDK
 echo -e "${CCPINK}${CCBOLD}\n---> Install qt6 SDK ${CCEND}";
-	curl -fsSL "https://github.com/elfpipe/amiga-qt6/releases/download/v6.2.0public-static2/qt6-amigaos-sdk.tar.gz" -o /tmp/qt6.tar.gz && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/elfpipe/amiga-qt6/releases/download/v6.2.0public-static2/qt6-amigaos-sdk.tar.gz" -o /tmp/qt6.tar.gz && \
 		tar -xzf /tmp/qt6.tar.gz --directory /
 	# replace the path "/usr/local/Qt-6.2.0" with "/usr/lib/qt6" on every file in the qt6-amiga directory
 	find /qt6-amiga -type f -exec sed -i 's|/usr/local/Qt-6.2.0|/usr/lib/qt6|g' {} +

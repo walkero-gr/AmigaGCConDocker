@@ -2,7 +2,7 @@
 # 
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libmodplug${CCEND}";
-	curl -fsSL "http://os4depot.net/share/development/library/audio/libmodplug.lha" -o /tmp/libmodplug.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/audio/libmodplug.lha" -o /tmp/libmodplug.lha && \
 		lha -xfq2 libmodplug.lha && \
 		cp -r ./libmodplug-0.8.9.1/SDK/local/* ${SDK_PATH}/local/ && \
 		mkdir -p ${SDK_PATH}/local/examples/libmodplug && \

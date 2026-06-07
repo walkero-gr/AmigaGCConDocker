@@ -13,7 +13,7 @@ cd /tmp
 
 # Install AmigaOS 4 SDK
 echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
-	curl -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=127&amp;Itemid=127" -o /tmp/AmigaOS4-SDK.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=127&amp;Itemid=127" -o /tmp/AmigaOS4-SDK.lha && \
 		lha -xfq2 AmigaOS4-SDK.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/exec*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/newlib*.lha && \

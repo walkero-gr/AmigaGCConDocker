@@ -2,7 +2,7 @@
 # 
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install glib${CCEND}";
-	curl -fsSL "http://os4depot.net/share/development/library/misc/glib.lha" -o /tmp/glib.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/misc/glib.lha" -o /tmp/glib.lha && \
 		lha -xfq2 glib.lha && \
 		cp -r ./glib-2.30.1/local/* ${SDK_PATH}/local/ && \
 		cp -r ./glib-2.30.1/glib-2.30.1/glib/.libs/libglib-2.0.l* \
