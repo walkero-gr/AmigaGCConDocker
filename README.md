@@ -50,6 +50,7 @@ The MorphOS docker image containes multiple versions of gcc ready to be used.
 | gcc9         | 9.1.0   |
 | gcc10        | 10.3.0  |
 | gcc11        | 11.5.0  |
+| gcc13        | 13.4.0  |
 
 ## Included SDKs
 
@@ -59,7 +60,7 @@ The MorphOS docker image containes multiple versions of gcc ready to be used.
 | ------------- | ------------ | -------------------------------------------- |
 | AmigaOS 4 SDK | 54.16        | http://www.hyperion-entertainment.com/       |
 | MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                   |
-| AmiSSL SDK    | 5.20         | https://github.com/jens-maus/amissl/releases |
+| AmiSSL SDK    | 5.26         | https://github.com/jens-maus/amissl/releases |
 
 The list above is not complete and a lot more are included. A full list can be seen at `ppc-amigaos/scripts/libs/` folder in this repo. There are different bash scripts for each library that describe where they are downloaded from and how they are installed. All of them are installed under SDK path `/opt/ppc-amigaos/ppc-amigaos/SDK/local`. 
 
@@ -96,6 +97,7 @@ docker run -it --rm --name gcc8 -v ${PWD}/code:/opt/code -w /opt/code walkero/am
 docker run -it --rm --name gcc9 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc9 /bin/bash
 docker run -it --rm --name gcc10 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc10 /bin/bash
 docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc11 /bin/bash
+docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc13 /bin/bash
 
 docker run -it --rm --name mos-gcc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:mos-gcc /bin/bash
 ```
@@ -139,6 +141,13 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  gcc13:
+    image: 'walkero/amigagccondocker:os4-gcc13'
+    volumes:
+      - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   mos-gcc:
     image: 'walkero/amigagccondocker:mos-gcc'
     volumes:
@@ -156,6 +165,7 @@ docker-compose exec gcc8 bash
 docker-compose exec gcc9 bash
 docker-compose exec gcc10 bash
 docker-compose exec gcc11 bash
+docker-compose exec gcc13 bash
 
 docker-compose exec mos-gcc bash
 ```
