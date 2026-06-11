@@ -1,13 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## os4-3.1.0 - [future]
+## os4-3.1.0 - [2026-06-11]
 ### Added
 - Added RADRunner by Colin (hitman-codehq) Ward
 - Added luarocks, the busted and luacov packages
 - Added uchardet 0.0.8
 - Added nodejs v24 and npm v11
 - Added cairo 1.14.0 for newlib
+- Added gcc13 image
 
 ### Updated
 - Updated SDL3 to 3.4.0

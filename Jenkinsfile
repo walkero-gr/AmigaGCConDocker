@@ -30,14 +30,6 @@ pipeline {
 				"""
 			}
 		}
-		stage('aws-poweron') {
-			when { buildingTag() }
-			steps {
-				sh """
-					aws ec2 start-instances --instance-ids i-07474e4fe80f14754 i-02bb3cbe63a2b3fef || { echo "Failed to start AWS instances"; exit 1; }
-				"""
-			}
-		}
 		stage('build-ppc-amigaos-images') {
 			when { 
 				allOf {
@@ -57,10 +49,10 @@ pipeline {
 					}
 					axis {
 						name 'GCC'
-						values '11', '8'
+						values '13', '11', '8'
 					}
 				}
-				agent { label "aws-${ARCH}" }
+				agent { label "agent-${ARCH}" }
 				stages {
 					stage('build') {
 						options {
@@ -70,6 +62,7 @@ pipeline {
 							sh """
 								cd ppc-amigaos
 								docker build \
+									--provenance=false \
 									--cache-from ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} \
 									--build-arg OS=os4 \
 									--build-arg BASE_VER=${OS4_GCC_BASE_VER} \
@@ -128,7 +121,7 @@ pipeline {
 				axes {
 					axis {
 						name 'GCC'
-						values '11', '8'
+						values '13', '11', '8'
 					}
 				}
 				stages {
