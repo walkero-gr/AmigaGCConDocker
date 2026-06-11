@@ -39,7 +39,7 @@ pipeline {
 			}
 			environment {
 				TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
-				OS4_GCC_BASE_VER="1.6.0"
+				OS4_GCC_BASE_VER="1.7.0"
 			}
 			matrix {
 				axes {
@@ -61,10 +61,9 @@ pipeline {
 						steps {
 							sh """
 								cd ppc-amigaos
-								docker build \
+								docker buildx build \
 									--provenance=false \
 									--cache-from ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} \
-									--build-arg OS=os4 \
 									--build-arg BASE_VER=${OS4_GCC_BASE_VER} \
 									--build-arg GCC_VER=${GCC} \
 									-t ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}-${ARCH} \
@@ -73,30 +72,23 @@ pipeline {
 							"""
 						}
 					}
-					stage('dockerhub-login') {
-						steps {
-							sh """
-								echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
-							"""
-						}
-					}
 					stage('push-images') {
 						steps {
 							sh """
-								set -e
+								echo \$DOCKERHUB_CREDS_PSW | docker login -u \$DOCKERHUB_CREDS_USR --password-stdin
 								docker push ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}-${ARCH} || { echo "Failed to push tagged image"; exit 1; }
 								docker push ${DOCKERHUB_REPO}:os4-gcc${GCC}-${ARCH} || { echo "Failed to push latest image"; exit 1; }
 							"""
 						}
 					}
-					stage('remove-images') {
-						steps {
-							sh """
-								docker rmi -f \$(docker images --filter=reference="${DOCKERHUB_REPO}:*" -q)
-								docker image prune -a --force
-							"""
-						}
-					}
+					// stage('remove-images') {
+					// 	steps {
+					// 		sh """
+					// 			docker rmi -f \$(docker images --filter=reference="${DOCKERHUB_REPO}:*" -q)
+					// 			docker image prune -a --force
+					// 		"""
+					// 	}
+					// }
 				}
 				post {
 					always {
@@ -128,6 +120,8 @@ pipeline {
 					stage('create') {
 						steps {
 							sh """
+								docker manifest rm ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION} || true
+								docker manifest rm ${DOCKERHUB_REPO}:os4-gcc${GCC} || true
 								docker manifest create \
 									--amend ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION} \
 									${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}-amd64 \
@@ -144,22 +138,22 @@ pipeline {
 						when { buildingTag() }
 						steps {
 							sh """
-								echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin
+								echo \$DOCKERHUB_CREDS_PSW | docker login -u \$DOCKERHUB_CREDS_USR --password-stdin
 								docker manifest push ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}
 								docker manifest push ${DOCKERHUB_REPO}:os4-gcc${GCC}
 								docker logout
 							"""
 						}
 					}
-					stage('clear-manifests') {
-						when { buildingTag() }
-						steps {
-							sh """
-								docker manifest rm ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}
-								docker manifest rm ${DOCKERHUB_REPO}:os4-gcc${GCC}
-							"""
-						}
-					}
+					// stage('clear-manifests') {
+					// 	when { buildingTag() }
+					// 	steps {
+					// 		sh """
+					// 			docker manifest rm ${DOCKERHUB_REPO}:os4-gcc${GCC}-${TAG_VERSION}
+					// 			docker manifest rm ${DOCKERHUB_REPO}:os4-gcc${GCC}
+					// 		"""
+					// 	}
+					// }
 				}
 			}
 		}
