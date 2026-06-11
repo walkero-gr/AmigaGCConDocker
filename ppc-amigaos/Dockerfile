@@ -2,18 +2,16 @@
 
 ##############################################################################
 # adtools image
-ARG OS=os4
 ARG GCC_VER=11
 ARG BASE_VER=1.6.0
 
-FROM walkero/amigagccondocker:${OS}-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
+FROM walkero/amigagccondocker:os4-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
 
 
 ##############################################################################
 # SDK Setup image
 FROM ubuntu:latest AS sdk-builder
 
-ARG OS=os4
 ARG GCC_VER=11
 ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 

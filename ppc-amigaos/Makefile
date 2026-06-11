@@ -1,6 +1,4 @@
-# os4, os3, mos
-OS?=os4
-# 8,9,10,11 can be used here
+# 8,9,10,11,13 can be used here
 GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
@@ -10,10 +8,10 @@ REL?=3.1.0
 BASE_VER?=1.7.0
 
 REPO?=walkero/amigagccondocker
-TAG?=$(OS)-gcc$(GCC)-$(REL)
+TAG?=os4-gcc$(GCC)-$(REL)
 VOLUMES?=-v "${PWD}/tests":/opt/code
 WORKSPACE?=-w /opt/code
-NAME?=$(OS)-gcc$(GCC)
+NAME?=os4-gcc$(GCC)
 
 .PHONY: build buildnc shell push logs clean test release
 
@@ -29,9 +27,7 @@ help:
 	@echo ""
 	@echo "Parameters that can be used with build rules:"
 	@echo "GCC              - defines the gcc version."
-	@echo "                   Possible values: 8 (default)/9/10/11"
-	@echo "OS               - defines the cross-compiler target OS"
-	@echo "                   Possible values: os4 (default)/os3/mos"
+	@echo "                   Possible values: 8 (default)/9/10/11/13"
 	@echo "BASE_VER         - defines the base image to be used"
 	@echo ""
 
@@ -39,7 +35,6 @@ build:
 	docker buildx build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
-		--build-arg OS=$(OS) \
 		--build-arg GCC_VER=$(GCC) \
 		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL_VER=$(REL) .
@@ -48,7 +43,6 @@ buildnc:
 	docker buildx build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
-		--build-arg OS=$(OS) \
 		--build-arg GCC_VER=$(GCC) \
 		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL_VER=$(REL) .
