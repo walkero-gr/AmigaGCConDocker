@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file.
 - Updated libopus to v1.6.1
 - Updated sdl3_image to v3.4.4
 - Updated many more libraries
+- Moved the pthread.h and sched.h from `SDK/local/common/include` to `SDK/local/newlib/include` and `SDK/local/clib2/include` to avoid conflicts
+- Updated to latest Ubuntu Resolute 26.04
 
 ## [os4-3.1.0] - 2026-06-11
 

@@ -28,6 +28,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 		cp -r $SDK_PATH/Local/* $SDK_PATH/local/ && \
 		cp -r $SDK_PATH/Include/* $SDK_PATH/include/ && \
 		\
+		mkdir -p $SDK_PATH/local/clib2/include && \
 		cp $SDK_PATH/local/common/include/pthread.h $SDK_PATH/local/clib2/include/ && \
 		mv $SDK_PATH/local/common/include/pthread.h $SDK_PATH/local/newlib/include/ && \
 		cp $SDK_PATH/local/common/include/sched.h $SDK_PATH/local/clib2/include/ && \
