@@ -24,7 +24,7 @@ pipeline {
 					}
 					axis {
 						name 'GCC'
-						values '13', '11', '8'
+						values '13', '11', '8', '6'
 					}
 				}
 				agent { label "agent-${ARCH}" }
@@ -61,7 +61,7 @@ pipeline {
 			}
 			steps {
 				script {
-					createAndPushManifests(['13', '11', '8'])
+					createAndPushManifests(['13', '11', '8', '6'])
 				}
 			}
 		}
