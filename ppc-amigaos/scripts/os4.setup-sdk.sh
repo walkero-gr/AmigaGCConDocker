@@ -13,7 +13,7 @@ cd /tmp
 
 # Install AmigaOS 4 SDK
 echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=127&amp;Itemid=127" -o /tmp/AmigaOS4-SDK.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fskSL "https://www.hyperion-entertainment.com/index.php?option=com_registration&amp;view=download&amp;format=raw&amp;file=137&amp;Itemid=137" -o /tmp/AmigaOS4-SDK.lha && \
 		lha -xfq2 AmigaOS4-SDK.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/exec*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/newlib*.lha && \
@@ -23,9 +23,15 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 		lha -xfq2w=$SDK_PATH SDK_Install/SDI-*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/cairo-*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/expat-*.lha && \
+		\
 		cp -r $SDK_PATH/Examples/Locale/include/internal/* $SDK_PATH/include/include_h/ && \
 		cp -r $SDK_PATH/Local/* $SDK_PATH/local/ && \
-		cp -r $SDK_PATH/Include/* $SDK_PATH/include/;
+		cp -r $SDK_PATH/Include/* $SDK_PATH/include/ && \
+		\
+		cp $SDK_PATH/local/common/include/pthread.h $SDK_PATH/local/clib2/include/ && \
+		mv $SDK_PATH/local/common/include/pthread.h $SDK_PATH/local/newlib/include/ && \
+		cp $SDK_PATH/local/common/include/sched.h $SDK_PATH/local/clib2/include/ && \
+		mv $SDK_PATH/local/common/include/sched.h $SDK_PATH/local/newlib/include/;
 	
 	rm -rf $SDK_PATH/Local $SDK_PATH/C $SDK_PATH/Data $SDK_PATH/S \
 		$SDK_PATH/*.info $SDK_PATH/Include;

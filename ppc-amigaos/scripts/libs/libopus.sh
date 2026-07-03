@@ -4,7 +4,7 @@
 echo -e "${CCPINK}${CCBOLD}\n---> Install libopus${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://os4depot.net/share/development/library/audio/libopus.lha" -o /tmp/libopus.lha && \
 		lha -xfq2 libopus.lha && \
-		cp -r ./opus-1.5.2/SDK/local/* ${SDK_PATH}/local/ && \
+		cp -r ./opus-1.6.1/SDK/local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libopusfile${CCEND}";
@@ -16,5 +16,5 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install libopusfile${CCEND}";
 echo -e "${CCPINK}${CCBOLD}\n---> Install libopusenc${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://os4depot.net/share/development/library/audio/libopusenc.lha" -o /tmp/libopusenc.lha && \
 		lha -xfq2 libopusenc.lha && \
-		cp -r ./libopusenc-0.2.1/SDK/local/* ${SDK_PATH}/local/ && \
+		cp -r ./libopusenc-0.3/SDK/local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
