@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Changed
+
+- Updated amissl to v5.27
+- Decoupled the SDK from each image build to do it only once, and made it more robust on error failure. This will speed up the pipeline and make it fail if a library is not available
+
 ## [os4-3.2.0] - 2026-07-03
 
 ### Added
