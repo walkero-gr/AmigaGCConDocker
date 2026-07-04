@@ -1,11 +1,10 @@
-[![Build Status](https://cicd.walkero.gr/job/AmigaGCCOnDocker/view/tags/job/os4-3.1.0/badge/icon?subject=ppc-amigaos%20Build&build=last)](https://cicd.walkero.gr/job/AmigaGCCOnDocker/view/tags/job/os4-3.1.0/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a2a863e7754e46c7bafaed8e47e8e41a)](https://www.codacy.com/gh/walkero-gr/AmigaGCConDocker/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=walkero-gr/AmigaGCConDocker&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker/badge)](https://www.codefactor.io/repository/github/walkero-gr/amigagccondocker)
 [![Docker Pulls](https://img.shields.io/docker/pulls/walkero/amigagccondocker?color=brightgreen)](https://hub.docker.com/r/walkero/amigagccondocker)
 
 # AmigaGCConDocker
 
-AmigaGCConDocker is a project with different Docker images that can be used as the base for a cross-compiling development environment for AmigaOS 4 (ppc-amigaos) and MorphOS (ppc-morphos). They are based on GCC versions 8, 9, 10 and 11 and they are using Ubuntu OS. They have installed everything needed (gcc compiler, SDKs, libraries) for compiling your applications out of the box.
+AmigaGCConDocker is a project with different Docker images that can be used as the base for a cross-compiling development environment for AmigaOS 4 (ppc-amigaos) and MorphOS (ppc-morphos). They are based on GCC versions 8, 9, 10, 11 and 13 and they are based on Ubuntu. They have installed everything needed (gcc compiler, SDKs, libraries) for compiling your applications out of the box.
 
 The purpose of the project is to be an up-to-date, flexible and out-of-the-box solution for cross-compiling applications for Amiga OS4 or MorphOS, using the GCC C/C++ compiler. Those Docker images can be used on CI/CD solutions for automatic testing, compiling, packaging and deployment.
 
@@ -28,8 +27,9 @@ All the available docker images' tags can be seen at [Docker hub](https://hub.do
 - GCC 9: `ppc-amigaos-gcc9`
 - GCC 10: `ppc-amigaos-gcc10`
 - GCC 11: `os4-gcc11`
+- GCC 13: `os4-gcc13`
 
-The docker images with gcc versions 6,8,11 support newlib, clib2 and clib4 and they are the most updated releases.
+The docker images with gcc versions 6,11,13 support newlib, clib2 and clib4 and they are the most updated releases.
 
 The gcc v6 supports SPE CPU's and can be used to optimize code for systems like the A1222.
 
@@ -58,9 +58,9 @@ The MorphOS docker image containes multiple versions of gcc ready to be used.
 
 | SDK           | version      | source                                       |
 | ------------- | ------------ | -------------------------------------------- |
-| AmigaOS 4 SDK | 54.16        | http://www.hyperion-entertainment.com/       |
+| AmigaOS 4 SDK | 54.25        | http://www.hyperion-entertainment.com/       |
 | MUI 5.x dev   | 5.0-20210831 | http://muidev.de/downloads                   |
-| AmiSSL SDK    | 5.26         | https://github.com/jens-maus/amissl/releases |
+| AmiSSL SDK    | 5.27         | https://github.com/jens-maus/amissl/releases |
 
 The list above is not complete and a lot more are included. A full list can be seen at `ppc-amigaos/scripts/libs/` folder in this repo. There are different bash scripts for each library that describe where they are downloaded from and how they are installed. All of them are installed under SDK path `/opt/ppc-amigaos/ppc-amigaos/SDK/local`. 
 
@@ -84,6 +84,8 @@ The list above is not complete and a lot more are included. A full list can be s
 | flawfinder    | 2.0.19  |
 | git           | 2.43.0  |
 | subversion    | 1.14.3  |
+| npm           | 11      |
+| nodejs        | 24      |
 
 The list above is not complete and a lot more are included. A full list can be seen in the `ppc-amigaos/scripts/setup-tools.sh` script, along with the way they are installed.
 
@@ -97,7 +99,7 @@ docker run -it --rm --name gcc8 -v ${PWD}/code:/opt/code -w /opt/code walkero/am
 docker run -it --rm --name gcc9 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc9 /bin/bash
 docker run -it --rm --name gcc10 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc10 /bin/bash
 docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc11 /bin/bash
-docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc13 /bin/bash
+docker run -it --rm --name gcc13 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc13 /bin/bash
 
 docker run -it --rm --name mos-gcc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:mos-gcc /bin/bash
 ```
@@ -223,7 +225,7 @@ I recommend using VSCode with [Remote - Containers](https://marketplace.visualst
 		"patricklee.vsnotes",
 		"twxs.cmake"
 	],
-	"workspaceFolder": "/opt/code/grafx2",
+	"workspaceFolder": "/opt/code",
 	"remoteUser": "amidev"
 }
 ```
