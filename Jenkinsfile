@@ -5,6 +5,37 @@ pipeline {
 		DOCKERHUB_REPO="walkero/amigagccondocker"
 	}
 	stages {
+		stage('build-sdk-image') {
+			when { 
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			matrix {
+				axes {
+					axis {
+						name 'ARCH'
+						values 'amd64', 'arm64'
+					}
+				}
+				agent { label "agent-${ARCH}" }
+				stages {
+					stage('build') {
+						steps {
+							sh """
+								cd ppc-amigaos
+								docker buildx build \
+									--no-cache \
+									--provenance=false \
+									-t ${DOCKERHUB_REPO}:sdk \
+									-f Dockerfile.sdk .
+							"""
+						}
+					}
+				}
+			}
+		}
 		stage('build-ppc-amigaos-images') {
 			when { 
 				allOf {

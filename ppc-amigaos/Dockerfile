@@ -1,38 +1,9 @@
-# The ubuntu:latest tag points to the "latest LTS", since that's the version recommended for general use.
-
 ##############################################################################
 # adtools image
 ARG GCC_VER=11
-ARG BASE_VER=1.6.0
+ARG BASE_VER=1.8.0
 
 FROM walkero/amigagccondocker:os4-gcc${GCC_VER}-base-${BASE_VER} AS adtools-image
-
-
-##############################################################################
-# SDK Setup image
-FROM ubuntu:latest AS sdk-builder
-
-ARG GCC_VER=11
-ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
-
-ENV CCRED="\033[31m" \
-    CCGREEN="\033[32m" \
-    CCYELLOW="\033[33m" \
-    CCBLUE="\033[34m" \
-    CCPINK="\033[35m" \
-    CCLBLUE="\033[36m" \
-    CCEND="\033[0m" \
-    CCBOLD="\033[1m" \
-    CCITAL="\033[3m" \
-    CCUNDR="\033[4m"
-
-COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
-COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
-
-COPY scripts/os4.setup-sdk.sh /scripts/setup-sdk.sh
-COPY scripts/libs /scripts/libs
-RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
-
 
 ##############################################################################
 # Dev environment image
@@ -77,7 +48,8 @@ ENV AS=${APPC}/bin/ppc-amigaos-as \
     RANLIB=${APPC}/bin/ppc-amigaos-ranlib
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
-COPY --from=sdk-builder /opt/ppc-amigaos /opt/ppc-amigaos
+COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
+COPY --from=walkero/amigagccondocker:sdk /opt/ppc-amigaos /opt/ppc-amigaos
 
 RUN ln -sf ${APPC}/bin/ppc-amigaos-as /usr/bin/as && \
     ln -sf ${APPC}/bin/ppc-amigaos-ar /usr/bin/ar && \

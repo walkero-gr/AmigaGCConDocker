@@ -1,0 +1,22 @@
+##############################################################################
+# SDK Setup image
+FROM ubuntu:latest AS sdk-builder
+
+ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
+
+ENV CCRED="\033[31m" \
+    CCGREEN="\033[32m" \
+    CCYELLOW="\033[33m" \
+    CCBLUE="\033[34m" \
+    CCPINK="\033[35m" \
+    CCLBLUE="\033[36m" \
+    CCEND="\033[0m" \
+    CCBOLD="\033[1m" \
+    CCITAL="\033[3m" \
+    CCUNDR="\033[4m"
+
+COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
+
+COPY scripts/os4.setup-sdk.sh /scripts/setup-sdk.sh
+COPY scripts/libs /scripts/libs
+RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh

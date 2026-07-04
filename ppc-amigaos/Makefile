@@ -3,7 +3,7 @@ GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
 # release version
-REL?=3.2.0
+REL?=3.2.1
 # gcc base image version
 BASE_VER?=1.8.0
 
@@ -24,6 +24,7 @@ help:
 	@echo "buildnc          - Build the Docker image without using cache"
 	@echo "shell            - Create a container with the latest Docker"
 	@echo "                   image and get into it"
+	@echo "build-sdk        - Build the SDK Docker image"
 	@echo ""
 	@echo "Parameters that can be used with build rules:"
 	@echo "GCC              - defines the gcc version."
@@ -46,6 +47,11 @@ buildnc:
 		--build-arg GCC_VER=$(GCC) \
 		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL_VER=$(REL) .
+
+build-sdk:
+	docker buildx build -f ./Dockerfile.sdk \
+		-t $(REPO):sdk \
+		--progress plain .
 
 shell:
 	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
