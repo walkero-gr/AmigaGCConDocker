@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libsdl_ttf${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/graphics/libsdl_ttf.lha" -o /tmp/libsdl_ttf.lha && \

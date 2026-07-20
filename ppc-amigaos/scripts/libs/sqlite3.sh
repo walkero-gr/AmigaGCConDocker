@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install sqlite3${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://aminet.net/biz/dbase/sqlite-3.34.0.a-amiga.lha" -o /tmp/sqlite.lha && \

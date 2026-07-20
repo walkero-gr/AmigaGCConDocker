@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install AmiSSL SDK${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/jens-maus/amissl/releases/download/5.27/AmiSSL-5.27-SDK.lha" -o /tmp/AmiSSL.lha && \

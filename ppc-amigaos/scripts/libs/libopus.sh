@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libopus${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://os4depot.net/share/development/library/audio/libopus.lha" -o /tmp/libopus.lha && \

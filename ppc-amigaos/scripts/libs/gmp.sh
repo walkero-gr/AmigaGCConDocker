@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libgmp${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/gmp/gmp-6.3.0.lha" -o /tmp/gmp.lha && \

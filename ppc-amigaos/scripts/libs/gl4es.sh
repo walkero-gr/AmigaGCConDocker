@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install GL4ES SDK${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/kas1e/GL4ES-SDK/releases/download/1.2/gl4es_sdk-1.2.lha" -o /tmp/gl4es_sdk.lha && \

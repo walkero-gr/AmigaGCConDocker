@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install OpenURL library${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://aminet.net/comm/www/OpenURL-7.18.lha" -o /tmp/openurl.lha && \

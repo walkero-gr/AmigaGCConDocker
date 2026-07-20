@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install SDL3 SDK${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://sdk.os4depot.net/files/libSDL3.lha" -o /tmp/SDL3.lha && \

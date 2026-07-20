@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install SDL2 SDK${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v2.32.10-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \

@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install codesets library${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \

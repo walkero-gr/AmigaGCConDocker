@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libsdl2_image${CCEND}";
 	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://os4depot.net/share/development/library/graphics/libsdl2_image.lha" -o /tmp/libsdl2_image.lha && \
