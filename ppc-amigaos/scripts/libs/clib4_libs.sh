@@ -1,22 +1,18 @@
 #!/usr/bin/bash
 # 
+set -e
 
 CLIB4_PACKAGES="\
 	amigaos4-clib4		\
 	cppunit-clib4		\
-	curl7-clib4			\
-	fontconfig-clib4	\
-	freetype2-clib4		\
 	gdbm-clib4			\
 	giflib-clib4		\
 	jansson-clib4		\
 	jpeg9d-clib4		\
 	libagg2-clib4		\
-	libass-clib4		\
 	libboost-clib4		\
 	libbrotli-clib4		\
 	libbz2-clib4		\
-	libcairo-clib4		\
 	libcares-clib4		\
 	libcdr-clib4		\
 	libconfig-clib4		\
@@ -26,13 +22,11 @@ CLIB4_PACKAGES="\
 	libexpat-clib4		\
 	libfast-lzma2-clib4	\
 	libffi-clib4		\
-	libffmpeg-clib4		\
 	libflac-clib4		\
 	libfmt-clib4		\
 	libgl4es-clib4		\
 	libglm-clib4		\
 	libgme-clib4		\
-	libharfbuzz-clib4	\
 	libharu-clib4		\
 	libicu-clib4		\
 	libidn2-clib4		\
@@ -41,10 +35,8 @@ CLIB4_PACKAGES="\
 	libmd4c-clib4		\
 	libmp3lame-clib4	\
 	libncurses-clib4	\
-	libnghttp2-clib4	\
 	libnghttp3-clib4	\
 	libogg-clib4		\
-	libopenjp2-clib4	\
 	libpbl-clib4		\
 	libpsl-clib4		\
 	librapidjson-clib4	\
@@ -58,10 +50,7 @@ CLIB4_PACKAGES="\
 	libunistring-clib4	\
 	libvorbis-clib4		\
 	libvpx-clib4		\
-	libwebp-clib4		\
 	libx264-clib4		\
-	libxml2-clib4		\
-	libxslt-clib4		\
 	libxvidcore-clib4	\
 	libxxhash-clib4		\
 	little-cms-clib4	\
@@ -69,14 +58,17 @@ CLIB4_PACKAGES="\
 	mpc-clib4			\
 	opencore-amr-clib4	\
 	opengles-clib4		\
-	openssl-quic-clib4	\
-	openssl3-clib4		\
 	pixman1-clib4		\
 	sqlite-clib4		\
 	theora-clib4		\
 	zlib-clib4"
 
 # Replaced by OS4 depot packages
+	# fontconfig-clib4	\
+	# freetype2-clib4		\
+	# libcairo-clib4		\
+	# libffmpeg-clib4		\
+	# libharfbuzz-clib4	\
 	# libsdl2-image-clib4	\
 	# libsdl2-net-clib4	\
 	# libsdl2-ttf-clib4	\
@@ -84,6 +76,14 @@ CLIB4_PACKAGES="\
 	# libopus-clib4		\
 	# libopusfile-clib4	\
 	# libpng16-clib4		\
+	# libxml2-clib4		\
+	# libnghttp2-clib4	\
+	# libxslt-clib4		\
+	# libopenjp2-clib4	\
+	# libwebp-clib4		\
+	# curl7-clib4			\
+	# openssl-quic-clib4	\
+	# openssl3-clib4		\
 
 # Removed because of conflicts
 # librtmp-clib4		\
