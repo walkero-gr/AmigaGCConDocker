@@ -1,6 +1,5 @@
 #!/usr/bin/bash
-# 
-set -e
+#
 
 CLIB4_PACKAGES="\
 	amigaos4-clib4		\
@@ -89,9 +88,9 @@ CLIB4_PACKAGES="\
 # librtmp-clib4		\
 # libngtcp2-clib4		\
 # libSDL2-gl4es-clib4	\
-# 
+#
 # minigl-clib4, libungif-clib4, libsdl2-minigl-clib4
-# 
+#
 # Replaced by AmigaLabs libs-ports
 # mpfr-clib4
 # gmp-clib4
@@ -99,7 +98,7 @@ CLIB4_PACKAGES="\
 # pcre2-clib4
 
 if [ -d "$SDK_PATH/clib4" ]; then
-echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
+echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries ${CCEND}";
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
 	# They are saved under /user/ppc-amigaos
 	dpkg --add-architecture amd64;
@@ -108,12 +107,16 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries${CCEND}";
 		apt-get update
 
 	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES
+
+	# apt-get download libharfbuzz-clib4 && \
+	# 	dpkg --force-all -i libharfbuzz-clib4_*.deb
+
 	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
 
 	# Necessary for paths in some pkgconfig files
 	rm -rf /usr/ppc-amigaos && \
-	mkdir -p /usr/ppc-amigaos/SDK/local && \
-	ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
+		mkdir -p /usr/ppc-amigaos/SDK/local && \
+		ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
 
 	# Delete the local/clib4/include/GL directory because of inconsistencies
 	rm -rf $SDK_PATH/local/clib4/include/GL
