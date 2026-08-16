@@ -1,12 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [os4-3.3.0] - 2026-08-16
 
 ### Changed
 
-- Updated amissl to v5.27
+- Updated AmiSSL to v5.27
+- Updated liblua to 5.5, having the v5.4 available as well, in different include folder and static libraries
+- Update SDL3 to 3.4.14
 - Decoupled the SDK from each image build to do it only once, and made it more robust on error failure. This will speed up the pipeline and make it fail if a library is not available
+- Source changed for some clib4 libraries to avoid conflicts. Main source now is OS4Depot
 
 ## [os4-3.2.0] - 2026-07-03
 
@@ -47,13 +50,13 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Added libwebp 1.4.0
-- Added SDL3 3.2.8
+- Added SDL3 3.4.10
 - Added uchardet 0.0.8
 
 ### Changed
 
 - Updated libfreetype to 2.13.3
-- Updated SDL2 to 2.30.10
+- Updated SDL2 to 2.32.11
 - Updated tinygl to 2024-09-29
 
 ## [os4-3.0.0] - 2025-08-17
@@ -175,7 +178,7 @@ All notable changes to this project will be documented in this file.
 
 - Added curl7-clib4
 - Added openssl-quic-clib4
-  
+
 ### Fixed
 
 - Fixed a caching issue with the installation of clib4 libraries

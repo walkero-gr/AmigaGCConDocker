@@ -23,6 +23,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 		lha -xfq2w=$SDK_PATH SDK_Install/clib2*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/base.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/pthreads*.lha && \
+		lha -xfq2w=$SDK_PATH SDK_Install/python*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/SDI-*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/cairo-*.lha && \
 		lha -xfq2w=$SDK_PATH SDK_Install/expat-*.lha && \

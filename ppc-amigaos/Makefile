@@ -3,7 +3,7 @@ GCC?=11
 # adtools, afxgroup
 # CLIB2_REPO?=adtools
 # release version
-REL?=3.2.1
+REL?=3.3.0
 # gcc base image version
 BASE_VER?=1.8.0
 
@@ -48,13 +48,16 @@ buildnc:
 		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL_VER=$(REL) .
 
+shell:
+	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+
 build-sdk:
-	docker buildx build -f ./Dockerfile.sdk \
+	docker buildx build --no-cache -f ./Dockerfile.sdk \
 		-t $(REPO):sdk \
 		--progress plain .
 
-shell:
-	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+shell-sdk:
+	docker run -it --rm --name sdk $(REPO):sdk /bin/bash
 
 push:
 	docker push $(REPO):$(TAG)

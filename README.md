@@ -110,6 +110,7 @@ If you want to use it with **docker-compose**, you can create a *docker-compose.
 services:
   gcc6:
     image: 'walkero/amigagccondocker:os4-gcc6'
+    hostname: ppc-amigaos-gcc6
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -117,6 +118,7 @@ services:
 
   gcc8:
     image: 'walkero/amigagccondocker:os4-gcc8'
+    hostname: ppc-amigaos-gcc8
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -124,6 +126,7 @@ services:
 
   gcc9:
     image: 'walkero/amigagccondocker:ppc-amigaos-gcc9'
+    hostname: ppc-amigaos-gcc9
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -131,6 +134,7 @@ services:
 
   gcc10:
     image: 'walkero/amigagccondocker:ppc-amigaos-gcc10'
+    hostname: ppc-amigaos-gcc10
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -138,6 +142,7 @@ services:
 
   gcc11:
     image: 'walkero/amigagccondocker:os4-gcc11'
+    hostname: ppc-amigaos-gcc11
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -145,6 +150,7 @@ services:
 
   gcc13:
     image: 'walkero/amigagccondocker:os4-gcc13'
+    hostname: ppc-amigaos-gcc13
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -152,6 +158,7 @@ services:
 
   mos-gcc:
     image: 'walkero/amigagccondocker:mos-gcc'
+    hostname: ppc-morphos
     volumes:
       - './code:/opt/code'
     extra_hosts:
@@ -188,6 +195,7 @@ docker-compose.yml
 services:
   gcc11-ppc:
     image: 'walkero/amigagccondocker:os4-gcc11'
+    hostname: ppc-amigaos-gcc11
     environment:
       MY_INC: "/opt/ext_sdk/MY/include_h"
     volumes:

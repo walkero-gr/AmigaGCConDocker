@@ -17,6 +17,6 @@ ENV CCRED="\033[31m" \
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 
-COPY scripts/os4.setup-sdk.sh /scripts/setup-sdk.sh
+COPY scripts/setup-sdk.sh /scripts/setup-sdk.sh
 COPY scripts/libs /scripts/libs
 RUN chmod +x /scripts/* -R && bash /scripts/setup-sdk.sh
