@@ -6,7 +6,7 @@ pipeline {
 	}
 	stages {
 		stage('build-sdk-image') {
-			when { 
+			when {
 				allOf {
 					buildingTag()
 					tag pattern: "os4-.*", comparator: "REGEXP"
@@ -37,7 +37,7 @@ pipeline {
 			}
 		}
 		stage('build-ppc-amigaos-images') {
-			when { 
+			when {
 				allOf {
 					buildingTag()
 					tag pattern: "os4-.*", comparator: "REGEXP"
@@ -81,7 +81,7 @@ pipeline {
 			}
 		}
 		stage('create-ppc-amigaos-manifests') {
-			when { 
+			when {
 				allOf {
 					buildingTag()
 					tag pattern: "os4-.*", comparator: "REGEXP"
@@ -90,6 +90,7 @@ pipeline {
 			environment {
 				TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
 			}
+			agent { label "agent-amd64" }
 			steps {
 				script {
 					createAndPushManifests(['13', '11', '8', '6'])
