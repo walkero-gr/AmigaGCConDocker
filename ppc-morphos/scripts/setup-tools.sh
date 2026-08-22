@@ -1,5 +1,13 @@
 #!/usr/bin/bash
 
+# Update nodejs repository
+echo -e "${CCPINK}${CCBOLD}\n---> Add nodejs v24 repository ${CCEND}"
+	cd /tmp && \
+		curl --retry 5 --retry-delay 2 --retry-connrefused -sL https://deb.nodesource.com/setup_24.x -o nodesource_setup.sh && \
+		chmod +x nodesource_setup.sh && \
+		./nodesource_setup.sh && \
+		rm -f nodesource_setup.sh
+
 PACKAGES="\
 	autoconf \
 	automake \
@@ -16,6 +24,7 @@ PACKAGES="\
 	gettext \
 	git \
 	gperf \
+	lcov \
 	libfl2 \
 	libgmp-dev \
 	libisl-dev \
@@ -29,6 +38,7 @@ PACKAGES="\
 	mercurial \
 	meson \
 	nano \
+	nodejs \
 	pip \
 	pkg-config \
 	python3 \
@@ -38,7 +48,7 @@ PACKAGES="\
 	sudo \
 	texinfo \
 	wget"
-	
+
 apt-get update && apt-get -y dist-upgrade && \
 	apt-get -y --no-install-recommends install $PACKAGES
 
@@ -56,7 +66,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install Lizard linter${CCEND}"
 
 # Install FlexCat
 echo -e "${CCPINK}${CCBOLD}\n---> Install FlexCat${CCEND}"
-	curl -fsSL "https://github.com/adtools/flexcat/releases/download/2.18/FlexCat-2.18.lha" -o /tmp/FlexCat.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/adtools/flexcat/releases/download/2.18/FlexCat-2.18.lha" -o /tmp/FlexCat.lha && \
 		lha -xfq2 FlexCat.lha && \
 		cp ./FlexCat/Linux-i386/flexcat /usr/bin/ && \
 		rm -rf /tmp/*;

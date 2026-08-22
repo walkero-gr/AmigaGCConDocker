@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 # 
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libwebp ${CCEND}";
-	curl -fsSL "https://www.morphos-storage.net/dl.php?id=2251646" -o libwebp.lha && \
+	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://www.morphos-storage.net/dl.php?id=2251646" -o libwebp.lha && \
 		lha -xfq2 libwebp.lha && \
 		mkdir -p /gg/include/webp/sharpyuv /gg/lib/pkgconfig/ && \
 		cp -r ./libwebp-1.4.0/src/libwebp*.a /gg/lib/ && \

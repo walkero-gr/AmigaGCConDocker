@@ -1,5 +1,6 @@
 #!/usr/bin/bash
-# 
+#
+set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install SDL3 SDK ${CCEND}";
 	curl -fsSL "https://www.morphos-storage.net/dl.php?id=2403006" -o /tmp/SDL3.lha && \
