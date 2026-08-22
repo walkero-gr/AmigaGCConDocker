@@ -1,8 +1,12 @@
-
-
-##############################################################################
-# The ubuntu:latest tag points to the "latest LTS", since that's the version recommended for general use.
-FROM phusion/baseimage:noble-1.0.2
+# Dev environment image
+FROM phusion/baseimage:resolute
+LABEL maintainer="Georgios Sokianos <walkero@gmail.com>" \
+      org.opencontainers.image.title="MorphOS cross-compiling development environment" \
+      org.opencontainers.image.description="MorphOS cross-compiling development environment" \
+      org.opencontainers.image.source="https://github.com/walkero-gr/AmigaGCConDocker" \
+      org.opencontainers.image.url="https://github.com/walkero-gr/AmigaGCConDocker" \
+      org.opencontainers.image.vendor="walkero" \
+      org.opencontainers.image.base.name="phusion/baseimage:resolute"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -22,13 +26,15 @@ ENV CCRED="\033[31m" \
     CCITAL="\033[3m" \
     CCUNDR="\033[4m"
 
+# SDK found at https://morph.zone/modules/newbb_plus/viewtopic.php?forum=12&topic_id=13308
 COPY scripts /scripts
 RUN chmod +x /scripts/* -R; \
     bash /scripts/setup-user.sh ;\
     bash /scripts/setup-tools.sh ; \
     \
     dpkg --add-architecture amd64; \
-    curl -fsSLk "https://bigfoot.morphos-team.net/test/morphos-sdk_20230510-1_amd64.deb" -o morphos-sdk_amd64.deb && \
+    curl --retry 5 --retry-delay 2 --retry-connrefused \
+        -fsSLk "https://bigfoot.morphos-team.net/test/morphos-sdk_20230510-1_amd64.deb" -o morphos-sdk_amd64.deb && \
     dpkg -i ./morphos-sdk_amd64.deb && \
     rm morphos-sdk_amd64.deb; \
     mkdir -p /gg/usr/local/; \
