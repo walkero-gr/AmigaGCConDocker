@@ -1,14 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [os4-Unreleased] - future
+## [Unreleased] - future
 
 ### Added
 
 - Added libharfbuzz 14.2.1
 - Added OpenAL 1.18.2r2
 
-## [os4-3.3.0] - 2026-08-16
+## [3.3.0] - 2026-08-16
 
 ### Changed
 
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 - Decoupled the SDK from each image build to do it only once, and made it more robust on error failure. This will speed up the pipeline and make it fail if a library is not available
 - Source changed for some clib4 libraries to avoid conflicts. Main source now is OS4Depot
 
-## [os4-3.2.0] - 2026-07-03
+## [3.2.0] - 2026-07-03
 
 ### Added
 
@@ -36,7 +36,7 @@ All notable changes to this project will be documented in this file.
 - Moved the pthread.h and sched.h from `SDK/local/common/include` to `SDK/local/newlib/include` and `SDK/local/clib2/include` to avoid conflicts
 - Updated to latest Ubuntu Resolute 26.04
 
-## [os4-3.1.0] - 2026-06-11
+## [3.1.0] - 2026-06-11
 
 ### Added
 
@@ -52,21 +52,7 @@ All notable changes to this project will be documented in this file.
 - Updated AmiSSL to 5.26
 - Updated many third party libraries
 
-## [mos-1.1.0] - unreleased
-
-### Added
-
-- Added libwebp 1.4.0
-- Added SDL3 3.4.10
-- Added uchardet 0.0.8
-
-### Changed
-
-- Updated libfreetype to 2.13.3
-- Updated SDL2 to 2.32.11
-- Updated tinygl to 2024-09-29
-
-## [os4-3.0.0] - 2025-08-17
+## [3.0.0] - 2025-08-17
 
 ### Added
 
@@ -82,7 +68,7 @@ All notable changes to this project will be documented in this file.
 - Updated pcre2 to v10.45
 - Updated clib4 to v2.0.0
 
-## [os4-2.7.0] - 2025-06-02
+## [2.7.0] - 2025-06-02
 
 ### Added
 
@@ -106,7 +92,7 @@ All notable changes to this project will be documented in this file.
 - Updated SDL3 to 3.2.14
 - Updated libpng to 1.6.47
 
-## [os4-2.6.0] - 2025-05-09
+## [2.6.0] - 2025-05-09
 
 ### Changed
 
@@ -120,7 +106,7 @@ All notable changes to this project will be documented in this file.
 - Updated libsdl_ttf to 2.0.11.1 for newlib
 - Updated many other libraries for newlib, clib2 and clib4
 
-## [os4-2.5.0] - 2025-02-15
+## [2.5.0] - 2025-02-15
 
 ### Added
 
@@ -142,7 +128,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed issue #10
 
-## [os4-2.4.0] - 2024-12-17
+## [2.4.0] - 2024-12-17
 
 ### Added
 
