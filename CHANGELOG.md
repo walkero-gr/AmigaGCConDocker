@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [os4-Unreleased] - future
+
+### Added
+
+- Added libharfbuzz 14.2.1
+- Added OpenAL 1.18.2r2
+
 ## [os4-3.3.0] - 2026-08-16
 
 ### Changed
