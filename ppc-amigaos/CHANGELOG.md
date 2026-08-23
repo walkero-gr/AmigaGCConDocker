@@ -7,6 +7,17 @@ All notable changes to this project will be documented in this file.
 
 - Added libharfbuzz 14.2.1
 - Added OpenAL 1.18.2r2
+- Added Lua 5.1
+- Added libphysfs 3.3.0
+
+### Changed
+
+- Lua 5.5 header files moved into their own folder named lua55
+
+### Updated
+
+- Updated OpenAL 1.18.2 with support for clib4
+- Updated SDL 2 with support for clib4
 
 ## [3.3.0] - 2026-08-16
 
