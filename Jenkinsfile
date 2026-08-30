@@ -5,7 +5,7 @@ pipeline {
 		DOCKERHUB_REPO="walkero/amigagccondocker"
 	}
 	stages {
-		stage('build-sdk-image') {
+		stage('build-ppc-amigaos-sdk-image') {
 			when {
 				allOf {
 					buildingTag()
@@ -66,7 +66,7 @@ pipeline {
 						}
 						steps {
 							script {
-								buildAndPush(GCC, ARCH)
+								buildAndPush_os4(GCC, ARCH)
 							}
 						}
 					}
@@ -93,14 +93,70 @@ pipeline {
 			agent { label "agent-amd64" }
 			steps {
 				script {
-					createAndPushManifests(['13', '11', '8', '6'])
+					createAndPushManifests('os4', ['13', '11', '8', '6'])
+				}
+			}
+		}
+		stage('build-ppc-morphos-images') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "mos-.*", comparator: "REGEXP"
+				}
+			}
+			environment {
+				TAG_VERSION = "${TAG_NAME.replace('mos-', '')}"
+			}
+			matrix {
+				axes {
+					axis {
+						name 'ARCH'
+						values 'amd64', 'arm64'
+					}
+				}
+				agent { label "agent-${ARCH}" }
+				stages {
+					stage('build') {
+						options {
+							timeout(time: 60, unit: 'MINUTES')
+						}
+						steps {
+							script {
+								buildAndPush_mos(ARCH)
+							}
+						}
+					}
+				}
+				post {
+					always {
+						sh """
+							docker logout
+						"""
+					}
+				}
+			}
+		}
+		stage('create-ppc-morphos-manifests') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "mos-.*", comparator: "REGEXP"
+				}
+			}
+			environment {
+				TAG_VERSION = "${TAG_NAME.replace('mos-', '')}"
+			}
+			agent { label "agent-amd64" }
+			steps {
+				script {
+					createAndPushManifests('mos', [''])
 				}
 			}
 		}
 	}
 }
 
-def buildAndPush(gccVer, arch) {
+def buildAndPush_os4(gccVer, arch) {
 	def imageTagBase = "${env.DOCKERHUB_REPO}:os4-gcc${gccVer}"
 	def imageTagVersioned = "${imageTagBase}-${env.TAG_VERSION}-${arch}"
 	def imageTagLatest = "${imageTagBase}-${arch}"
@@ -129,9 +185,9 @@ def buildAndPush(gccVer, arch) {
 	}
 }
 
-def createAndPushManifests(gccVersions) {
+def createAndPushManifests(system, gccVersions) {
 	gccVersions.each { gccVer ->
-		def imageTagBase = "${env.DOCKERHUB_REPO}:os4-gcc${gccVer}"
+		def imageTagBase = "${env.DOCKERHUB_REPO}:${system}-gcc${gccVer}"
 		def imageTagVersioned = "${imageTagBase}-${env.TAG_VERSION}"
 		def imageTagLatest = imageTagBase
 
@@ -154,7 +210,7 @@ def createAndPushManifests(gccVersions) {
 	try {
 		sh 'echo \$DOCKERHUB_CREDS_PSW | docker login -u \$DOCKERHUB_CREDS_USR --password-stdin'
 		gccVersions.each { gccVer ->
-			def imageTagBase = "${env.DOCKERHUB_REPO}:os4-gcc${gccVer}"
+			def imageTagBase = "${env.DOCKERHUB_REPO}:${system}-gcc${gccVer}"
 			def imageTagVersioned = "${imageTagBase}-${env.TAG_VERSION}"
 			def imageTagLatest = imageTagBase
 
@@ -164,6 +220,33 @@ def createAndPushManifests(gccVersions) {
 					docker manifest push ${imageTagLatest}
 				"""
 			}
+		}
+	} finally {
+		sh 'docker logout'
+	}
+}
+
+def buildAndPush_mos(arch) {
+	def imageTagBase = "${env.DOCKERHUB_REPO}:mos-gcc"
+	def imageTagVersioned = "${imageTagBase}-${env.TAG_VERSION}-${arch}"
+	def imageTagLatest = "${imageTagBase}-${arch}"
+
+	try {
+		sh """
+			cd ppc-morphos
+			docker buildx build \
+				--provenance=false \
+				--cache-from ${imageTagLatest} \
+				-t ${imageTagVersioned} \
+				-t ${imageTagLatest} \
+				-f Dockerfile .
+		"""
+		retry(3) {
+			sh """
+				echo \$DOCKERHUB_CREDS_PSW | docker login -u \$DOCKERHUB_CREDS_USR --password-stdin
+				docker push ${imageTagVersioned}
+				docker push ${imageTagLatest}
+			"""
 		}
 	} finally {
 		sh 'docker logout'
