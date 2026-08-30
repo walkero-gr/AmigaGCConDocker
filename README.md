@@ -12,9 +12,9 @@ The purpose of the project is to be an up-to-date, flexible and out-of-the-box s
 
 AmigaGCConDocker is split into different Docker images for better manipulation and updates. Those are separated by tags, which can be seen below, as well as their purpose.
 
-There are **amd64** and **arm64** images, ready to be used on any system based on these cpu architectures.
+There are **amd64** and **arm64** images, ready to be used on any system based on these cpu architectures. All the images have versions based on each release, being easier to be locked on their changes. This helps make sure that it will always contain the same software and that won't change in the future. That helps when used in CI/CD systems, where a minor change might bring a failure that breaks the pipelines.
 
-Here is a list of the supported systems, with to links to necessary information.
+Here is a list of the supported systems, with links to further information.
 
 | system    | information                            | versions                                 |
 | --------- | -------------------------------------- | ---------------------------------------- |

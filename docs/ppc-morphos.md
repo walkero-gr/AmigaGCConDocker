@@ -4,9 +4,10 @@
 
 All the available docker images' tags can be seen at [Docker hub](https://hub.docker.com/r/walkero/amigagccondocker/tags)
 
-- mos-gcc-amd64
+- mos-gcc
+- mos-gcc-[version]
 
-The MorphOS docker image containes multiple versions of gcc ready to be used.
+The MorphOS docker image contains multiple versions of gcc ready to be used.
 
 ## Included SDKs
 
