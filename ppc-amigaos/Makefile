@@ -1,38 +1,28 @@
-# 8,9,10,11,13 can be used here
+include ../_common/help.mk
+
+# Target architecture for the build
+ARCH=ppc-amigaos
+
+# GCC version to use
 GCC?=11
-# adtools, afxgroup
-# CLIB2_REPO?=adtools
-# release version
-REL?=3.3.0
-# gcc base image version
-BASE_VER?=1.8.0
 
-REPO?=walkero/amigagccondocker
-TAG?=os4-gcc$(GCC)-$(REL)
-VOLUMES?=-v "${PWD}/tests":/opt/code
-WORKSPACE?=-w /opt/code
-NAME?=os4-gcc$(GCC)
+# Release version
+REL?=3.3.1
 
-.PHONY: build buildnc shell push logs clean test release
+# GCC base image version to use
+BASE_VER?=1.8.1
 
-default: help
-help:
-	@echo "This makefile helps on building cross-compiling docker image with gcc for AmigaOS 4"
-	@echo "The available parameters can be seen below:"
-	@echo ""
-	@echo "build            - Build the Docker image"
-	@echo "buildnc          - Build the Docker image without using cache"
-	@echo "shell            - Create a container with the latest Docker"
-	@echo "                   image and get into it"
-	@echo "build-sdk        - Build the SDK Docker image"
-	@echo ""
-	@echo "Parameters that can be used with build rules:"
-	@echo "GCC              - defines the gcc version."
-	@echo "                   Possible values: 8 (default)/9/10/11/13"
-	@echo "BASE_VER         - defines the base image to be used"
-	@echo ""
+REPO=walkero/amigagccondocker
+TAG=os4-gcc$(GCC)-$(REL)
+VOLUMES=-v "${PWD}/tests":/opt/code
+WORKSPACE=-w /opt/code
+NAME=$(TAG)
 
-build:
+#####################################################################
+##@ Build dev environment
+
+.PHONY: build
+build: ## Build the main dev environment image
 	docker buildx build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
@@ -40,7 +30,8 @@ build:
 		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL_VER=$(REL) .
 
-buildnc:
+.PHONY: buildnc
+buildnc: ## Build the main dev environment image with no-cache
 	docker buildx build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain \
@@ -48,27 +39,41 @@ buildnc:
 		--build-arg BASE_VER=$(BASE_VER) \
 		--build-arg REL_VER=$(REL) .
 
-shell:
+.PHONY: shell
+shell: ## Create a container with the latest Docker image and use it
 	docker run -it --rm --name $(TAG) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
 
-build-sdk:
+#####################################################################
+##@ Build SDK help image
+
+.PHONY: build-sdk
+build-sdk: ## Build the sdk-files image
 	docker buildx build --no-cache -f ./Dockerfile.sdk \
-		-t $(REPO):sdk \
+		-t $(REPO):ppc-amigaos-sdk \
 		--progress plain .
 
-shell-sdk:
-	docker run -it --rm --name sdk $(REPO):sdk /bin/bash
+.PHONY: shell-sdk
+shell-sdk: ## Create a container with the latest SDK Docker image and use it
+	docker run -it --rm --name sdk $(REPO):ppc-amigaos-sdk /bin/bash
 
-push:
+#####################################################################
+##@ Helpers
+
+.PHONY: push
+push: ## Push the Docker image to the repository
 	docker push $(REPO):$(TAG)
 
-logs:
+.PHONY: logs
+logs: ## Show the logs of the container
 	docker logs $(NAME)
 
-clean:
+.PHONY: clean
+clean: ## Remove the container if it exists
 	-docker rm -f $(NAME)
 
-test:
+.PHONY: test
+test: ## Test the Docker image with snyk
 	snyk test --docker $(REPO):$(TAG) --file=Dockerfile
 
-release: build push
+.PHONY: release
+release: build push ## Build and push the Docker image

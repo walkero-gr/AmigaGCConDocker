@@ -1,15 +1,23 @@
 
 include ../_common/help.mk
 
-OS?=ppc-morphos
+# Target architecture for the build
+ARCH=ppc-morphos
+
+# GCC version to use
+GCC?=11
+
+# Release version
 REL?=1.1.0
 
+# GCC base image version to use
+BASE_VER?=1.0.0
+
 REPO=walkero/amigagccondocker
-TAG?=$(OS)-$(REL)
-VOLUMES?=-v "${PWD}/out":/opt/out
+TAG=mos-gcc$(GCC)-$(REL)
+VOLUMES=-v "${PWD}/out":/opt/out
 WORKSPACE=-w /opt/code
 NAME=$(TAG)
-ARCH=ppc-morphos
 
 #####################################################################
 ##@ Build dev environment
@@ -18,13 +26,19 @@ ARCH=ppc-morphos
 build: ## Build the main dev environment image
 	docker buildx build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
-		--progress plain .
+		--progress plain \
+		--build-arg GCC_VER=$(GCC) \
+		--build-arg BASE_VER=$(BASE_VER) \
+		--build-arg REL_VER=$(REL) .
 
 .PHONY: buildnc
 buildnc: ## Build the main dev environment image with no-cache
 	docker buildx build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
-		--progress plain .
+		--progress plain \
+		--build-arg GCC_VER=$(GCC) \
+		--build-arg BASE_VER=$(BASE_VER) \
+		--build-arg REL_VER=$(REL) .
 
 .PHONY: shell
 shell: ## Create a container with the latest Docker image and use it
@@ -43,16 +57,24 @@ build-sdk: ## Build the sdk-files image
 shell-sdk: ## Create a container with the latest SDK Docker image and use it
 	docker run -it --rm --name sdk $(REPO):$(ARCH)-sdk /bin/bash
 
-# push:
-# 	docker push $(REPO):$(TAG)
+#####################################################################
+##@ Helpers
 
-# logs:
-# 	docker logs $(NAME)
+.PHONY: push
+push: ## Push the Docker image to the repository
+	docker push $(REPO):$(TAG)
 
-# clean:
-# 	-docker rm -f $(NAME)
+.PHONY: logs
+logs: ## Show the logs of the container
+	docker logs $(NAME)
 
-# test:
-# 	snyk test --docker $(REPO):$(TAG) --file=Dockerfile
+.PHONY: clean
+clean: ## Remove the container if it exists
+	-docker rm -f $(NAME)
 
-# release: build push
+.PHONY: test
+test: ## Test the Docker image with snyk
+	snyk test --docker $(REPO):$(TAG) --file=Dockerfile
+
+.PHONY: release
+release: build push ## Build and push the Docker image
