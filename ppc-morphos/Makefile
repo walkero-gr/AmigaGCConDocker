@@ -1,38 +1,47 @@
 
+include ../_common/help.mk
+
 OS?=ppc-morphos
 REL?=1.1.0
 
 REPO=walkero/amigagccondocker
 TAG?=$(OS)-$(REL)
-VOLUMES?=
-# -v "${PWD}/out":/opt/out
+VOLUMES?=-v "${PWD}/out":/opt/out
 WORKSPACE=-w /opt/code
 NAME=$(TAG)
+ARCH=ppc-morphos
 
-.PHONY: build buildnc build-exp shell push logs clean test release
+#####################################################################
+##@ Build dev environment
 
-default: help
-
-help:
-	@echo "This makefile helps on building cross-compiling docker image for MorphOS"
-	@echo "The available parameters can be seen below:"
-	@echo ""
-	@echo "build            - Build the Docker image"
-	@echo "buildnc          - Build the Docker image without using caching"
-	@echo "shell            - Create a container with the latest Docker image and get"
-
-build:
+.PHONY: build
+build: ## Build the main dev environment image
 	docker buildx build -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain .
 
-buildnc:
+.PHONY: buildnc
+buildnc: ## Build the main dev environment image with no-cache
 	docker buildx build --no-cache -f ./Dockerfile \
 		-t $(REPO):$(TAG) \
 		--progress plain .
 
-shell:
+.PHONY: shell
+shell: ## Create a container with the latest Docker image and use it
 	docker run -it --rm --name $(NAME) $(VOLUMES) $(WORKSPACE) $(REPO):$(TAG) /bin/bash
+
+#####################################################################
+##@ Build SDK help image
+
+.PHONY: build-sdk
+build-sdk: ## Build the sdk-files image
+	docker buildx build --no-cache -f ./Dockerfile.sdk \
+		-t $(REPO):$(ARCH)-sdk \
+		--progress plain .
+
+.PHONY: shell-sdk
+shell-sdk: ## Create a container with the latest SDK Docker image and use it
+	docker run -it --rm --name sdk $(REPO):$(ARCH)-sdk /bin/bash
 
 # push:
 # 	docker push $(REPO):$(TAG)
