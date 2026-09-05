@@ -100,6 +100,31 @@ pipeline {
 				}
 			}
 			stages {
+				stage('build-ppc-morphos-sdk-image') {
+					matrix {
+						axes {
+							axis {
+								name 'ARCH'
+								values 'amd64', 'arm64'
+							}
+						}
+						agent { label "agent-${ARCH}" }
+						stages {
+							stage('build') {
+								steps {
+									sh """
+										cd ppc-morphos
+										docker buildx build \
+											--no-cache \
+											--provenance=false \
+											-t ${DOCKERHUB_REPO}:ppc-morphos-sdk \
+											-f Dockerfile.sdk .
+									"""
+								}
+							}
+						}
+					}
+				}
 				stage('build-ppc-morphos-images') {
 					environment {
 						TAG_VERSION = "${TAG_NAME.replace('mos-', '')}"
