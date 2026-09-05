@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - Future
+## [1.1.0] - 2026-09-05
 
 ### Changed
 
