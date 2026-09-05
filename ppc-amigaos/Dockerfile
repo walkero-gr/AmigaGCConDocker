@@ -49,7 +49,7 @@ ENV AS=${APPC}/bin/ppc-amigaos-as \
 
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
-COPY --from=walkero/amigagccondocker:sdk /opt/ppc-amigaos /opt/ppc-amigaos
+COPY --from=walkero/amigagccondocker:ppc-amigaos-sdk /opt/ppc-amigaos /opt/ppc-amigaos
 
 RUN ln -sf ${APPC}/bin/ppc-amigaos-as /usr/bin/as && \
     ln -sf ${APPC}/bin/ppc-amigaos-ar /usr/bin/ar && \
