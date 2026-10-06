@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - future
+## [3.4.0] - 2026-10-06
 
 ### Added
 
@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 ### Updated
 
 - Updated OpenAL 1.18.2 with support for clib4
-- Updated SDL 2 with support for clib4
+- Updated SDL 2 with support for clib4 and Mesa
 
 ## [3.3.0] - 2026-08-16
 
