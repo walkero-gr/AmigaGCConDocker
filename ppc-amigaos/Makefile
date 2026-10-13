@@ -10,7 +10,7 @@ GCC?=11
 REL?=3.3.1
 
 # GCC base image version to use
-BASE_VER?=1.8.1
+BASE_VER?=1.9.0
 
 REPO=walkero/amigagccondocker
 TAG=os4-gcc$(GCC)-$(REL)

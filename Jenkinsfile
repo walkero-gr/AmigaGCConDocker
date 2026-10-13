@@ -8,7 +8,38 @@ pipeline {
 		M68K_GCC_BASE_VER="1.0.0"
 	}
 	stages {
-		stage('ppc-amigaos') {
+		stage('build-ppc-amigaos-sdk-image') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			matrix {
+				axes {
+					axis {
+						name 'ARCH'
+						values 'amd64', 'arm64'
+					}
+				}
+				agent { label "agent-${ARCH}" }
+				stages {
+					stage('build') {
+						steps {
+							sh """
+								cd ppc-amigaos
+								docker buildx build \
+									--no-cache \
+									--provenance=false \
+									-t ${DOCKERHUB_REPO}:ppc-amigaos-sdk \
+									-f Dockerfile.sdk .
+							"""
+						}
+					}
+				}
+			}
+		}
+		stage('ppc-amigaos-gcc15') {
 			when {
 				allOf {
 					buildingTag()
@@ -16,31 +47,6 @@ pipeline {
 				}
 			}
 			stages {
-				stage('build-ppc-amigaos-sdk-image') {
-					matrix {
-						axes {
-							axis {
-								name 'ARCH'
-								values 'amd64', 'arm64'
-							}
-						}
-						agent { label "agent-${ARCH}" }
-						stages {
-							stage('build') {
-								steps {
-									sh """
-										cd ppc-amigaos
-										docker buildx build \
-											--no-cache \
-											--provenance=false \
-											-t ${DOCKERHUB_REPO}:ppc-amigaos-sdk \
-											-f Dockerfile.sdk .
-									"""
-								}
-							}
-						}
-					}
-				}
 				stage('build-ppc-amigaos-images') {
 					environment {
 						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
@@ -51,10 +57,6 @@ pipeline {
 								name 'ARCH'
 								values 'amd64', 'arm64'
 							}
-							axis {
-								name 'GCC'
-								values '13', '11', '8', '6'
-							}
 						}
 						agent { label "agent-${ARCH}" }
 						stages {
@@ -64,7 +66,7 @@ pipeline {
 								}
 								steps {
 									script {
-										buildAndPush_os4(GCC, ARCH)
+										buildAndPush_os4('15', ARCH)
 									}
 								}
 							}
@@ -85,7 +87,227 @@ pipeline {
 					agent { label "agent-amd64" }
 					steps {
 						script {
-							createAndPushManifests('os4', ['13', '11', '8', '6'])
+							createAndPushManifests('os4', ['15'])
+						}
+					}
+				}
+
+			}
+		}
+		stage('ppc-amigaos-gcc13') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			stages {
+				stage('build-ppc-amigaos-images') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					matrix {
+						axes {
+							axis {
+								name 'ARCH'
+								values 'amd64', 'arm64'
+							}
+						}
+						agent { label "agent-${ARCH}" }
+						stages {
+							stage('build') {
+								options {
+									timeout(time: 60, unit: 'MINUTES')
+								}
+								steps {
+									script {
+										buildAndPush_os4('13', ARCH)
+									}
+								}
+							}
+						}
+						post {
+							always {
+								sh """
+									docker logout
+								"""
+							}
+						}
+					}
+				}
+				stage('create-ppc-amigaos-manifests') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					agent { label "agent-amd64" }
+					steps {
+						script {
+							createAndPushManifests('os4', ['13'])
+						}
+					}
+				}
+
+			}
+		}
+		stage('ppc-amigaos-gcc11') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			stages {
+				stage('build-ppc-amigaos-images') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					matrix {
+						axes {
+							axis {
+								name 'ARCH'
+								values 'amd64', 'arm64'
+							}
+						}
+						agent { label "agent-${ARCH}" }
+						stages {
+							stage('build') {
+								options {
+									timeout(time: 60, unit: 'MINUTES')
+								}
+								steps {
+									script {
+										buildAndPush_os4('11', ARCH)
+									}
+								}
+							}
+						}
+						post {
+							always {
+								sh """
+									docker logout
+								"""
+							}
+						}
+					}
+				}
+				stage('create-ppc-amigaos-manifests') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					agent { label "agent-amd64" }
+					steps {
+						script {
+							createAndPushManifests('os4', ['11'])
+						}
+					}
+				}
+
+			}
+		}
+		stage('ppc-amigaos-gcc8') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			stages {
+				stage('build-ppc-amigaos-images') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					matrix {
+						axes {
+							axis {
+								name 'ARCH'
+								values 'amd64', 'arm64'
+							}
+						}
+						agent { label "agent-${ARCH}" }
+						stages {
+							stage('build') {
+								options {
+									timeout(time: 60, unit: 'MINUTES')
+								}
+								steps {
+									script {
+										buildAndPush_os4('8', ARCH)
+									}
+								}
+							}
+						}
+						post {
+							always {
+								sh """
+									docker logout
+								"""
+							}
+						}
+					}
+				}
+				stage('create-ppc-amigaos-manifests') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					agent { label "agent-amd64" }
+					steps {
+						script {
+							createAndPushManifests('os4', ['8'])
+						}
+					}
+				}
+
+			}
+		}
+		stage('ppc-amigaos-gcc6') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			stages {
+				stage('build-ppc-amigaos-images') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					matrix {
+						axes {
+							axis {
+								name 'ARCH'
+								values 'amd64', 'arm64'
+							}
+						}
+						agent { label "agent-${ARCH}" }
+						stages {
+							stage('build') {
+								options {
+									timeout(time: 60, unit: 'MINUTES')
+								}
+								steps {
+									script {
+										buildAndPush_os4('6', ARCH)
+									}
+								}
+							}
+						}
+						post {
+							always {
+								sh """
+									docker logout
+								"""
+							}
+						}
+					}
+				}
+				stage('create-ppc-amigaos-manifests') {
+					environment {
+						TAG_VERSION = "${TAG_NAME.replace('os4-', '')}"
+					}
+					agent { label "agent-amd64" }
+					steps {
+						script {
+							createAndPushManifests('os4', ['6'])
 						}
 					}
 				}
