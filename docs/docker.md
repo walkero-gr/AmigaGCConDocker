@@ -171,3 +171,12 @@ docker compose build
 docker compose up -d
 ```
 
+## Docker image versioning
+
+My docker images are created with version tags, except the `latest` one. The reason is that the versioned ones never change, increasing the stability and standardising the expected outcome.
+
+So, if you have in your dockerfile something like `FROM walkero/amigagccondocker:os4-gcc11` that will take the latest build. But this can change at any time a new release is made, including having breaking changes.
+
+But a version image can be used, i.e. `FROM walkero/amigagccondocker:os4-gcc11-<version>` where **version** is the one defined on the releases section of the **AmigaGCConDocker** repository. the latest one is 3.5.0, but the previous is 3.4.0. So the above example becomes `FROM walkero/amigagccondocker:os4-gcc11-3.3.0`
+
+All the images and the released tags can be found at the [Docker hub](https://hub.docker.com/repository/docker/walkero/amigagccondocker/tags). Also, they can be found project's releases on [Github](https://github.com/walkero-gr/AmigaGCConDocker/releases).

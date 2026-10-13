@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 
 - Updated gcc13 to version 13.5.0
 - Update SDL3 to 3.4.18 with support for clib4 and Mesa
+- Updated clib4 to v2.4
 
 ## [3.4.0] - 2026-10-06
 
