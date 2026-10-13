@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install sqlite3${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://aminet.net/biz/dbase/sqlite-3.34.0.a-amiga.lha" -o /tmp/sqlite.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://aminet.net/biz/dbase/sqlite-3.34.0.a-amiga.lha" -o /tmp/sqlite.lha && \
 		lha -xfq2 sqlite.lha && \
 		cp -r ./sqlite-3.34.0.a-amiga/build-ppc-amigaos/include/* ${SDK_PATH}/local/common/include/ && \
 		cp -r ./sqlite-3.34.0.a-amiga/build-ppc-amigaos/lib/* ${SDK_PATH}/local/newlib/lib/ && \

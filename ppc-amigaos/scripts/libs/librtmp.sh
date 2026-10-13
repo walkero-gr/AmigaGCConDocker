@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install librtmp ${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://os4depot.net/share/development/library/misc/librtmp.lha" -o /tmp/librtmp.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://os4depot.net/share/development/library/misc/librtmp.lha" -o /tmp/librtmp.lha && \
 		lha -xfq2 librtmp.lha && \
 		cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
 		mv ./Docs ${SDK_PATH}/local/Documentation/librtmp && \

@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libsdl2_mixer${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/audio/libsdl2_mixer.lha" -o /tmp/libsdl2_mixer.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/audio/libsdl2_mixer.lha" -o /tmp/libsdl2_mixer.lha && \
 		lha -xfq2 libsdl2_mixer.lha && \
 		cp -r ./SDL2_mixer-2.8.1/SDK/local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;

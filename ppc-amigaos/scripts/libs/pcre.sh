@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install pcre${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/pcre/pcre-8.45.lha" -o /tmp/pcre.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/pcre/pcre-8.45.lha" -o /tmp/pcre.lha && \
 		lha -xfq2 pcre.lha && \
 		cp -r ./SDK/local/clib2/* ${SDK_PATH}/local/clib2/ && \
 		cp -r ./SDK/local/newlib/* ${SDK_PATH}/local/newlib/ && \

@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install jansson library${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://walkero.gr/betas/jansson_library_2.12.1_sdk.lha" -o /tmp/jansson.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://walkero.gr/betas/jansson_library_2.12.1_sdk.lha" -o /tmp/jansson.lha && \
 		lha -xfq2 jansson.lha && \
 		cp -r ./local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;

@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libregex ${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://aminet.net/dev/lib/libregex-4.4.3.lha" -o libregex.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://aminet.net/dev/lib/libregex-4.4.3.lha" -o libregex.lha && \
 		lha -xfq2 libregex.lha && \
 		cp -r ./libregex/clib2/libregex.a ${SDK_PATH}/local/clib2/lib/ && \
 		cp -r ./libregex/newlib/libregex.a ${SDK_PATH}/local/newlib/lib/ && \

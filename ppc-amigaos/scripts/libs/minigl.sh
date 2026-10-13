@@ -1,9 +1,9 @@
 #!/usr/bin/bash
-# 
+#
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install latest MiniGL${CCEND}";
-	curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "http://os4depot.net/share/driver/graphics/minigl.lha" -o /tmp/minigl.lha && \
+	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "http://os4depot.net/share/driver/graphics/minigl.lha" -o /tmp/minigl.lha && \
 		lha -xfq2 minigl.lha && \
 		cp -r ./MiniGL/SDK/local/* ${SDK_PATH}/local/ && \
 		mkdir ${SDK_PATH}/local/Documentation/minigl && \

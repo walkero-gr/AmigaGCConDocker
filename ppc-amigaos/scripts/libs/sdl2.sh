@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install SDL2 SDK${CCEND}";
-    curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://sdk.os4depot.net/files/libSDL2.lha" -o /tmp/SDL2.lha && \
+    curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://sdk.os4depot.net/files/libSDL2.lha" -o /tmp/SDL2.lha && \
         lha -xfq2 SDL2.lha && \
         cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
         mkdir -p ${SDK_PATH}/local/Documentation/SDL2 && \
@@ -12,7 +12,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install SDL2 SDK${CCEND}";
 
 
 
-    # curl --retry 5 --retry-delay 2 --retry-connrefused -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v2.32.10-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
+    # curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://github.com/AmigaPorts/SDL/releases/download/v2.32.10-amigaos4/SDL2.lha" -o /tmp/SDL2.lha && \
     # 	lha -xfq2 SDL2.lha && \
     # 	cp -r ./SDL2/SDK/local/* ${SDK_PATH}/local/ && \
     # 	mkdir ${SDK_PATH}/local/Documentation/SDL2 && \
