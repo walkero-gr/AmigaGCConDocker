@@ -10,6 +10,7 @@ All the available docker images' tags can be seen at [Docker hub](https://hub.do
 - GCC 10: `ppc-amigaos-gcc10`
 - GCC 11: `os4-gcc11`
 - GCC 13: `os4-gcc13`
+- GCC 13: `os4-gcc15`
 
 The docker images with gcc versions 6,11,13 support newlib, clib2 and clib4 and they are the most updated releases.
 
@@ -24,7 +25,8 @@ The gcc v6 supports SPE CPU's and can be used to optimize code for systems like 
 | gcc9         | 9.1.0   |
 | gcc10        | 10.3.0  |
 | gcc11        | 11.5.0  |
-| gcc13        | 13.4.0  |
+| gcc13        | 13.5.0  |
+| gcc13        | 15.3.0  |
 
 ## Included SDKs
 

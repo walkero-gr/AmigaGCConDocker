@@ -7,7 +7,7 @@ ARCH=ppc-amigaos
 GCC?=11
 
 # Release version
-REL?=3.3.1
+REL?=3.5.0
 
 # GCC base image version to use
 BASE_VER?=1.9.0

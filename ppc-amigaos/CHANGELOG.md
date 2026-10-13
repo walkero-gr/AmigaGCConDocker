@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.5.0] - 2026-10-13
+
+### Added
+
+- Added gcc15
+
+### Updated
+
+- Updated gcc13 to version 13.5.0
+- Update SDL3 to 3.4.18 with support for clib4 and Mesa
+
 ## [3.4.0] - 2026-10-06
 
 ### Added

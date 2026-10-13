@@ -9,6 +9,7 @@ docker run -it --rm --name gcc9 -v ${PWD}/code:/opt/code -w /opt/code walkero/am
 docker run -it --rm --name gcc10 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:ppc-amigaos-gcc10 /bin/bash
 docker run -it --rm --name gcc11 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc11 /bin/bash
 docker run -it --rm --name gcc13 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc13 /bin/bash
+docker run -it --rm --name gcc15 -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:os4-gcc15 /bin/bash
 
 docker run -it --rm --name mos-gcc -v ${PWD}/code:/opt/code -w /opt/code walkero/amigagccondocker:mos-gcc /bin/bash
 ```
@@ -65,6 +66,14 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  gcc15:
+    image: 'walkero/amigagccondocker:os4-gcc15'
+    hostname: ppc-amigaos-gcc15
+    volumes:
+      - './code:/opt/code'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   mos-gcc:
     image: 'walkero/amigagccondocker:mos-gcc'
     hostname: ppc-morphos
@@ -84,6 +93,7 @@ docker-compose exec gcc9 bash
 docker-compose exec gcc10 bash
 docker-compose exec gcc11 bash
 docker-compose exec gcc13 bash
+docker-compose exec gcc15 bash
 
 docker-compose exec mos-gcc bash
 ```
@@ -121,3 +131,43 @@ If you need to change the IDs with your own, set the following ENV variables whe
 AMIDEV_USER_ID
 AMIDEV_GROUP_ID
 ```
+
+## Expand the docker images
+
+To expand the docker images and build new ones, a Docker file should be used that will start with my docker image as the base. For example:
+
+```
+FROM walkero/amigagccondocker:os4-gcc11
+```
+
+After that more commands can be added. Information about Dockerfiles can be found at [https://docs.docker.com/reference/dockerfile/](https://docs.docker.com/reference/dockerfile/).
+
+To build the new custom docker image, it can be done with the following command.
+
+```bash
+docker buildx build -f ./Dockerfile -t {your repo name here}:{your tag version here} --progress plain .
+```
+
+Make sure to not omit the dot at the end of the command above, as it is necessary.
+
+It is possible to do the same from a docker compose YAML file like it can be seen below.
+
+```yaml
+services:
+  my-gcc11:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+```
+
+The **context** is the path where the Dockerfile is. If it is in the same folder then the dot is enough to be used.
+
+This way you do not need to build your image as a separated step, like the previous example. Furthermore, there is no need to set a repo name or a tag for that custom image.
+
+To build and use that image in a container, you just need to execute:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
