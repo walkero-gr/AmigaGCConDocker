@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install SDL2 SDK${CCEND}";
-    curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "https://sdk.os4depot.net/files/libSDL2.lha" -o /tmp/SDL2.lha && \
+    curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://sdk.os4depot.net/files/libSDL2.lha" -o /tmp/SDL2.lha && \
         lha -xfq2 SDL2.lha && \
         cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
         mkdir -p ${SDK_PATH}/local/Documentation/SDL2 && \

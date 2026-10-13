@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install GL4ES SDK${CCEND}";
-	curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "https://github.com/kas1e/GL4ES-SDK/releases/download/1.2/gl4es_sdk-1.2.lha" -o /tmp/gl4es_sdk.lha && \
+	curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/kas1e/GL4ES-SDK/releases/download/1.2/gl4es_sdk-1.2.lha" -o /tmp/gl4es_sdk.lha && \
 		lha -xfq2 gl4es_sdk.lha && \
 		cp -r ./SDK/local/newlib/* ${SDK_PATH}/local/newlib/ && \
 		mv ./SDK/local/common/include/GL ${SDK_PATH}/local/common/include/GL4ES && \

@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libgmp${CCEND}";
-	curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/gmp/gmp-6.3.0.lha" -o /tmp/gmp.lha && \
+	curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/gmp/gmp-6.3.0.lha" -o /tmp/gmp.lha && \
 		lha -xfq2 gmp.lha && \
 		cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
