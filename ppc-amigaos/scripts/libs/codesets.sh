@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install codesets library${CCEND}";
-	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \
+	curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "https://github.com/jens-maus/libcodesets/releases/download/6.21/codesets-6.21.lha" -o /tmp/codesets.lha && \
 		lha -xfq2 codesets.lha && \
 		cp -r ./codesets/Developer/include/* ${SDK_PATH}/local/common/include/ && \
 		mkdir -p ${SDK_PATH}/local/Documentation/codesets && \

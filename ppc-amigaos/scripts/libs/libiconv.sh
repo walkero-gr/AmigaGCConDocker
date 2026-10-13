@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libiconv${CCEND}";
-	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/misc/libiconv.lha" -o /tmp/libiconv.lha && \
+	curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "http://os4depot.net/share/development/library/misc/libiconv.lha" -o /tmp/libiconv.lha && \
 		lha -xfq2 libiconv.lha && \
 		cp -r ./libiconv-1.11/include/iconv.h \
 			./libiconv-1.11/libcharset/include/libcharset.h \
@@ -15,7 +15,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install libiconv${CCEND}";
 			${SDK_PATH}/local/newlib/lib/ && \
 		rm -rf /tmp/*;
 		\
-	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/libiconv/libiconv-1.17.lha" -o /tmp/libiconv.lha && \
+	curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/libiconv/libiconv-1.17.lha" -o /tmp/libiconv.lha && \
 		lha -xfq2 libiconv.lha && \
 		cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;

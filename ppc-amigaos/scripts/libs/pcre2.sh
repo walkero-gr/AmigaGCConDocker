@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install pcre2${CCEND}";
-	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/pcre2/pcre2-10.45.lha" -o /tmp/pcre2.lha && \
+	curl --retry 10 --retry-delay 10 --retry-connrefused -fsSL "https://github.com/AmigaLabs/libs-ports/raw/main/pcre2/pcre2-10.45.lha" -o /tmp/pcre2.lha && \
 		lha -xfq2 pcre2.lha && \
 		cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
 		rm -rf /tmp/*;
