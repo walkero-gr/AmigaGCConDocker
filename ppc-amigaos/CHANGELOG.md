@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.5.1] - 2026-10-16
+
+### Fixed
+
+- Fixed gcc15 working with clib4
+
 ## [3.5.0] - 2026-10-13
 
 ### Added
