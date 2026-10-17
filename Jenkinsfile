@@ -3,7 +3,7 @@ pipeline {
 	environment {
 		DOCKERHUB_CREDS=credentials('walkero-dockerhub')
 		DOCKERHUB_REPO="walkero/amigagccondocker"
-		OS4_GCC_BASE_VER="1.9.1"
+		OS4_GCC_BASE_VER="1.9.2"
 		MOS_GCC_BASE_VER="1.0.0"
 		M68K_GCC_BASE_VER="1.0.0"
 	}

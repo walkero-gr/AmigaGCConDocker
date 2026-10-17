@@ -7,10 +7,10 @@ ARCH=ppc-amigaos
 GCC?=11
 
 # Release version
-REL?=3.5.0
+REL?=3.5.2
 
 # GCC base image version to use
-BASE_VER?=1.9.0
+BASE_VER?=1.9.2
 
 REPO=walkero/amigagccondocker
 TAG=os4-gcc$(GCC)-$(REL)

@@ -3,9 +3,9 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install MUI 5.0 SDK ${CCEND}";
-  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/amiga-mui/muidev/releases/download/MUI-5.0-20210831/MUI-5.0-20210831-os4.lha" -o /tmp/MUI-5.0.lha && \
+  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://walkero.gr/betas/MUI-5.0-20210831-os4.lha" -o /tmp/MUI-5.0.lha && \
   lha -xfq2 MUI-5.0.lha; \
-  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/amiga-mui/muidev/releases/download/MUI-5.0-20210831/MUI-5.0-20210831-os4-contrib.lha" -o /tmp/MUI-5.0-contrib.lha && \
+  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://walkero.gr/betas/MUI-5.0-20210831-os4-contrib.lha" -o /tmp/MUI-5.0-contrib.lha && \
   lha -xfq2 MUI-5.0-contrib.lha; \
   mkdir -p ${SDK_PATH}/Examples/MUI; \
   mv ./SDK/MUI/Autodocs/* ${SDK_PATH}/Documentation/AutoDocs/; \
