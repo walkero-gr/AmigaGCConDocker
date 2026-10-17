@@ -102,7 +102,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries ${CCEND}";
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
 	# They are saved under /user/ppc-amigaos
 	dpkg --add-architecture amd64;
-	curl --retry 5 --retry-delay 4 --retry-connrefused -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
+	curl --retry 5 --retry-delay 4 --retry-all-errors -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
 		echo "deb [arch=amd64] https://clib4pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
 		apt-get update > /dev/null
 
