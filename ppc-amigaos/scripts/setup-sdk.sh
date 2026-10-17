@@ -10,7 +10,6 @@ apt-get update && apt-get -y --no-install-recommends install \
 	unzip;
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*;
 
-
 mkdir -p $SDK_PATH/include/include_h $SDK_PATH/clib4
 cd /tmp
 
@@ -37,7 +36,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 		mv $SDK_PATH/local/common/include/pthread.h $SDK_PATH/local/newlib/include/ && \
 		cp $SDK_PATH/local/common/include/sched.h $SDK_PATH/local/clib2/include/ && \
 		mv $SDK_PATH/local/common/include/sched.h $SDK_PATH/local/newlib/include/;
-	
+
 	rm -rf $SDK_PATH/Local $SDK_PATH/C $SDK_PATH/Data $SDK_PATH/S \
 		$SDK_PATH/*.info $SDK_PATH/Include;
 	rm -rf /tmp/*;
@@ -65,7 +64,10 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install AmigaOS 4 SDK${CCEND}";
 	ln -s $SDK_PATH/newlib/lib/libunix.a 	$SDK_PATH/newlib/lib/small-data/
 
 
-echo -e "${CCPINK}${CCBOLD}\n---> Install libraries for newlib, clib2 and clib4${CCEND}";
+echo -e "${CCPINK}${CCBOLD}\n---> Clone AmigaLabs libs-ports ${CCEND}";
+git clone https://github.com/AmigaLabs/libs-ports.git /opt/amigalabs-libs-ports
+
+echo -e "${CCPINK}${CCBOLD}\n---> Install libraries for newlib, clib2 and clib4 ${CCEND}";
 find /scripts/libs -type f -name '*.sh' | sort | while read i; do
 	bash "$i"
 done

@@ -17,7 +17,13 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.5 ${CCEND}";
         rm -rf /tmp/*;
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.4 ${CCEND}";
-    curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/libs-ports/raw/refs/heads/main/lua5.4/lua-5.4.8.lha" -o /tmp/liblua54.lha && \
+    if [ -f /opt/amigalabs-libs-ports/lua5.4/lua-5.4.8.lha ]; then
+      echo -e "${CCGREEN}${CCBOLD}lua-5.4.8.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+      cp /opt/amigalabs-libs-ports/lua5.4/lua-5.4.8.lha /tmp/liblua54.lha
+    else
+      echo -e "${CCYELLOW}${CCBOLD}lua-5.4.8.lha not found locally. Downloading. ${CCEND}"
+      curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/libs-ports/raw/refs/heads/main/lua5.4/lua-5.4.8.lha" -o /tmp/liblua54.lha
+    fi
         lha -xfq2 liblua54.lha && \
         rm -rf SDK/local/newlib/bin/ && \
         rm -rf SDK/local/clib2/bin/ && \
@@ -26,7 +32,13 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.4 ${CCEND}";
         rm -rf /tmp/*;
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.1 ${CCEND}";
-    curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/libs-ports/raw/refs/heads/main/lua5.1/lua-5.1.5.lha" -o /tmp/liblua51.lha && \
+    if [ -f /opt/amigalabs-libs-ports/lua5.1/lua-5.1.5.lha ]; then
+      echo -e "${CCGREEN}${CCBOLD}lua-5.1.5.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+      cp /opt/amigalabs-libs-ports/lua5.1/lua-5.1.5.lha /tmp/liblua51.lha
+    else
+      echo -e "${CCYELLOW}${CCBOLD}lua-5.1.5.lha not found locally. Downloading. ${CCEND}"
+      curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/libs-ports/raw/refs/heads/main/lua5.1/lua-5.1.5.lha" -o /tmp/liblua51.lha
+    fi
         lha -xfq2 liblua51.lha && \
         rm -rf SDK/local/newlib/bin/ && \
         rm -rf SDK/local/clib2/bin/ && \
