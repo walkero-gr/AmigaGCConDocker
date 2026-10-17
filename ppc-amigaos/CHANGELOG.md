@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.5.2] - 2026-10-17
+
+### Fixed
+
+- Reverted a change the enables again the sjlj-exceptions
+
 ## [3.5.1] - 2026-10-16
 
 ### Fixed
