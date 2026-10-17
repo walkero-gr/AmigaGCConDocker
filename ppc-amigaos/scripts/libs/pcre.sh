@@ -4,7 +4,7 @@ set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install pcre${CCEND}";
 	if [ -f /opt/amigalabs-libs-ports/pcre/pcre-8.45.lha ]; then
-	  echo -e "${CCGREEN}${CCBOLD}pcre-8.45.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+	  echo -e "${CCGREEN}${CCBOLD}pcre-8.45.lha found locally. Skipping download. ${CCEND}"
 	  cp /opt/amigalabs-libs-ports/pcre/pcre-8.45.lha /tmp/pcre.lha
 	else
 	  echo -e "${CCYELLOW}${CCBOLD}pcre-8.45.lha not found locally. Downloading. ${CCEND}"

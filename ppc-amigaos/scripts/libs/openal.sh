@@ -4,7 +4,7 @@ set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install openal ${CCEND}";
   if [ -f /opt/amigalabs-libs-ports/libopenal/libopenal-1.18.2.lha ]; then
-    echo -e "${CCGREEN}${CCBOLD}libopenal-1.18.2.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+    echo -e "${CCGREEN}${CCBOLD}libopenal-1.18.2.lha found locally. Skipping download. ${CCEND}"
     cp /opt/amigalabs-libs-ports/libopenal/libopenal-1.18.2.lha /tmp/openal.lha
   else
     echo -e "${CCYELLOW}${CCBOLD}libopenal-1.18.2.lha not found locally. Downloading. ${CCEND}"

@@ -18,7 +18,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.5 ${CCEND}";
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.4 ${CCEND}";
     if [ -f /opt/amigalabs-libs-ports/lua5.4/lua-5.4.8.lha ]; then
-      echo -e "${CCGREEN}${CCBOLD}lua-5.4.8.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+      echo -e "${CCGREEN}${CCBOLD}lua-5.4.8.lha found locally. Skipping download. ${CCEND}"
       cp /opt/amigalabs-libs-ports/lua5.4/lua-5.4.8.lha /tmp/liblua54.lha
     else
       echo -e "${CCYELLOW}${CCBOLD}lua-5.4.8.lha not found locally. Downloading. ${CCEND}"
@@ -33,7 +33,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.4 ${CCEND}";
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.1 ${CCEND}";
     if [ -f /opt/amigalabs-libs-ports/lua5.1/lua-5.1.5.lha ]; then
-      echo -e "${CCGREEN}${CCBOLD}lua-5.1.5.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+      echo -e "${CCGREEN}${CCBOLD}lua-5.1.5.lha found locally. Skipping download. ${CCEND}"
       cp /opt/amigalabs-libs-ports/lua5.1/lua-5.1.5.lha /tmp/liblua51.lha
     else
       echo -e "${CCYELLOW}${CCBOLD}lua-5.1.5.lha not found locally. Downloading. ${CCEND}"

@@ -16,7 +16,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install libiconv${CCEND}";
 		rm -rf /tmp/*;
 		\
 	if [ -f /opt/amigalabs-libs-ports/libiconv/libiconv-1.17.lha ]; then
-	  echo -e "${CCGREEN}${CCBOLD}libiconv-1.17.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+	  echo -e "${CCGREEN}${CCBOLD}libiconv-1.17.lha found locally. Skipping download. ${CCEND}"
 	  cp /opt/amigalabs-libs-ports/libiconv/libiconv-1.17.lha /tmp/libiconv.lha
 	else
 	  echo -e "${CCYELLOW}${CCBOLD}libiconv-1.17.lha not found locally. Downloading. ${CCEND}"

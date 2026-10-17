@@ -4,7 +4,7 @@ set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libzip${CCEND}";
   if [ -f /opt/amigalabs-libs-ports/libzip/libzip-1.11.2.lha ]; then
-    echo -e "${CCGREEN}${CCBOLD}libzip-1.11.2.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+    echo -e "${CCGREEN}${CCBOLD}libzip-1.11.2.lha found locally. Skipping download. ${CCEND}"
     cp /opt/amigalabs-libs-ports/libzip/libzip-1.11.2.lha /tmp/libzip.lha
   else
     echo -e "${CCYELLOW}${CCBOLD}libzip-1.11.2.lha not found locally. Downloading. ${CCEND}"

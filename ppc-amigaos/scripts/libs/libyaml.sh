@@ -4,7 +4,7 @@ set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libyaml ${CCEND}";
   if [ -f /opt/amigalabs-libs-ports/libyaml/libyaml-0.2.5.lha ]; then
-    echo -e "${CCGREEN}${CCBOLD}libyaml-0.2.5.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+    echo -e "${CCGREEN}${CCBOLD}libyaml-0.2.5.lha found locally. Skipping download. ${CCEND}"
     cp /opt/amigalabs-libs-ports/libyaml/libyaml-0.2.5.lha /tmp/libyaml.lha
   else
     echo -e "${CCYELLOW}${CCBOLD}libyaml-0.2.5.lha not found locally. Downloading. ${CCEND}"

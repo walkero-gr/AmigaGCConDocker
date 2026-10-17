@@ -4,7 +4,7 @@ set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install uchardet ${CCEND}";
 	if [ -f /opt/amigalabs-libs-ports/uchardet/uchardet-v0.0.8.lha ]; then
-	  echo -e "${CCGREEN}${CCBOLD}uchardet-v0.0.8.lha found in /opt/amigalabs-libs-ports. Skipping download. ${CCEND}"
+	  echo -e "${CCGREEN}${CCBOLD}uchardet-v0.0.8.lha found locally. Skipping download. ${CCEND}"
 	  cp /opt/amigalabs-libs-ports/uchardet/uchardet-v0.0.8.lha /tmp/uchardet.lha
 	else
 	  echo -e "${CCYELLOW}${CCBOLD}uchardet-v0.0.8.lha not found locally. Downloading. ${CCEND}"
