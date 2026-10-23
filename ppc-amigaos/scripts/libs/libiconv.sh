@@ -3,7 +3,7 @@
 set -e
 
 echo -e "${CCPINK}${CCBOLD}\n---> Install libiconv${CCEND}";
-	curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "http://os4depot.net/share/development/library/misc/libiconv.lha" -o /tmp/libiconv.lha && \
+	curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://os4depot.net/share/development/library/misc/libiconv.lha" -o /tmp/libiconv.lha && \
 		lha -xfq2 libiconv.lha && \
 		cp -r ./libiconv-1.11/include/iconv.h \
 			./libiconv-1.11/libcharset/include/libcharset.h \
