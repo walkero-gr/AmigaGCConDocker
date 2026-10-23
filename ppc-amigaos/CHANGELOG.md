@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.6.0] - 2026-10-23
+
+### Added
+
+- Added mesa v1.2
+- Added libopenal v1.18.2
+
+### Removed
+
+- Removed minigl and GL4ES libraries as replaced by mesa
+
+### Updated
+
+- Updated clib4 to v2.5
+
 ## [3.5.2] - 2026-10-17
 
 ### Fixed
