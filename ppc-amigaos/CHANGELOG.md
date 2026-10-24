@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.6.1] - 2026-10-24
+
+### Fixed
+
+- Fixed missing clib4 libraries in v3.6.0
+
 ## [3.6.0] - 2026-10-23
 
 ### Added
