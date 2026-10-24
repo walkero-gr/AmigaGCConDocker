@@ -2,65 +2,66 @@
 #
 
 CLIB4_PACKAGES="\
-	amigaos4-clib4		\
-	cppunit-clib4		\
-	gdbm-clib4			\
-	giflib-clib4		\
-	jansson-clib4		\
-	jpeg9d-clib4		\
-	libagg2-clib4		\
-	libboost-clib4		\
-	libbrotli-clib4		\
-	libbz2-clib4		\
-	libcares-clib4		\
-	libcdr-clib4		\
-	libconfig-clib4		\
-	libdeflate-clib4	\
-	libev-clib4			\
-	libexif-clib4		\
-	libexpat-clib4		\
-	libfast-lzma2-clib4	\
-	libffi-clib4		\
-	libflac-clib4		\
-	libfmt-clib4		\
-	libgl4es-clib4		\
-	libglm-clib4		\
-	libgme-clib4		\
-	libharu-clib4		\
-	libicu-clib4		\
-	libidn2-clib4		\
-	libiodbc-clib4		\
-	libmad-clib4		\
-	libmd4c-clib4		\
-	libmp3lame-clib4	\
-	libncurses-clib4	\
-	libnghttp3-clib4	\
-	libogg-clib4		\
-	libpbl-clib4		\
-	libpsl-clib4		\
-	librapidjson-clib4	\
-	libraylib5-clib4	\
-	libreadline8-clib4	\
-	librevenge-clib4	\
-	libsidplay-clib4	\
-	libsndfile-clib4	\
-	libstb-clib4		\
-	libtiff-clib4		\
-	libunistring-clib4	\
-	libvorbis-clib4		\
-	libvpx-clib4		\
-	libx264-clib4		\
-	libxvidcore-clib4	\
-	libxxhash-clib4		\
-	little-cms-clib4	\
-	lz4-clib4			\
-	mpc-clib4			\
-	opencore-amr-clib4	\
-	opengles-clib4		\
-	pixman1-clib4		\
-	sqlite-clib4		\
-	theora-clib4		\
-	zlib-clib4"
+  cppunit-clib4       \
+  gdbm-clib4          \
+  giflib-clib4        \
+  jansson-clib4       \
+  jpeg9d-clib4        \
+  libagg2-clib4       \
+  libboost-clib4      \
+  libbrotli-clib4     \
+  libbz2-clib4        \
+  libcares-clib4      \
+  libcdr-clib4        \
+  libconfig-clib4     \
+  libdeflate-clib4    \
+  libev-clib4         \
+  libexif-clib4       \
+  libexpat-clib4      \
+  libfast-lzma2-clib4 \
+  libffi-clib4        \
+  libflac-clib4       \
+  libfmt-clib4        \
+  libgl4es-clib4      \
+  libglm-clib4        \
+  libgme-clib4        \
+  libharu-clib4       \
+  libicu-clib4        \
+  libidn2-clib4       \
+  libiodbc-clib4      \
+  libmad-clib4        \
+  libmd4c-clib4       \
+  libmp3lame-clib4    \
+  libncurses-clib4    \
+  libnghttp3-clib4    \
+  libogg-clib4        \
+  libpbl-clib4        \
+  libpsl-clib4        \
+  librapidjson-clib4  \
+  libraylib5-clib4    \
+  libreadline8-clib4  \
+  librevenge-clib4    \
+  libsidplay-clib4    \
+  libsndfile-clib4    \
+  libstb-clib4        \
+  libtiff-clib4       \
+  libunistring-clib4  \
+  libvorbis-clib4     \
+  libvpx-clib4        \
+  libx264-clib4       \
+  libxvidcore-clib4   \
+  libxxhash-clib4     \
+  little-cms-clib4    \
+  lz4-clib4           \
+  mpc-clib4           \
+  opencore-amr-clib4  \
+  opengles-clib4      \
+  pixman1-clib4       \
+  sqlite-clib4        \
+  theora-clib4        \
+  zlib-clib4"
+
+  # amigaos4-clib4      \
 
 # Replaced by OS4 depot packages
 	# fontconfig-clib4	\
@@ -97,6 +98,11 @@ CLIB4_PACKAGES="\
 # pcre-clib4
 # pcre2-clib4
 
+echo -e "${CCPINK}${CCBOLD}\n---> Download clib4 from GitHub ${CCEND}";
+	curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/clib4/releases/download/v2.5/clib4-v2.5_amd64.deb" -o /tmp/clib4.deb && \
+		dpkg -i /tmp/clib4.deb && \
+		rm -rf /tmp/clib4.deb;
+
 if [ -d "$SDK_PATH/clib4" ]; then
 echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries ${CCEND}";
 	# Install clib4 libraries from afxgroup's Ubuntu repo.
@@ -107,9 +113,6 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries ${CCEND}";
 		apt-get update > /dev/null
 
 	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES > /dev/null
-
-	# apt-get download libharfbuzz-clib4 && \
-	# 	dpkg --force-all -i libharfbuzz-clib4_*.deb
 
 	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
 

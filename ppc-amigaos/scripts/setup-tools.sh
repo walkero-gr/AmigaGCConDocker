@@ -98,3 +98,10 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install qt6 SDK ${CCEND}";
     # replace the path "/usr/local/Qt-6.2.0" with "/usr/lib/qt6" on every file in the qt6-amiga directory
     find /qt6-amiga -type f -exec sed -i 's|/usr/local/Qt-6.2.0|/usr/lib/qt6|g' {} +
     rm -rf /tmp/*;
+
+# Install pi-coding-agent. REMOVE before release, this is only for my local dev environment
+echo -e "${CCPINK}${CCBOLD}\n---> Install pi-coding-agent and rtk ${CCEND}";
+    npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+    curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh && \
+        mv /root/.local/bin/rtk /usr/bin/ && \
+        rm -rf /root/.local
