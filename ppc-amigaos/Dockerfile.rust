@@ -16,8 +16,7 @@ ENV CCRED="\033[31m" \
     CCUNDR="\033[4m"
 
 ENV PACKAGES=" \
-  ca-certificates \
-	gcc-x86-64-linux-gnu"
+  ca-certificates"
 
 COPY scripts/setup-rust.sh /setup-rust.sh
 

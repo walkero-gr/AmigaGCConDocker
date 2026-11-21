@@ -3,6 +3,10 @@ set -euo pipefail
 
 echo -e "${CCPINK}${CCBOLD}\n---> Compile rust ${CCEND}"
 
+# Host triple of the build machine (x86_64 or aarch64); the build directory is named after it.
+ARCH=$(uname -m)
+HOST="${HOST_TRIPLE:-$ARCH-unknown-linux-gnu}"
+
 cd /tmp
 git clone https://github.com/AmigaLabs/rust.git -b amigaos-port
 
@@ -16,10 +20,10 @@ if [ -x "$LOCAL" ]; then\
   exec "$LOCAL" "$@"\
 fi' amiga/bin/ppc-amigaos-gcc
 
-grep -q '^\[target.x86_64-unknown-linux-gnu\]' bootstrap.toml || sed -i '$a\
+grep -q '^\[target.$HOST\]' bootstrap.toml || sed -i '$a\
 \
-[target.x86_64-unknown-linux-gnu]\
-linker = "x86_64-linux-gnu-gcc"' bootstrap.toml
+[target.$HOST]\
+linker = "$ARCH-linux-gnu-gcc"' bootstrap.toml
 
 export PATH="$PWD/amiga/bin:$PATH"
 # The cross toolchain must not leak into host builds: unset these exported variables
@@ -29,7 +33,7 @@ echo -e "${CCPINK}${CCBOLD}\n---> Build rustc ${CCEND}"
 BOOTSTRAP_SKIP_TARGET_SANITY=1 ./x build compiler/rustc
 
 echo -e "${CCPINK}${CCBOLD}\n---> Compile library std ${CCEND}"
-BOOTSTRAP_SKIP_TARGET_SANITY=1 ./x build library/std library/proc_macro library/test --target x86_64-unknown-linux-gnu,powerpc-unknown-amigaos
+BOOTSTRAP_SKIP_TARGET_SANITY=1 ./x build library/std library/proc_macro library/test --target $HOST,powerpc-unknown-amigaos
 
 
 ROOT="/tmp/rust"
@@ -37,8 +41,8 @@ D="/opt/ppc-amigaos/rust"
 B="$ROOT/build"
 
 echo -e "${CCPINK}${CCBOLD}\n---> Check build ${CCEND}"
-for f in "$B/host/stage1/bin/rustc" "$B/x86_64-unknown-linux-gnu/stage0/bin/cargo" \
-         "$B/x86_64-unknown-linux-gnu/stage1/lib/rustlib/powerpc-unknown-amigaos"; do
+for f in "$B/host/stage1/bin/rustc" "$B/$HOST/stage0/bin/cargo" \
+         "$B/$HOST/stage1/lib/rustlib/powerpc-unknown-amigaos"; do
     [ -e "$f" ] || { echo "missing: $f (build first, see README_AMIGA.md)" >&2; exit 1; }
 done
 
@@ -47,7 +51,7 @@ mkdir -p "$D/bin" "$D/lib"
 # Binaries: strip all symbols and debug info.
 echo -e "${CCPINK}${CCBOLD}\n---> Install rust ${CCEND}"
 cp -f "$B/host/stage1/bin/rustc" "$D/bin/rustc"
-cp -f "$B/x86_64-unknown-linux-gnu/stage0/bin/cargo" "$D/bin/cargo"
+cp -f "$B/$HOST/stage0/bin/cargo" "$D/bin/cargo"
 strip "$D/bin/rustc" "$D/bin/cargo"
 
 # Shared libraries: strip debug info only, keep symbols for backtraces.
@@ -62,7 +66,7 @@ done
 
 # Sysroots (host and AmigaOS). Copied as-is; rlibs are not stripped.
 rm -rf "$D/lib/rustlib"
-cp -a "$B/x86_64-unknown-linux-gnu/stage1/lib/rustlib" "$D/lib/"
+cp -a "$B/$HOST/stage1/lib/rustlib" "$D/lib/"
 
 du -sh "$D"
 echo "installed to $D"
