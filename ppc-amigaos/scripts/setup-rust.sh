@@ -16,6 +16,11 @@ if [ -x "$LOCAL" ]; then\
   exec "$LOCAL" "$@"\
 fi' amiga/bin/ppc-amigaos-gcc
 
+grep -q '^\[target.x86_64-unknown-linux-gnu\]' bootstrap.toml || sed -i '$a\
+\
+[target.x86_64-unknown-linux-gnu]\
+linker = "x86_64-linux-gnu-gcc"' bootstrap.toml
+
 export PATH="$PWD/amiga/bin:$PATH"
 # The cross toolchain must not leak into host builds: unset these exported variables
 unset CC CXX LD AR AS RANLIB

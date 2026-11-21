@@ -15,7 +15,14 @@ ENV CCRED="\033[31m" \
     CCITAL="\033[3m" \
     CCUNDR="\033[4m"
 
+ENV PACKAGES=" \
+  ca-certificates \
+	gcc-x86-64-linux-gnu"
+
 COPY scripts/setup-rust.sh /setup-rust.sh
 
-RUN chmod +x /setup-rust.sh; \
+RUN apt-get update && apt-get -y dist-upgrade && \
+    apt-get -y --no-install-recommends install ${PACKAGES} && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
+    chmod +x /setup-rust.sh && \
     bash /setup-rust.sh && rm /setup-rust.sh; \
