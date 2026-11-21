@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - future
+## [3.7.0] - 2026-11-21
 
 ### Added
 
@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Added SDL3 mixer 3.2.4
 - Added libxmp
 - Added luaJIT v2.1
+- Added rust compiler under /opt/ppc-amigaos
 
 ### Changed
 

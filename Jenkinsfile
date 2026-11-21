@@ -39,6 +39,37 @@ pipeline {
 				}
 			}
 		}
+		stage('build-ppc-amigaos-rust-image') {
+			when {
+				allOf {
+					buildingTag()
+					tag pattern: "os4-.*", comparator: "REGEXP"
+				}
+			}
+			matrix {
+				axes {
+					axis {
+						name 'ARCH'
+						values 'amd64', 'arm64'
+					}
+				}
+				agent { label "agent-${ARCH}" }
+				stages {
+					stage('build') {
+						steps {
+							sh """
+								cd ppc-amigaos
+								docker buildx build \
+									--no-cache \
+									--provenance=false \
+									-t ${DOCKERHUB_REPO}:ppc-amigaos-rust \
+									-f Dockerfile.rust .
+							"""
+						}
+					}
+				}
+			}
+		}
 		stage('ppc-amigaos-gcc15') {
 			when {
 				allOf {

@@ -1,0 +1,21 @@
+##############################################################################
+# SDK Setup image
+FROM walkero/amigagccondocker:os4-gcc11
+
+ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
+
+ENV CCRED="\033[31m" \
+    CCGREEN="\033[32m" \
+    CCYELLOW="\033[33m" \
+    CCBLUE="\033[34m" \
+    CCPINK="\033[35m" \
+    CCLBLUE="\033[36m" \
+    CCEND="\033[0m" \
+    CCBOLD="\033[1m" \
+    CCITAL="\033[3m" \
+    CCUNDR="\033[4m"
+
+COPY scripts/setup-rust.sh /setup-rust.sh
+
+RUN chmod +x /setup-rust.sh; \
+    bash /setup-rust.sh && rm /setup-rust.sh; \

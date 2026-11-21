@@ -7,7 +7,7 @@ ARCH=ppc-amigaos
 GCC?=11
 
 # Release version
-REL?=3.5.2
+REL?=3.7.0
 
 # GCC base image version to use
 BASE_VER?=1.9.2
@@ -55,6 +55,19 @@ build-sdk: ## Build the sdk-files image
 .PHONY: shell-sdk
 shell-sdk: ## Create a container with the latest SDK Docker image and use it
 	docker run -it --rm --name sdk $(REPO):ppc-amigaos-sdk /bin/bash
+
+#####################################################################
+##@ Build Rust help image
+
+.PHONY: build-rust
+build-rust: ## Build the rust image
+	docker buildx build --no-cache -f ./Dockerfile.rust \
+		-t $(REPO):ppc-amigaos-rust \
+		--progress plain .
+
+.PHONY: shell-rust
+shell-rust: ## Create a container with the latest Rust Docker image and use it
+	docker run -it --rm --name rust $(REPO):ppc-amigaos-rust /bin/bash
 
 #####################################################################
 ##@ Helpers

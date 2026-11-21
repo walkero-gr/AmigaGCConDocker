@@ -36,7 +36,7 @@ ENV CCRED="\033[31m" \
 ENV AMIDEV_USER_ID=1000 \
     AMIDEV_GROUP_ID=1000 \
     APPC="/opt/ppc-amigaos" \
-    PATH="/opt/ppc-amigaos/bin:/qt6-amiga/bin:$PATH" \
+    PATH="/opt/ppc-amigaos/bin:/opt/ppc-amigaos/rust/bin:/qt6-amiga/bin:$PATH" \
     SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK" \
     MUI50_INC="/opt/ppc-amigaos/ppc-amigaos/SDK/local/common/include"
 
@@ -50,6 +50,7 @@ ENV AS=${APPC}/bin/ppc-amigaos-as \
 COPY --from=walkero/lha-on-docker /usr/bin/lha /usr/bin/lha
 COPY --from=adtools-image /opt/ppc-amigaos /opt/ppc-amigaos
 COPY --from=walkero/amigagccondocker:ppc-amigaos-sdk /opt/ppc-amigaos /opt/ppc-amigaos
+COPY --from=walkero/amigagccondocker:ppc-amigaos-rust /opt/ppc-amigaos/rust /opt/ppc-amigaos/rust
 
 RUN ln -sf ${APPC}/bin/ppc-amigaos-as /usr/bin/as && \
     ln -sf ${APPC}/bin/ppc-amigaos-ar /usr/bin/ar && \

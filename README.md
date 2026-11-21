@@ -8,6 +8,16 @@ AmigaGCConDocker is a project with different Docker images that can be used as t
 
 The purpose of the project is to be an up-to-date, flexible and out-of-the-box solution for cross-compiling applications for Amiga OS4 or MorphOS, using the GCC C/C++ compiler. Those Docker images can be used on CI/CD solutions for automatic testing, compiling, packaging and deployment.
 
+## Rust
+
+Since the 3.7.0 release, the ppc-amigaos images include the rustc 1.101.0-dev, as ported by [AmigaLabs](https://github.com/AmigaLabs/rust/commits/amigaos-port/). This is ready set-up to compile code written in rust.
+
+To compile a [hello.rs](./ppc-amigaos/tests/hello.rs) code, you need to execute:
+
+```bash
+rustc --target=powerpc-unknown-amigaos hello.rs -o hello
+```
+
 ## Docker images
 
 AmigaGCConDocker is split into different Docker images for better manipulation and updates. Those are separated by tags, which can be seen below, as well as their purpose.
