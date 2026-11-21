@@ -20,10 +20,10 @@ if [ -x "$LOCAL" ]; then\
   exec "$LOCAL" "$@"\
 fi' amiga/bin/ppc-amigaos-gcc
 
-grep -q '^\[target.$HOST\]' bootstrap.toml || sed -i '$a\
-\
-[target.$HOST]\
-linker = "$ARCH-linux-gnu-gcc"' bootstrap.toml
+grep -q "^\[target.$HOST\]" bootstrap.toml || sed -i "\$a\\
+\\
+[target.$HOST]\\
+linker = \"$ARCH-linux-gnu-gcc\"" bootstrap.toml
 
 export PATH="$PWD/amiga/bin:$PATH"
 # The cross toolchain must not leak into host builds: unset these exported variables
