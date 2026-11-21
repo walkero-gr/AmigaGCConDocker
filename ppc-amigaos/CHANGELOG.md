@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased] - future
+
+### Added
+
+- Added libicu v78.3
+- Added SDL3 mixer 3.2.4
+- Added libxmp
+- Added luaJIT v2.1
+
+### Changed
+
+- Changed the folder for mesa includes and libraries
+- minigl and GL4ES added back into the images, having their includes and libraries on their own folders
+
+### Updated
+
+- SDL3 updated to the latest version
+
 ## [3.6.1] - 2026-10-24
 
 ### Fixed
