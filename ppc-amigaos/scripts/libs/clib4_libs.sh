@@ -22,11 +22,9 @@ CLIB4_PACKAGES="\
   libffi-clib4        \
   libflac-clib4       \
   libfmt-clib4        \
-  libgl4es-clib4      \
   libglm-clib4        \
   libgme-clib4        \
   libharu-clib4       \
-  libicu-clib4        \
   libidn2-clib4       \
   libiodbc-clib4      \
   libmad-clib4        \
@@ -55,13 +53,14 @@ CLIB4_PACKAGES="\
   lz4-clib4           \
   mpc-clib4           \
   opencore-amr-clib4  \
-  opengles-clib4      \
   pixman1-clib4       \
   sqlite-clib4        \
   theora-clib4        \
   zlib-clib4"
 
   # amigaos4-clib4      \
+  # opengles-clib4      \
+  # libgl4es-clib4      \
 
 # Replaced by OS4 depot packages
 	# fontconfig-clib4	\
@@ -69,6 +68,7 @@ CLIB4_PACKAGES="\
 	# libcairo-clib4		\
 	# libffmpeg-clib4		\
 	# libharfbuzz-clib4	\
+  # libicu-clib4        \
 	# libsdl2-image-clib4	\
 	# libsdl2-net-clib4	\
 	# libsdl2-ttf-clib4	\
@@ -98,32 +98,69 @@ CLIB4_PACKAGES="\
 # pcre-clib4
 # pcre2-clib4
 
-echo -e "${CCPINK}${CCBOLD}\n---> Download clib4 from GitHub ${CCEND}";
-	curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/clib4/releases/download/v2.5/clib4-v2.5_amd64.deb" -o /tmp/clib4.deb && \
-		dpkg -i /tmp/clib4.deb && \
-		rm -rf /tmp/clib4.deb;
+mkdir -p $SDK_PATH/clib4
+cd /tmp
 
-if [ -d "$SDK_PATH/clib4" ]; then
-echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries ${CCEND}";
-	# Install clib4 libraries from afxgroup's Ubuntu repo.
-	# They are saved under /user/ppc-amigaos
-	dpkg --add-architecture amd64;
-	curl --retry 5 --retry-delay 4 --retry-all-errors -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
-		echo "deb [arch=amd64] https://clib4pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
-		apt-get update > /dev/null
+# if [ -d "$SDK_PATH/clib4" ]; then
+echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 libraries from DEB repository ${CCEND}";
+  # Install clib4 libraries from afxgroup's Ubuntu repo.
+  # They are saved under /user/ppc-amigaos
+  dpkg --add-architecture amd64;
+  curl --retry 5 --retry-delay 4 --retry-all-errors -fsSL https://clib4pkg.amigasoft.net/ubuntu/clib4.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/clib4.gpg && \
+    echo "deb [arch=amd64] https://clib4pkg.amigasoft.net/ubuntu/ focal main" | tee /etc/apt/sources.list.d/clib4.list && \
+    apt -y modernize-sources && \
+    apt-get update > /dev/null
 
-	apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES > /dev/null
+  apt-get -y --no-install-recommends -o Dpkg::Options::="--force-overwrite" install $CLIB4_PACKAGES > /dev/null
 
-	\cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
+  \cp -r /usr/ppc-amigaos/SDK/* ${SDK_PATH}/
 
-	# Necessary for paths in some pkgconfig files
-	rm -rf /usr/ppc-amigaos && \
-		mkdir -p /usr/ppc-amigaos/SDK/local && \
-		ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
+  # Necessary for paths in some pkgconfig files
+  rm -rf /usr/ppc-amigaos && \
+    mkdir -p /usr/ppc-amigaos/SDK/local && \
+    ln -s $SDK_PATH/local/clib4 /usr/ppc-amigaos/SDK/local/clib4
+
+
+# curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://clib4pkg.amigasoft.net/ubuntu/pool/main/libharfbuzz-7.3.0_amd64.deb" -o ./libharfbuzz.deb && \
+# 		dpkg -x ./libharfbuzz.deb ./
+
+echo -e "${CCPINK}${CCBOLD}\n---> Install clib4 ${CCEND}";
+  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://clib4pkg.amigasoft.net/ubuntu/pool/main/clib4-v2.5_amd64.deb" -o ./clib4.deb && \
+    dpkg -x ./clib4.deb ./ && \
+    cp -r ./usr/ppc-amigaos/SDK/clib4/* ${SDK_PATH}/clib4/ && \
+    rm -rf ./*.deb;
+
+echo -e "${CCPINK}${CCBOLD}\n---> Install libgl4es for clib4 ${CCEND}";
+  # Remove previous installation
+  rm -rf ${SDK_PATH}/local/clib4/include/GL ${SDK_PATH}/local/clib4/include/GLES \
+    ${SDK_PATH}/local/clib4/include/KHR ${SDK_PATH}/local/clib4/include/android_debug.h \
+    ${SDK_PATH}/local/clib4/include/gl4eshint.h ${SDK_PATH}/local/clib4/include/gl4esinit.h \
+    ${SDK_PATH}/local/clib4/include/khash.h ${SDK_PATH}/local/clib4/lib/libGL.*
+  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://clib4pkg.amigasoft.net/ubuntu/pool/main/libgl4es_amd64.deb" -o ./libgl4es.deb && \
+    dpkg -x ./libgl4es.deb ./ && \
+    mkdir -p ${SDK_PATH}/local/clib4/include/GL4ES ${SDK_PATH}/local/clib4/lib/GL4ES && \
+    cp -r ./usr/ppc-amigaos/SDK/local/clib4/include/* ${SDK_PATH}/local/clib4/include/GL4ES/ && \
+    cp -r ./usr/ppc-amigaos/SDK/local/clib4/lib/* ${SDK_PATH}/local/clib4/lib/GL4ES/ && \
+    rm -rf ./*.deb ./*.tar.zst ./debian-binary ./usr;
+
+echo -e "${CCPINK}${CCBOLD}\n---> Install opengles2 for clib4 ${CCEND}";
+  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://clib4pkg.amigasoft.net/ubuntu/pool/main/opengles-2.0_amd64.deb" -o ./opengles2.deb && \
+    dpkg -x ./opengles2.deb ./ && \
+    mkdir -p ${SDK_PATH}/local/clib4/include/ogles2 ${SDK_PATH}/local/clib4/lib/ogles2 && \
+    mv ./usr/ppc-amigaos/SDK/local/clib4/include/GLES2 ./usr/ppc-amigaos/SDK/local/clib4/include/GLES3 \
+      ${SDK_PATH}/local/clib4/include/ogles2/ && \
+    cp -r ./usr/ppc-amigaos/SDK/local/clib4/include/* ${SDK_PATH}/local/clib4/include/ && \
+    cp -r ./usr/ppc-amigaos/SDK/local/clib4/lib/* ${SDK_PATH}/local/clib4/lib/ogles2/ && \
+    rm -rf ./*.deb ./*.tar.zst ./debian-binary ./usr;
+
+echo -e "${CCPINK}${CCBOLD}\n---> Install minigl for clib4 ${CCEND}";
+  # No include files are copied because the ones in local/common are the same
+  curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://clib4pkg.amigasoft.net/ubuntu/pool/main/minigl-2.24_amd64.deb" -o ./minigl.deb && \
+    dpkg -x ./minigl.deb ./ && \
+    mkdir -p ${SDK_PATH}/local/clib4/lib/MiniGL && \
+    cp -r ./usr/ppc-amigaos/SDK/local/clib4/lib/* ${SDK_PATH}/local/clib4/lib/MiniGL/ && \
+    rm -rf ./*.deb ./*.tar.zst ./debian-binary /tmp/usr;
+
 
 	# Delete the local/clib4/include/GL directory because of inconsistencies
-	rm -rf $SDK_PATH/local/clib4/include/GL
-else
-echo -e "${CCRED}${CCBOLD}\n---> clib4 FOLDER NOT FOUND${CCEND}";
-echo "$SDK_PATH/clib4"
-fi
+	# rm -rf $SDK_PATH/local/clib4/include/GL
