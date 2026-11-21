@@ -45,3 +45,17 @@ echo -e "${CCPINK}${CCBOLD}\n---> Install liblua 5.1 ${CCEND}";
         rm -rf SDK/local/clib4/bin/ && \
         cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
         rm -rf /tmp/*;
+
+echo -e "${CCPINK}${CCBOLD}\n---> Install liblua JIT ${CCEND}";
+    if [ -f /opt/amigalabs-libs-ports/luajit/luajit-2.1.lha ]; then
+      echo -e "${CCGREEN}${CCBOLD}luajit-2.1.lha found locally. Skipping download. ${CCEND}"
+      cp /opt/amigalabs-libs-ports/luajit/luajit-2.1.lha /tmp/libluajit.lha
+    else
+      echo -e "${CCYELLOW}${CCBOLD}luajit-2.1.lha not found locally. Downloading. ${CCEND}"
+      curl --retry 10 --retry-delay 10 --retry-all-errors -fsSL "https://github.com/AmigaLabs/libs-ports/raw/refs/heads/main/luajit/luajit-2.1.lha" -o /tmp/libluajit.lha
+    fi
+        lha -xfq2 libluajit.lha && \
+        rm -rf SDK/local/newlib/bin/ && \
+        rm -rf SDK/local/clib4/bin/ && \
+        cp -r ./SDK/local/* ${SDK_PATH}/local/ && \
+        rm -rf /tmp/*;
