@@ -1,6 +1,6 @@
 ##############################################################################
 # SDK Setup image
-FROM walkero/amigagccondocker:os4-gcc11
+FROM ubuntu:latest
 
 ENV SDK_PATH="/opt/ppc-amigaos/ppc-amigaos/SDK"
 
@@ -16,7 +16,11 @@ ENV CCRED="\033[31m" \
     CCUNDR="\033[4m"
 
 ENV PACKAGES=" \
-  ca-certificates"
+    build-essential \
+    ca-certificates \
+    curl \
+    git \
+    python3"
 
 COPY scripts/setup-rust.sh /setup-rust.sh
 
@@ -24,4 +28,4 @@ RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get -y --no-install-recommends install ${PACKAGES} && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
     chmod +x /setup-rust.sh && \
-    bash /setup-rust.sh && rm /setup-rust.sh; \
+    bash /setup-rust.sh && rm /setup-rust.sh && rm -rf /tmp/rust; \

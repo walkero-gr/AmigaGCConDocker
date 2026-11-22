@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo -e "${CCPINK}${CCBOLD}\n---> Compile rust ${CCEND}"
+echo -e "${CCPINK}${CCBOLD}\n---> Clone AmigaLabs rust repository ${CCEND}"
 
 # Host triple of the build machine (x86_64 or aarch64); the build directory is named after it.
 ARCH=$(uname -m)
