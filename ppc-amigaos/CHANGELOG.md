@@ -18,7 +18,8 @@ All notable changes to this project will be documented in this file.
 
 ### Updated
 
-- SDL3 updated to the latest version
+- Updated SDL3 to the latest version
+- Updated AmiSSL to v6.1
 
 ## [3.6.1] - 2026-10-24
 
